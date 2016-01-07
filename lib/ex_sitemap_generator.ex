@@ -1,0 +1,2 @@
+defmodule ExSitemapGenerator do
+end
