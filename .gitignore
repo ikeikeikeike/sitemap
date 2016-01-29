@@ -1,5 +1,15 @@
 /_build
 /cover
 /deps
+/docs
+/doc
 erl_crash.dump
 *.ez
+
+tags
+
+/.bundle/
+/.byebug_history
+/Gemfile
+/Gemfile.lock
+/vendor/

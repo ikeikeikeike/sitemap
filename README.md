@@ -1,7 +1,3 @@
-# ExSitemapGenerator
-
-Funnnnnny code
-
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
