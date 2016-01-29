@@ -14,10 +14,4 @@ defmodule ExSitemapGenerator.DSLTest do
     assert alts == [unko: [ab: false], tatsuo: true, ikeda: [], hello: []]
   end
 
-  create do
-    IO.inspect [1234]
-    IO.inspect 2131231
-    false
-  end
-
 end
