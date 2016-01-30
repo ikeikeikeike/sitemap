@@ -1,11 +1,33 @@
 defmodule ExSitemapGenerator.DSL do
   defmacro __using__(_opts) do
     quote do
-      import ExSitemapGenerator.DSL
-
       Module.register_attribute(__MODULE__, :alts, accumulate: :true)
-
       @before_compile ExSitemapGenerator.DSL
+
+      import ExSitemapGenerator.DSL
+      import ExSitemapGenerator.Generator
+    end
+  end
+
+  defmacro create(options \\ [], contents) do
+    contents =
+      case contents do
+        [do: block] ->
+          quote do
+            unquote(block)
+            :ok
+          end
+        _ ->
+          quote do
+            try(unquote(contents))
+            :ok
+          end
+      end
+
+    contents = Macro.escape(contents, unquote: true)
+
+    quote bind_quoted: binding do
+      Code.eval_quoted(contents)
     end
   end
 
