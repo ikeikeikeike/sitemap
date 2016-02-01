@@ -2,10 +2,12 @@ defmodule ExSitemapGenerator.Generator do
 
   def add(link, options \\ []) do
     {link, options}
+    :ok
   end
 
   def add_to_index(link, options \\ []) do
     {link, options}
+    :ok
   end
 
   # def group do end

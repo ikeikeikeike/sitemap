@@ -6,27 +6,23 @@ defmodule ExSitemapGenerator.GeneratorTest do
   use ExSitemapGenerator
 
   test "create macro" do
-    resp = create do
+    {:ok, []} == create do
       false
     end
-
-    assert resp == {:ok, []}
   end
 
   test "add function" do
+    create do
+      add "rss",     priority: nil, changefreq: nil, lastmod: nil, mobile: true
+      add "site",    priority: nil, changefreq: nil, lastmod: nil, mobile: true
+      add "entry",   priority: nil, changefreq: nil, lastmod: nil, mobile: true
+      add "about",   priority: nil, changefreq: nil, lastmod: nil, mobile: true
+      add "contact", priority: nil, changefreq: nil, lastmod: nil, mobile: true
 
-    IO.inspect add "rss", priority: nil, changefreq: nil, lastmod: nil, mobile: true
-    IO.inspect "kjkjk"
-    resp = create do
-      ExSitemapGenerator.Generator.add "rss",     priority: nil, changefreq: nil, lastmod: nil, mobile: true
-      ExSitemapGenerator.Generator.add "site",    priority: nil, changefreq: nil, lastmod: nil, mobile: true
-      ExSitemapGenerator.Generator.add "entry",   priority: nil, changefreq: nil, lastmod: nil, mobile: true
-      ExSitemapGenerator.Generator.add "about",   priority: nil, changefreq: nil, lastmod: nil, mobile: true
-      ExSitemapGenerator.Generator.add "contact", priority: nil, changefreq: nil, lastmod: nil, mobile: true
+      assert add("link", []) == :ok
     end
 
-    IO.inspect resp
-    # assert add("link", []) == {"link", []}
+    assert add("link", []) == :ok
   end
 
   # test "add_to_index function" do

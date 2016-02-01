@@ -9,7 +9,7 @@ defmodule ExSitemapGenerator.DSL do
     end
   end
 
-  defmacro create(options \\ [], contents) do
+  defmacro create(contents) do
     contents =
       case contents do
         [do: block] ->
@@ -26,9 +26,9 @@ defmodule ExSitemapGenerator.DSL do
 
     contents = Macro.escape(contents, unquote: true)
 
-    quote bind_quoted: binding do
-      Code.eval_quoted(contents)
-    end
+    Code.eval_quoted(quote do
+      unquote(contents)
+    end)
   end
 
   defmacro alt(name, options \\ []) do
