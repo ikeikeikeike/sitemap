@@ -1,7 +1,7 @@
 defmodule ExSitemapGenerator.DSL do
   defmacro __using__(_opts) do
     quote do
-      Module.register_attribute(__MODULE__, :alts, accumulate: :true)
+      Module.register_attribute(__MODULE__, :alts, accumulate: true)
       @before_compile ExSitemapGenerator.DSL
 
       import ExSitemapGenerator.DSL
