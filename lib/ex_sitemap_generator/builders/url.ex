@@ -1,5 +1,4 @@
 defmodule ExSitemapGenerator.Builders.Url do
-
   import XmlBuilder
 
   def to_xml(link, options \\ []) do
@@ -13,12 +12,12 @@ defmodule ExSitemapGenerator.Builders.Url do
       ])
 
     if link[:mobile],     do: elms = append_last(elms, mobile())
-    if link[:geo],        do: elms = append_last(elms, geo(link))
-    if link[:news],       do: elms = append_last(elms, news(link))
-    if link[:pagemap],    do: elms = append_last(elms, pagemap(link))
-    if link[:images],     do: elms = append_last(elms, images([link]))
-    if link[:videos],     do: elms = append_last(elms, videos([link]))
-    if link[:alternates], do: elms = append_last(elms, alternates([link]))
+    if link[:geo],        do: elms = append_last(elms, geo(link[:geo]))
+    if link[:news],       do: elms = append_last(elms, news(link[:news]))
+    if link[:pagemap],    do: elms = append_last(elms, pagemap(link[:pagemap]))
+    if link[:images],     do: elms = append_last(elms, images([link[:images]]))
+    if link[:videos],     do: elms = append_last(elms, videos([link[:videos]]))
+    if link[:alternates], do: elms = append_last(elms, alternates([link[:alternates]]))
 
     elms
   end
@@ -34,8 +33,8 @@ defmodule ExSitemapGenerator.Builders.Url do
   defp news(data) do
     element(:"news:news", [
       element(:"news:publication", [
-        element(:"news:name",             data[:name]),
-        element(:"news:language",         data[:language]),
+        element(:"news:name",             data[:publication_name]),
+        element(:"news:language",         data[:publication_language]),
       ]),
       element(":news:title",              data[:title]),
       element(":news:access",             data[:access]),
