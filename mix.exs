@@ -27,6 +27,6 @@ defmodule ExSitemapGenerator.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:xml_builder, "~> 0.0"}]
   end
 end
