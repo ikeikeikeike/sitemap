@@ -16,15 +16,15 @@ defmodule ExSitemapGenerator.BuildersFileTest do
   end
 
   test "init Builders.File" do
-    IO.inspect File.get
+    IO.inspect "first: #{inspect File.get}"
     File.set :location, 12345
-    IO.inspect File.get
+    IO.inspect "next: #{inspect File.get}"
   end
 
   test "finalize Builders.File" do
-    IO.inspect File.get
+    IO.inspect "first: #{inspect File.get}"
     File.set :news_count, 45678
-    IO.inspect File.get
+    IO.inspect "next: #{inspect File.get}"
   end
 
 end
