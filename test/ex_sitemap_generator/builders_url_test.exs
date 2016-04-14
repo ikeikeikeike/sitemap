@@ -9,7 +9,7 @@ defmodule ExSitemapGenerator.BuildersUrlTest do
   setup do
     ExSitemapGenerator.start_link
     on_exit fn ->
-      # IO.puts "done"
+      nil
     end
     # Returns extra metadata, it must be a dict
     # {:ok, hello: "world"}

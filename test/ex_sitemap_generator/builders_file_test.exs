@@ -7,9 +7,8 @@ defmodule ExSitemapGenerator.BuildersFileTest do
 
   setup do
     ExSitemapGenerator.start_link
-    # IO.puts "doing"
     on_exit fn ->
-      # IO.puts "done"
+      nil
     end
     # Returns extra metadata, it must be a dict
     # {:ok, hello: "world"}

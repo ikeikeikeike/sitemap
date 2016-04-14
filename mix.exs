@@ -4,7 +4,7 @@ defmodule ExSitemapGenerator.Mixfile do
   def project do
     [app: :ex_sitemap_generator,
      version: "0.0.1",
-     elixir: "~> 1.1",
+     elixir: ">= 1.0.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -27,6 +27,6 @@ defmodule ExSitemapGenerator.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:xml_builder, "~> 0.0"}]
+    [{:xml_builder, ">= 0.0.0"}]
   end
 end
