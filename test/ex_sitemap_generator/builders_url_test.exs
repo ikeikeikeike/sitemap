@@ -16,12 +16,11 @@ defmodule ExSitemapGenerator.BuildersUrlTest do
   end
 
   test "Basic sitemap url" do
-    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
     expected = "<url>\n\t<loc>loc</loc>\n\t<lastmod>lastmod</lastmod>\n\t<expires>expires</expires>\n\t<changefreq>changefreq</changefreq>\n\t<priority>0.5</priority>\n</url>"
 
     actual =
-      data
-      |> Url.to_xml
+      Url.to_xml("loc", data)
       |> XmlBuilder.generate
 
     assert actual == expected
@@ -41,8 +40,7 @@ defmodule ExSitemapGenerator.BuildersUrlTest do
     expected = "<url>\n\t<loc/>\n\t<lastmod/>\n\t<expires/>\n\t<changefreq/>\n\t<priority/>\n\t<news:news>\n\t\t<news:publication>\n\t\t\t<news:name>Example</news:name>\n\t\t\t<news:language>en</news:language>\n\t\t</news:publication>\n\t\t<:news:title>My Article</:news:title>\n\t\t<:news:access>Subscription</:news:access>\n\t\t<:news:genres>PressRelease</:news:genres>\n\t\t<:news:keywords>my article, articles about myself</:news:keywords>\n\t\t<:news:stock_tickers>SAO:PETR3</:news:stock_tickers>\n\t\t<:news:publication_date>2011-08-22</:news:publication_date>\n\t</news:news>\n</url>"
 
     actual =
-      data
-      |> Url.to_xml
+      Url.to_xml(nil, data)
       |> XmlBuilder.generate
 
     assert actual == expected

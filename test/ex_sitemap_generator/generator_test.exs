@@ -2,8 +2,17 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule ExSitemapGenerator.GeneratorTest do
 
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   use ExSitemapGenerator
+
+  setup do
+    ExSitemapGenerator.start_link
+    on_exit fn ->
+      nil
+    end
+    # Returns extra metadata, it must be a dict
+    # {:ok, hello: "world"}
+  end
 
   test "create macro" do
     {:ok, []} == create do

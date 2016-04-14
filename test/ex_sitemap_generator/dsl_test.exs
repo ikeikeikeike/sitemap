@@ -2,7 +2,7 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule ExSitemapGenerator.DSLTest do
 
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   use ExSitemapGenerator
 
   alt :hello

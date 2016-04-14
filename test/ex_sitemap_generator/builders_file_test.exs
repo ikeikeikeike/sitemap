@@ -14,16 +14,25 @@ defmodule ExSitemapGenerator.BuildersFileTest do
     # {:ok, hello: "world"}
   end
 
-  test "init Builders.File" do
-    # IO.inspect "first: #{inspect File.get}"
-    File.set :location, 12345
-    # IO.inspect "next: #{inspect File.get}"
+  test "Add Builders.File" do
+    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    assert :ok == File.add(data)
   end
 
-  test "finalize Builders.File" do
-    # IO.inspect "first: #{inspect File.get}"
-    File.set :news_count, 45678
-    # IO.inspect "next: #{inspect File.get}"
+  test "Adds Builders.File" do
+    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    Enum.each(1..10, fn _ -> File.add(data) end)
+
+    assert 10 == File.get.link_count
+  end
+
+  # TODO: Want improving.
+  test "content_limit? Builders.File" do
+    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    Enum.each(1..100, fn _ -> File.add(data) end)
+
+    assert :ok == File.add(data)
+    assert 101 == File.get.link_count
   end
 
 end

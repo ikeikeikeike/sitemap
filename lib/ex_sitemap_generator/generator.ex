@@ -1,7 +1,8 @@
 defmodule ExSitemapGenerator.Generator do
+  alias ExSitemapGenerator.Builders.File
 
   def add(link, options \\ []) do
-    {link, options}
+    File.add(link, options)
     :ok
   end
 

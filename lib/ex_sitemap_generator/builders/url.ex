@@ -1,23 +1,23 @@
 defmodule ExSitemapGenerator.Builders.Url do
   import XmlBuilder
 
-  def to_xml(link, options \\ []) do
+  def to_xml(link, opts \\ []) do
     elms =
       element(:url, [
-        element(:loc,         link[:loc]),
-        element(:lastmod,     link[:lastmod]),
-        element(:expires,     link[:expires]),
-        element(:changefreq,  link[:changefreq]),
-        element(:priority,    link[:priority]),
+        element(:loc,         link),
+        element(:lastmod,     opts[:lastmod]),
+        element(:expires,     opts[:expires]),
+        element(:changefreq,  opts[:changefreq]),
+        element(:priority,    opts[:priority]),
       ])
 
-    if link[:mobile],     do: elms = append_last(elms, mobile())
-    if link[:geo],        do: elms = append_last(elms, geo(link[:geo]))
-    if link[:news],       do: elms = append_last(elms, news(link[:news]))
-    if link[:pagemap],    do: elms = append_last(elms, pagemap(link[:pagemap]))
-    if link[:images],     do: elms = append_last(elms, images([link[:images]]))
-    if link[:videos],     do: elms = append_last(elms, videos([link[:videos]]))
-    if link[:alternates], do: elms = append_last(elms, alternates([link[:alternates]]))
+    if opts[:mobile],     do: elms = append_last(elms, mobile())
+    if opts[:geo],        do: elms = append_last(elms, geo(opts[:geo]))
+    if opts[:news],       do: elms = append_last(elms, news(opts[:news]))
+    if opts[:pagemap],    do: elms = append_last(elms, pagemap(opts[:pagemap]))
+    if opts[:images],     do: elms = append_last(elms, images([opts[:images]]))
+    if opts[:videos],     do: elms = append_last(elms, videos([opts[:videos]]))
+    if opts[:alternates], do: elms = append_last(elms, alternates([opts[:alternates]]))
 
     elms
   end
