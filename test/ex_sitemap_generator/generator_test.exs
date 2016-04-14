@@ -2,8 +2,9 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule ExSitemapGenerator.GeneratorTest do
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   use ExSitemapGenerator
+  alias ExSitemapGenerator.Builders.File
 
   setup do
     ExSitemapGenerator.start_link
@@ -15,12 +16,13 @@ defmodule ExSitemapGenerator.GeneratorTest do
   end
 
   test "create macro" do
-    {:ok, []} == create do
+    statement = create do
       false
     end
+    assert {:ok, []} == statement
   end
 
-  test "add function" do
+  test "create & add" do
     create do
       add "rss",     priority: nil, changefreq: nil, lastmod: nil, mobile: true
       add "site",    priority: nil, changefreq: nil, lastmod: nil, mobile: true
@@ -31,11 +33,11 @@ defmodule ExSitemapGenerator.GeneratorTest do
       assert add("link", []) == :ok
     end
 
-    assert add("link", []) == :ok
+    assert File.get.link_count == 6
   end
 
-  # test "add_to_index function" do
-    # assert add("link", []) == {"link", []}
-  # end
+  test "add_to_index function" do
+    assert :ok == add_to_index("link", [])
+  end
 
 end
