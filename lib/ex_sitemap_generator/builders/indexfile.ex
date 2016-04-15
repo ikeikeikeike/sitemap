@@ -43,9 +43,10 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
   end
 
   def write do
-    fs = file.state
-    fs.location.write @xml_header <> fs.content <> @xml_footer, fs.link_count
+    s = state
+    content = Consts.xml_header <> s.content <> Consts.xml_footer
 
+    s.location.write content, s.link_count
   end
 
 end

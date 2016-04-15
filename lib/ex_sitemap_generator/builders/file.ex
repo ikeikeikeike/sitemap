@@ -54,7 +54,10 @@ defmodule ExSitemapGenerator.Builders.File do
   end
 
   def write do
+    s = state
+    content = Consts.xml_header <> s.content <> Consts.xml_footer
 
+    s.location.write content, s.link_count
   end
 
 end
