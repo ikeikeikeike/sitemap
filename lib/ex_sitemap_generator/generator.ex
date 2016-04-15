@@ -1,5 +1,6 @@
 defmodule ExSitemapGenerator.Generator do
   alias ExSitemapGenerator.Builders.File
+  alias ExSitemapGenerator.Builders.Indexfile
 
   def add(link, options \\ []) do
     File.add(link, options)
@@ -7,7 +8,7 @@ defmodule ExSitemapGenerator.Generator do
   end
 
   def add_to_index(link, options \\ []) do
-    {link, options}
+    Indexfile.add(link, options)
     :ok
   end
 

@@ -12,28 +12,28 @@ defmodule ExSitemapGenerator.Builders.File do
   @doc """
   Get state
   """
-  def get do
+  def state do
     Agent.get(__MODULE__, &(&1))
   end
 
   defp add_content(xml) do
-    Agent.update(__MODULE__, fn state ->
-      Map.update!(state, :content, &(&1 <> xml))
+    Agent.update(__MODULE__, fn s ->
+      Map.update!(s, :content, &(&1 <> xml))
     end)
   end
 
   defp incr_count(key) do
-    Agent.update(__MODULE__, fn state ->
-      Map.update!(state, key, &(&1 + 1))
+    Agent.update(__MODULE__, fn s ->
+      Map.update!(s, key, &(&1 + 1))
     end)
   end
 
-  defp content_limit?(content) do
-    state = get
+  defp sizelimit?(content) do
+    s = state
 
-    r = String.length(state.content <> content) < Consts.max_sitemap_filesize
-	r = r && state.link_count < Consts.max_sitemap_links
-    r = r && state.news_count < Consts.max_sitemap_news
+    r = String.length(s.content <> content) < Consts.max_sitemap_filesize
+    r = r && s.link_count < Consts.max_sitemap_links
+    r = r && s.news_count < Consts.max_sitemap_news
     r
   end
 
@@ -42,7 +42,7 @@ defmodule ExSitemapGenerator.Builders.File do
       Url.to_xml(link, options)
       |> XmlBuilder.generate
 
-    case content_limit?(content) do
+    case sizelimit?(content) do
       false ->
         :ng
 
@@ -51,6 +51,10 @@ defmodule ExSitemapGenerator.Builders.File do
         incr_count :link_count
         :ok
     end
+  end
+
+  def write do
+
   end
 
 end

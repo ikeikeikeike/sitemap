@@ -2,7 +2,7 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
   alias ExSitemapGenerator.Builders.Indexurl
   require XmlBuilder
 
-  defstruct location: nil, link_count: 0, news_count: 0, content: ""
+  defstruct location: nil, link_count: 0, total_count: 0, content: ""
 
   def start_link do
     Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
@@ -11,20 +11,41 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
   @doc """
   Get state
   """
-  def get do
+  def state do
     Agent.get(__MODULE__, &(&1))
   end
 
   defp add_content(xml) do
-    Agent.update(__MODULE__, fn state ->
-      Map.update!(state, :content, &(&1 <> xml))
+    Agent.update(__MODULE__, fn s ->
+      Map.update!(s, :content, &(&1 <> xml))
     end)
   end
 
-  defp incr_count(key) do
-    Agent.update(__MODULE__, fn state ->
-      Map.update!(state, key, &(&1 + 1))
+  defp incr_count(key), do: incr_count(key, 1)
+  defp incr_count(key, number) do
+    Agent.update(__MODULE__, fn s ->
+      Map.update!(s, key, &(&1 + number))
     end)
+  end
+
+  def add(file, options \\ []) do
+    file.write
+    fs = file.state
+
+    Indexurl.to_xml(fs.location, options)
+    |> XmlBuilder.generate
+    |> add_content
+
+    incr_count :link_count
+    incr_count :total_count, fs.link_count
+
+    :ok
+  end
+
+  def write do
+    fs = file.state
+    fs.location.write @xml_header <> fs.content <> @xml_footer, fs.link_count
+
   end
 
 end

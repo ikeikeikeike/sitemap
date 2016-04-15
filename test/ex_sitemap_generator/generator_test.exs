@@ -33,11 +33,14 @@ defmodule ExSitemapGenerator.GeneratorTest do
       assert add("link", []) == :ok
     end
 
-    assert File.get.link_count == 6
+    assert File.state.link_count == 6
   end
 
   test "add_to_index function" do
-    assert :ok == add_to_index("link", [])
+    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    File.add(data)
+
+    assert :ok == add_to_index(File, [])
   end
 
 end

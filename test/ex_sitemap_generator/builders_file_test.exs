@@ -23,7 +23,7 @@ defmodule ExSitemapGenerator.BuildersFileTest do
     data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
     Enum.each(1..10, fn _ -> File.add(data) end)
 
-    assert 10 == File.get.link_count
+    assert 10 == File.state.link_count
   end
 
   # TODO: Want improving.
@@ -32,7 +32,7 @@ defmodule ExSitemapGenerator.BuildersFileTest do
     Enum.each(1..100, fn _ -> File.add(data) end)
 
     assert :ok == File.add(data)
-    assert 101 == File.get.link_count
+    assert 101 == File.state.link_count
   end
 
 end
