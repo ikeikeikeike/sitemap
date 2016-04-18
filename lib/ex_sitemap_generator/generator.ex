@@ -1,8 +1,8 @@
 defmodule ExSitemapGenerator.Generator do
-  use ExSitemapGenerator.Exceptions
-
   alias ExSitemapGenerator.Builders.File
   alias ExSitemapGenerator.Builders.Indexfile
+  alias ExSitemapGenerator.FullError
+  alias ExSitemapGenerator.FinalizedError
 
   def add(link, options \\ []) do
     File.add(link, options)
@@ -15,8 +15,8 @@ defmodule ExSitemapGenerator.Generator do
       add(link, options)
   end
 
-  def add_to_index(link, options \\ []) do
-    Indexfile.add(link, options)
+  def add_to_index(file, options \\ []) do
+    Indexfile.add(file, options)
   end
 
   # def group do end

@@ -38,8 +38,6 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
 
     incr_count :link_count
     incr_count :total_count, fs.link_count
-
-    :ok
   end
 
   def write do
