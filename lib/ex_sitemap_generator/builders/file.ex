@@ -1,11 +1,17 @@
 defmodule ExSitemapGenerator.Builders.File do
   alias ExSitemapGenerator.Consts
   alias ExSitemapGenerator.Builders.Url
+  alias ExSitemapGenerator.Location
   require XmlBuilder
 
-  defstruct location: nil, link_count: 0, news_count: 0, content: ""
+  defstruct [
+    content: "",
+    link_count: 0,
+    news_count: 0,
+  ]
 
   def start_link do
+    Location.start_link(:file)
     Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
   end
 
@@ -56,8 +62,7 @@ defmodule ExSitemapGenerator.Builders.File do
   def write do
     s = state
     content = Consts.xml_header <> s.content <> Consts.xml_footer
-
-    s.location.write content, s.link_count
+    Location.write :file, content, s.link_count
   end
 
 end

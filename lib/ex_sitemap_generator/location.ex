@@ -1,36 +1,38 @@
 defmodule ExSitemapGenerator.Location do
+  alias ExSitemapGenerator.Namer
+  alias ExSitemapGenerator.Adapter.File, as: FileAdapter
 
   defstruct [
-    adapter: ExSitemapGenerator.Adapter.File,
+    adapter: FileAdapter,
     public_path: "",
     filename: "sitemap",
     sitemaps_path: "sitemaps/",
     host: "http://www.example.com",
-    namer: ExSitemapGenerator.Namer,
+    namer: Namer,
     verbose: true,
     compress: true,
     create_index: :auto
   ]
 
-  def start_link do
-    Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
+  def start_link(name) do
+    Agent.start_link(fn -> %__MODULE__{} end, name: namepid(name))
   end
 
-  def state do
-    Agent.get(__MODULE__, &(&1))
+  def state(name) do
+    Agent.get(namepid(name), &(&1))
   end
 
-  defp add_content(xml) do
-    Agent.update(__MODULE__, fn s ->
-      Map.update!(s, :content, &(&1 <> xml))
-    end)
+  defp namepid(name) do
+    String.to_atom(Enum.join([__MODULE__, name]))
   end
 
-  defp incr_count(key) do
-    Agent.update(__MODULE__, fn s ->
-      Map.update!(s, key, &(&1 + 1))
-    end)
-  end
+  def write(name, data) do
+    s =
+      name
+      |> namepid
+      |> state
 
+    s.adapter.write(data)
+  end
 
 end

@@ -1,10 +1,16 @@
 defmodule ExSitemapGenerator.Builders.Indexfile do
   alias ExSitemapGenerator.Builders.Indexurl
+  alias ExSitemapGenerator.Location
   require XmlBuilder
 
-  defstruct location: nil, link_count: 0, total_count: 0, content: ""
+  defstruct [
+    content: "",
+    link_count: 0,
+    total_count: 0,
+  ]
 
   def start_link do
+    Location.start_link(:indexfile)
     Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
   end
 
@@ -41,10 +47,6 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
   end
 
   def write do
-    s = state
-    content = Consts.xml_header <> s.content <> Consts.xml_footer
-
-    s.location.write content, s.link_count
   end
 
 end
