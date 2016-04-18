@@ -15,21 +15,21 @@ defmodule ExSitemapGenerator.Location do
   ]
 
   def start_link(name) do
-    Agent.start_link(fn -> %__MODULE__{} end, name: namepid(name))
+    Agent.start_link(fn -> %__MODULE__{} end, name: namestate(name))
   end
 
   def state(name) do
-    Agent.get(namepid(name), &(&1))
+    Agent.get(namestate(name), &(&1))
   end
 
-  defp namepid(name) do
+  defp namestate(name) do
     String.to_atom(Enum.join([__MODULE__, name]))
   end
 
   def write(name, data) do
     s =
       name
-      |> namepid
+      |> namestate
       |> state
 
     s.adapter.write(data)
