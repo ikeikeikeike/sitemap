@@ -40,7 +40,7 @@ defmodule ExSitemapGenerator.GeneratorTest do
     data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
     File.add(data)
 
-    assert :ok == add_to_index(File, [])
+    assert :ok == add_to_index([])
   end
 
 end

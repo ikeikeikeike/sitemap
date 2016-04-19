@@ -43,19 +43,14 @@ defmodule ExSitemapGenerator.Builders.File do
     r
   end
 
-  def add(link, options \\ []) do
+  def add(link, attrs \\ []) do
     content =
-      Url.to_xml(link, options)
+      Url.to_xml(link, attrs)
       |> XmlBuilder.generate
 
-    case sizelimit?(content) do
-      false ->
-        :ng
-
-      true  ->
-        add_content content
-        incr_count :link_count
-        :ok
+    if sizelimit?(content) do
+      add_content content
+      incr_count :link_count
     end
   end
 

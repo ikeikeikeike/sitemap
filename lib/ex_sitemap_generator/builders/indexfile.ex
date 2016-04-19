@@ -1,4 +1,5 @@
 defmodule ExSitemapGenerator.Builders.Indexfile do
+  alias ExSitemapGenerator.Builders.File, as: FileBuilder
   alias ExSitemapGenerator.Builders.Indexurl
   alias ExSitemapGenerator.Location
   require XmlBuilder
@@ -34,9 +35,9 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
     end)
   end
 
-  def add(file, options \\ []) do
-    file.write
-    fs = file.state
+  def add(options \\ []) do
+    FileBuilder.write
+    fs = FileBuilder.state
 
     Indexurl.to_xml(fs.location, options)
     |> XmlBuilder.generate
