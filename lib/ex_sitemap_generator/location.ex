@@ -1,6 +1,6 @@
 defmodule ExSitemapGenerator.Location do
   alias ExSitemapGenerator.Namer
-  alias ExSitemapGenerator.Adapter.File, as: FileAdapter
+  alias ExSitemapGenerator.Adapters.File, as: FileAdapter
 
   defstruct [
     adapter: FileAdapter,
@@ -28,7 +28,17 @@ defmodule ExSitemapGenerator.Location do
 
   def directory(name) do
     s = state(name)
-    (s.public_path <> s.sitemaps_path).expand_path.to_s
+    s.public_path
+    |> Path.join(s.sitemaps_path)
+    |> Path.expand
+  end
+
+  def path(name) do
+    s = state(name)
+    s.public_path
+    |> Path.join(s.sitemaps_path)
+    |> Path.join(s.filename)
+    |> Path.expand
   end
 
   def write(name, data, _count) do
