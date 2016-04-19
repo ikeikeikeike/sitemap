@@ -31,7 +31,9 @@ defmodule ExSitemapGenerator.DSL do
     end)
   end
 
-  defmacro alt(name, options \\ []) do
+  defmacro alt(name, options) do
+    ExSitemapGenerator.Config.set name, options
+
     quote do
       @alts {unquote(name), unquote(options)}
     end

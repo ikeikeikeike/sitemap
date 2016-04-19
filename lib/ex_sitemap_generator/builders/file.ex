@@ -1,5 +1,6 @@
 defmodule ExSitemapGenerator.Builders.File do
   alias ExSitemapGenerator.Consts
+  alias ExSitemapGenerator.Config
   alias ExSitemapGenerator.Builders.Url
   alias ExSitemapGenerator.Location
   require XmlBuilder
@@ -37,9 +38,10 @@ defmodule ExSitemapGenerator.Builders.File do
   defp sizelimit?(content) do
     s = state
 
-    r = String.length(s.content <> content) < Consts.max_sitemap_filesize
-    r = r && s.link_count < Consts.max_sitemap_links
-    r = r && s.news_count < Consts.max_sitemap_news
+    cfg = Config.get
+    r = String.length(s.content <> content) < cfg.max_sitemap_filesize
+    r = r && s.link_count < cfg.max_sitemap_links
+    r = r && s.news_count < cfg.max_sitemap_news
     r
   end
 

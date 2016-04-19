@@ -47,6 +47,9 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
   end
 
   def write do
+    s = state
+    content = Consts.xml_idxheader <> s.content <> Consts.xml_idxfooter
+    Location.write :indexfile, content, s.link_count
   end
 
 end
