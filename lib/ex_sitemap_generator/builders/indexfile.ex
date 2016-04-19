@@ -37,14 +37,13 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
 
   def add(options \\ []) do
     FileBuilder.write
-    fs = FileBuilder.state
 
-    Indexurl.to_xml(fs.location, options)
+    Indexurl.to_xml(Location.url(:file), options)
     |> XmlBuilder.generate
     |> add_content
 
     incr_count :link_count
-    incr_count :total_count, fs.link_count
+    incr_count :total_count, FileBuilder.state.link_count
   end
 
   def write do

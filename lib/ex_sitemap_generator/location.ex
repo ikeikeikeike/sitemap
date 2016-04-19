@@ -41,6 +41,13 @@ defmodule ExSitemapGenerator.Location do
     |> Path.expand
   end
 
+  def url(name) do
+    s = state(name)
+    s.host
+    |> Path.join(s.sitemaps_path)
+    |> Path.join(s.filename)
+  end
+
   def write(name, data, _count) do
     s = state(name)
     s.adapter.write(name, data)

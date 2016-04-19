@@ -1,11 +1,11 @@
 defmodule ExSitemapGenerator.FullError do
-  defexception message: nil
+  defexception message: "no message"
 end
 
 defmodule ExSitemapGenerator.FinalizedError do
-  defexception message: nil
+  defexception message: "no message"
 end
 
 defmodule ExSitemapGenerator.DirNotExists do
-  defexception message: nil
+  defexception message: "no message"
 end

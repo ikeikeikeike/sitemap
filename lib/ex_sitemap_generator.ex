@@ -4,6 +4,7 @@ defmodule ExSitemapGenerator do
   def start_link, do: start(nil, [])
   def start(_type, _args) do
     ExSitemapGenerator.Builders.File.start_link
+    ExSitemapGenerator.Builders.Indexfile.start_link
   end
 
   @doc false
