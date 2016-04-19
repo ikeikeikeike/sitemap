@@ -9,8 +9,9 @@ defmodule ExSitemapGenerator do
   end
 
   @doc false
-  defmacro __using__(_opts) do
+  defmacro __using__(opts) do
     quote do
+      use ExSitemapGenerator.Config, unquote(opts)
       use ExSitemapGenerator.DSL
     end
   end
