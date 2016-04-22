@@ -16,7 +16,7 @@ defmodule ExSitemapGenerator.Generator do
 
   def finalize do
     add_to_index
-    FileBuilder.finalize
+    FileBuilder.finalize_state
   end
 
   def add_to_index do

@@ -10,30 +10,11 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
     total_count: 0,
   ]
 
+  use ExSitemapGenerator.State
+
   def init do
     Location.start_link(:indexfile)
     start_link
-  end
-
-  def start_link do
-    Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
-  end
-
-  def state do
-    Agent.get(__MODULE__, &(&1))
-  end
-
-  defp add_state(key, xml) do
-    Agent.update(__MODULE__, fn s ->
-      Map.update!(s, key, &(&1 <> xml))
-    end)
-  end
-
-  defp incr_state(key), do: incr_state(key, 1)
-  defp incr_state(key, number) do
-    Agent.update(__MODULE__, fn s ->
-      Map.update!(s, key, &(&1 + number))
-    end)
   end
 
   def add(options \\ []) do
