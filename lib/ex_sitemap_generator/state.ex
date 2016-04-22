@@ -34,6 +34,13 @@ defmodule ExSitemapGenerator.State do
         end)
       end
 
+      def decr_state(key), do: decr_state(key, 1)
+      def decr_state(key, number) do
+        Agent.update(__MODULE__, fn s ->
+          Map.update!(s, key, &(&1 - number))
+        end)
+      end
+
     end
   end
 end

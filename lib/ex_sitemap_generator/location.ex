@@ -8,11 +8,15 @@ defmodule ExSitemapGenerator.Location do
     filename: "sitemap",
     sitemaps_path: "sitemaps/",
     host: "http://www.example.com",
-    namer: Namer,
     verbose: true,
     compress: true,
     create_index: :auto
   ]
+
+  def init(name) do
+    Namer.init
+    start_link(name)
+  end
 
   defp namestate(name),
     do: String.to_atom(Enum.join([__MODULE__, name]))
@@ -21,6 +25,12 @@ defmodule ExSitemapGenerator.Location do
 
   def start_link(name) do
     Agent.start_link(fn -> %__MODULE__{} end, name: namestate(name))
+  end
+
+  def update_state(name, key, xml) do
+    Agent.update(namestate(name), fn s ->
+      Map.update!(s, key, fn _ -> xml end)
+    end)
   end
 
   def directory(name) do
@@ -45,11 +55,33 @@ defmodule ExSitemapGenerator.Location do
     |> Path.join(s.filename)
   end
 
-  def reserve_name do
+  def filename(name) do
+    require IEx; IEx.pry
+    s = state(name)
 
+    if Blank.blank?(s.filename) do
+      update_state name, :filename, Namer.to_string
+
+      unless s.compress do
+        update_state name, :filename, Regex.replace(~r/\.gz$/, s.filename, "")
+      end
+    end
+
+    require IEx; IEx.pry
+    s.filename
+  end
+
+  def reserve_name(name) do
+    require IEx; IEx.pry
+    filename(name)
+    Namer.next
+    require IEx; IEx.pry
   end
 
   def write(name, data, _count) do
+    require IEx; IEx.pry
+    reserve_name(name)
+
     s = state(name)
     s.adapter.write(name, data)
   end

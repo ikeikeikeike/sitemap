@@ -1,4 +1,5 @@
 defmodule ExSitemapGenerator.Namer do
+  alias ExSitemapGenerator.NameError
 
   defstruct [
     base: "",
@@ -8,11 +9,9 @@ defmodule ExSitemapGenerator.Namer do
     count: nil,
   ]
 
-  def start_link do
-    Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
-  end
+  use ExSitemapGenerator.State
 
-  def state, do: Agent.get(__MODULE__, &(&1))
+  def init, do: start_link
 
   def to_string do
     s = state
@@ -20,12 +19,32 @@ defmodule ExSitemapGenerator.Namer do
   end
 
   def reset do
-    # update_state :count, state.zero
+    update_state :count, state.zero
   end
 
   def start? do
     s = state
     s.count == s.zero
+  end
+
+  def next do
+    if start? do
+      update_state :count, state.start
+    else
+      incr_state :count
+    end
+  end
+
+  def previous! do
+    if start?, do: raise NameError,
+        message: "Already at the start of the series"
+
+    s = state
+    if s.count <= s.start do
+      update_state :count, state.zero
+    else
+      decr_state :count
+    end
   end
 
 end

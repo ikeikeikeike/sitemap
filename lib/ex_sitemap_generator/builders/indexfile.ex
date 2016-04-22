@@ -13,7 +13,7 @@ defmodule ExSitemapGenerator.Builders.Indexfile do
   use ExSitemapGenerator.State
 
   def init do
-    Location.start_link(:indexfile)
+    Location.init(:indexfile)
     start_link
   end
 
