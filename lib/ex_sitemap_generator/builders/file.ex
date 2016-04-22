@@ -44,6 +44,8 @@ defmodule ExSitemapGenerator.Builders.File do
   def write do
     s = state
     content = Consts.xml_header <> s.content <> Consts.xml_footer
+
+    Location.reserve_name(:file)
     Location.write :file, content, s.link_count
   end
 

@@ -61,8 +61,6 @@ defmodule ExSitemapGenerator.Location do
   end
 
   def write(name, data, _count) do
-    reserve_name(name)
-
     s = state(name)
     s.adapter.write(name, data)
   end
