@@ -5,7 +5,7 @@ defmodule ExSitemapGenerator.Location do
   defstruct [
     adapter: FileAdapter,
     public_path: "",
-    filename: "sitemap",
+    filename: "",
     sitemaps_path: "sitemaps/",
     host: "http://www.example.com",
     verbose: true,
@@ -15,8 +15,9 @@ defmodule ExSitemapGenerator.Location do
 
   use ExSitemapGenerator.State
 
-  def init(name) do
-    Namer.init(name)
+  def init(name), do: init(name, [])
+  def init(name, opts) do
+    Namer.init(name, opts)
     start_link(name)
   end
 
@@ -31,7 +32,7 @@ defmodule ExSitemapGenerator.Location do
     s = state(name)
     s.public_path
     |> Path.join(s.sitemaps_path)
-    |> Path.join(s.filename)
+    |> Path.join(filename(name))
     |> Path.expand
   end
 
@@ -39,26 +40,24 @@ defmodule ExSitemapGenerator.Location do
     s = state(name)
     s.host
     |> Path.join(s.sitemaps_path)
-    |> Path.join(s.filename)
+    |> Path.join(filename(name))
   end
 
   def filename(name) do
+    fname = Namer.to_string(name)
+
     s = state(name)
+    unless s.compress,
+      do: fname = Regex.replace(~r/\.gz$/, fname, "")
 
-    if Blank.blank?(s.filename) do
-      update_state name, :filename, Namer.to_string
-
-      unless s.compress do
-        update_state name, :filename, Regex.replace(~r/\.gz$/, s.filename, "")
-      end
-    end
-
-    s.filename
+    update_state name, :filename, fname
+    fname
   end
 
   def reserve_name(name) do
-    filename(name)
-    Namer.next
+    fname = filename(name)
+    Namer.next(name)
+    fname
   end
 
   def write(name, data, _count) do

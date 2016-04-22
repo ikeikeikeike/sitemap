@@ -12,14 +12,15 @@ defmodule ExSitemapGenerator.Namer do
   use ExSitemapGenerator.State
 
   def init(name), do: start_link(name)
+  def init(name, opts), do: start_link(name, opts)
 
   def to_string(name) do
     s = state(name)
-    "#{s.base}#{s.count}#{s.ext}"
+    "#{name}#{s.count}#{s.ext}"
   end
 
   def reset(name) do
-    update_state name, :count, state.zero
+    update_state name, :count, state(name).zero
   end
 
   def start?(name) do
@@ -29,7 +30,7 @@ defmodule ExSitemapGenerator.Namer do
 
   def next(name) do
     if start?(name) do
-      update_state name, :count, state.start
+      update_state name, :count, state(name).start
     else
       incr_state name, :count
     end
@@ -37,11 +38,11 @@ defmodule ExSitemapGenerator.Namer do
 
   def previous!(name) do
     if start?(name), do: raise NameError,
-        message: "Already at the start of the series"
+      message: "Already at the start of the series"
 
     s = state(name)
     if s.count <= s.start do
-      update_state name, :count, state.zero
+      update_state name, :count, state(name).zero
     else
       decr_state name, :count
     end

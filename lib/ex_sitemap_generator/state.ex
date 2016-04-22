@@ -6,12 +6,14 @@ defmodule ExSitemapGenerator.State do
       defp namepid(name),
         do: String.to_atom(Enum.join([__MODULE__, name]))
 
-      def start_link, do: start_link ""
-      def start_link(name) do
-        Agent.start_link(fn -> %__MODULE__{} end, name: namepid(name))
+      def start_link, do: start_link("", [])
+      def start_link(opts) when is_list(opts), do: start_link("", [])
+      def start_link(name), do: start_link(name, [])
+      def start_link(name, opts) do
+        Agent.start_link(fn -> struct(__MODULE__, opts) end, name: namepid(name))
       end
 
-      def state, do: state ""
+      def state, do: state("")
       def state(name), do: Agent.get(namepid(name), &(&1))
 
       def finalize_state, do: finalize_state("")
@@ -40,7 +42,7 @@ defmodule ExSitemapGenerator.State do
       def incr_state(name, key), do: incr_state(name, key, 1)
       def incr_state(name, key, number) do
         Agent.update(namepid(name), fn s ->
-          Map.update!(s, key, &(&1 + number))
+          Map.update!(s, key, &((&1 || 0) + number))
         end)
       end
 
@@ -49,7 +51,7 @@ defmodule ExSitemapGenerator.State do
       def decr_state(name, key), do: decr_state(name, key, 1)
       def decr_state(name, key, number) do
         Agent.update(namepid(name), fn s ->
-          Map.update!(s, key, &(&1 - number))
+          Map.update!(s, key, &((&1 || 0) - number))
         end)
       end
 

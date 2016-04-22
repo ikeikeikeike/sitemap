@@ -14,7 +14,6 @@ defmodule ExSitemapGenerator.Builders.File do
   use ExSitemapGenerator.State
 
   def init do
-    Location.init(:file)
     start_link
   end
 
