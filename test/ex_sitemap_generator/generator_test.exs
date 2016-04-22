@@ -29,18 +29,16 @@ defmodule ExSitemapGenerator.GeneratorTest do
       add "entry",   priority: nil, changefreq: nil, lastmod: nil, mobile: true
       add "about",   priority: nil, changefreq: nil, lastmod: nil, mobile: true
       add "contact", priority: nil, changefreq: nil, lastmod: nil, mobile: true
-
-      assert add("link", []) == :ok
     end
 
-    assert File.state.link_count == 6
+    assert File.state.link_count == 5
   end
 
   test "add_to_index function" do
     data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
     File.add(data)
 
-    assert :ok == add_to_index([])
+    assert :ok == add_to_index
   end
 
   test "A lot of creating" do
@@ -53,11 +51,9 @@ defmodule ExSitemapGenerator.GeneratorTest do
         add "about#{n}",   priority: 0.4, changefreq: "monthly", lastmod: nil, mobile: true
         add "contact#{n}", priority: 0.5, changefreq: "yearly", lastmod: nil, mobile: false
       end
-
-      assert add("link", []) == :ok
     end
 
-    assert File.state.link_count == 256
+    assert File.state.link_count == 255
   end
 
 end

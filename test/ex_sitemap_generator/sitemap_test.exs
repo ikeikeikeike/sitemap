@@ -15,9 +15,9 @@ defmodule ExSitemapGenerator.SitemapTest do
 
   test "limit file" do
     create do
-      IO.inspect ExSitemapGenerator.Config.get
+      ExSitemapGenerator.Config.set :max_sitemap_links, 10
 
-      Enum.each 0..10, fn n ->
+      Enum.each 0..20, fn n ->
         add "rss#{n}",     priority: 0.1, changefreq: "weekly", lastmod: nil, mobile: true
         add "site#{n}",    priority: 0.2, changefreq: "always", lastmod: nil, mobile: true
         add "entry#{n}",   priority: 0.3, changefreq: "dayly", lastmod: nil, mobile: false

@@ -1,15 +1,5 @@
 defmodule ExSitemapGenerator.Config do
 
-  defmacro __using__(_opts) do
-    IO.inspect "config: #{__MODULE__}"
-    # quote do
-      # Enum.each unquote(opts), fn {key, value} ->
-        # IO.inspect "config11: #{__MODULE__}"
-        # Module.put_attribute ExSitemapGenerator.Config, key, value
-      # end
-    # end
-  end
-
   defstruct [
     max_sitemap_files:    50_000,      # max sitemap links per index file
     max_sitemap_links:    50_000,      # max links per sitemap
@@ -18,7 +8,7 @@ defmodule ExSitemapGenerator.Config do
     max_sitemap_filesize: 10_000_000,  # bytes
   ]
 
-  def configure, do: configure(nil)
+  def configure, do: configure nil
   def configure(overwrite) do
     ow = overwrite
     start_link(%__MODULE__{

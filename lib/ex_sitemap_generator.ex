@@ -4,14 +4,13 @@ defmodule ExSitemapGenerator do
   def start_link, do: start(nil, [])
   def start(_type, _args) do
     ExSitemapGenerator.Config.configure
-    ExSitemapGenerator.Builders.File.start_link
-    ExSitemapGenerator.Builders.Indexfile.start_link
+    ExSitemapGenerator.Builders.File.init
+    ExSitemapGenerator.Builders.Indexfile.init
   end
 
   @doc false
-  defmacro __using__(opts) do
+  defmacro __using__(_opts) do
     quote do
-      use ExSitemapGenerator.Config, unquote(opts)
       use ExSitemapGenerator.DSL
     end
   end

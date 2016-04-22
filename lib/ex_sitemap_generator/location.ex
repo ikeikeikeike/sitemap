@@ -14,16 +14,13 @@ defmodule ExSitemapGenerator.Location do
     create_index: :auto
   ]
 
-  defp namestate(name) do
-    String.to_atom(Enum.join([__MODULE__, name]))
-  end
+  defp namestate(name),
+    do: String.to_atom(Enum.join([__MODULE__, name]))
+
+  def state(name), do: Agent.get(namestate(name), &(&1))
 
   def start_link(name) do
     Agent.start_link(fn -> %__MODULE__{} end, name: namestate(name))
-  end
-
-  def state(name) do
-    Agent.get(namestate(name), &(&1))
   end
 
   def directory(name) do
@@ -46,6 +43,10 @@ defmodule ExSitemapGenerator.Location do
     s.host
     |> Path.join(s.sitemaps_path)
     |> Path.join(s.filename)
+  end
+
+  def reserve_name do
+
   end
 
   def write(name, data, _count) do

@@ -2,22 +2,25 @@ defmodule ExSitemapGenerator.Generator do
   alias ExSitemapGenerator.Builders.File, as: FileBuilder
   alias ExSitemapGenerator.Builders.Indexfile
 
-  alias ExSitemapGenerator.FullError
-  alias ExSitemapGenerator.FinalizedError
-
   def add(link, attrs \\ []) do
-    FileBuilder.add(link, attrs)
-  rescue
-    FullError ->
-      add_to_index(attrs)
-      add(link, attrs)
-    FinalizedError ->
-      FileBuilder.finalize
-      add(link, attrs)
+    case FileBuilder.add(link, attrs) do
+      :ok   -> :ok
+      :full ->
+        finalize
+        add(link, attrs)
+      :fin ->
+        # FileBuilder.finalize
+        add(link, attrs)
+    end
   end
 
-  def add_to_index(options \\ []) do
-    Indexfile.add(options)
+  def finalize do
+    add_to_index
+    FileBuilder.finalize
+  end
+
+  def add_to_index do
+    Indexfile.add
   end
 
   # def group do end

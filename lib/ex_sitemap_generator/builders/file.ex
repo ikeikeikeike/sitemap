@@ -3,6 +3,7 @@ defmodule ExSitemapGenerator.Builders.File do
   alias ExSitemapGenerator.Config
   alias ExSitemapGenerator.Builders.Url
   alias ExSitemapGenerator.Location
+
   require XmlBuilder
 
   defstruct [
@@ -11,27 +12,33 @@ defmodule ExSitemapGenerator.Builders.File do
     news_count: 0,
   ]
 
-  def start_link do
+  def init do
     Location.start_link(:file)
+    start_link
+  end
+
+  def start_link do
     Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
   end
 
-  @doc """
-  Get state
-  """
-  def state do
-    Agent.get(__MODULE__, &(&1))
-  end
-
-  defp add_content(xml) do
-    Agent.update(__MODULE__, fn s ->
-      Map.update!(s, :content, &(&1 <> xml))
+  def finalize do
+    Agent.update(__MODULE__, fn _ ->
+      %__MODULE__{}
     end)
   end
 
-  defp incr_count(key) do
+  def state, do: Agent.get(__MODULE__, &(&1))
+
+  defp add_state(key, xml) do
     Agent.update(__MODULE__, fn s ->
-      Map.update!(s, key, &(&1 + 1))
+      Map.update!(s, key, &(&1 <> xml))
+    end)
+  end
+
+  defp incr_state(key), do: incr_state(key, 1)
+  defp incr_state(key, number) do
+    Agent.update(__MODULE__, fn s ->
+      Map.update!(s, key, &(&1 + number))
     end)
   end
 
@@ -50,9 +57,12 @@ defmodule ExSitemapGenerator.Builders.File do
       Url.to_xml(link, attrs)
       |> XmlBuilder.generate
 
-    if sizelimit?(content) do
-      add_content content
-      incr_count :link_count
+    case sizelimit?(content) do
+      false ->
+        :full
+      true ->
+        add_state :content, content
+        incr_state :link_count
     end
   end
 
