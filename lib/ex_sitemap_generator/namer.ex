@@ -11,39 +11,39 @@ defmodule ExSitemapGenerator.Namer do
 
   use ExSitemapGenerator.State
 
-  def init, do: start_link
+  def init(name), do: start_link(name)
 
-  def to_string do
-    s = state
+  def to_string(name) do
+    s = state(name)
     "#{s.base}#{s.count}#{s.ext}"
   end
 
-  def reset do
-    update_state :count, state.zero
+  def reset(name) do
+    update_state name, :count, state.zero
   end
 
-  def start? do
-    s = state
+  def start?(name) do
+    s = state(name)
     s.count == s.zero
   end
 
-  def next do
-    if start? do
-      update_state :count, state.start
+  def next(name) do
+    if start?(name) do
+      update_state name, :count, state.start
     else
-      incr_state :count
+      incr_state name, :count
     end
   end
 
-  def previous! do
-    if start?, do: raise NameError,
+  def previous!(name) do
+    if start?(name), do: raise NameError,
         message: "Already at the start of the series"
 
-    s = state
+    s = state(name)
     if s.count <= s.start do
-      update_state :count, state.zero
+      update_state name, :count, state.zero
     else
-      decr_state :count
+      decr_state name, :count
     end
   end
 

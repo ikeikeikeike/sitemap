@@ -3,40 +3,52 @@ defmodule ExSitemapGenerator.State do
   defmacro __using__(_opts) do
     quote do
 
-      def start_link do
-        Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
+      defp namepid(name),
+        do: String.to_atom(Enum.join([__MODULE__, name]))
+
+      def start_link, do: start_link ""
+      def start_link(name) do
+        Agent.start_link(fn -> %__MODULE__{} end, name: namepid(name))
       end
 
-      def state, do: Agent.get(__MODULE__, &(&1))
+      def state, do: state ""
+      def state(name), do: Agent.get(namepid(name), &(&1))
 
-      def finalize_state do
-        Agent.update(__MODULE__, fn _ ->
+      def finalize_state, do: finalize_state("")
+      def finalize_state(name) do
+        Agent.update(namepid(name), fn _ ->
           %__MODULE__{}
         end)
       end
 
-      def add_state(key, xml) do
-        Agent.update(__MODULE__, fn s ->
+      def add_state(key, xml), do: add_state("", key, xml)
+      def add_state(name, key, xml) do
+        Agent.update(namepid(name), fn s ->
           Map.update!(s, key, &(&1 <> xml))
         end)
       end
 
-      def update_state(key, xml) do
-        Agent.update(__MODULE__, fn s ->
+      def update_state(key, xml), do: update_state("", key, xml)
+      def update_state(name, key, xml) do
+        Agent.update(namepid(name), fn s ->
           Map.update!(s, key, fn _ -> xml end)
         end)
       end
 
-      def incr_state(key), do: incr_state(key, 1)
-      def incr_state(key, number) do
-        Agent.update(__MODULE__, fn s ->
+      def incr_state(key), do: incr_state("", key, 1)
+      def incr_state(key, number) when is_number(number), do: incr_state("", key, number)
+      def incr_state(name, key), do: incr_state(name, key, 1)
+      def incr_state(name, key, number) do
+        Agent.update(namepid(name), fn s ->
           Map.update!(s, key, &(&1 + number))
         end)
       end
 
-      def decr_state(key), do: decr_state(key, 1)
-      def decr_state(key, number) do
-        Agent.update(__MODULE__, fn s ->
+      def decr_state(key), do: decr_state("", key, 1)
+      def decr_state(key, number) when is_number(number), do: decr_state("", key, 1)
+      def decr_state(name, key), do: decr_state(name, key, 1)
+      def decr_state(name, key, number) do
+        Agent.update(namepid(name), fn s ->
           Map.update!(s, key, &(&1 - number))
         end)
       end

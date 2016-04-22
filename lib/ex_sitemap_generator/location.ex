@@ -13,24 +13,11 @@ defmodule ExSitemapGenerator.Location do
     create_index: :auto
   ]
 
+  use ExSitemapGenerator.State
+
   def init(name) do
-    Namer.init
+    Namer.init(name)
     start_link(name)
-  end
-
-  defp namestate(name),
-    do: String.to_atom(Enum.join([__MODULE__, name]))
-
-  def state(name), do: Agent.get(namestate(name), &(&1))
-
-  def start_link(name) do
-    Agent.start_link(fn -> %__MODULE__{} end, name: namestate(name))
-  end
-
-  def update_state(name, key, xml) do
-    Agent.update(namestate(name), fn s ->
-      Map.update!(s, key, fn _ -> xml end)
-    end)
   end
 
   def directory(name) do
@@ -56,7 +43,6 @@ defmodule ExSitemapGenerator.Location do
   end
 
   def filename(name) do
-    require IEx; IEx.pry
     s = state(name)
 
     if Blank.blank?(s.filename) do
@@ -67,19 +53,15 @@ defmodule ExSitemapGenerator.Location do
       end
     end
 
-    require IEx; IEx.pry
     s.filename
   end
 
   def reserve_name(name) do
-    require IEx; IEx.pry
     filename(name)
     Namer.next
-    require IEx; IEx.pry
   end
 
   def write(name, data, _count) do
-    require IEx; IEx.pry
     reserve_name(name)
 
     s = state(name)
