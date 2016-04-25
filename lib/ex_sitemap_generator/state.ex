@@ -1,7 +1,9 @@
 defmodule ExSitemapGenerator.State do
 
-  defmacro __using__(_opts) do
+  defmacro __using__(opts) do
     quote do
+      defstruct unquote(opts)
+      @__struct_resource__ unquote(opts)
 
       defp namepid(name),
         do: String.to_atom(Enum.join([__MODULE__, name]))

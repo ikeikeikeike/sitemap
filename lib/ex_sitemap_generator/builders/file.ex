@@ -5,13 +5,11 @@ defmodule ExSitemapGenerator.Builders.File do
   alias ExSitemapGenerator.Location
   require XmlBuilder
 
-  defstruct [
+  use ExSitemapGenerator.State, [
     content: "",
     link_count: 0,
     news_count: 0,
   ]
-
-  use ExSitemapGenerator.State
 
   def init do
     start_link

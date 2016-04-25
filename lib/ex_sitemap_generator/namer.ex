@@ -1,15 +1,12 @@
 defmodule ExSitemapGenerator.Namer do
   alias ExSitemapGenerator.NameError
-
-  defstruct [
+  use ExSitemapGenerator.State, [
     filename: "",
     ext: ".xml.gz",
     zero: nil,
     start: 1,
     count: nil,
   ]
-
-  use ExSitemapGenerator.State
 
   def init(name), do: start_link(name)
   def init(name, opts), do: start_link(name, opts)

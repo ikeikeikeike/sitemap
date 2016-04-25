@@ -1,7 +1,6 @@
 defmodule ExSitemapGenerator.Location do
   alias ExSitemapGenerator.Namer
-
-  defstruct [
+  use ExSitemapGenerator.State, [
     adapter: ExSitemapGenerator.Adapters.File,
     public_path: "",
     filename: "",
@@ -11,8 +10,6 @@ defmodule ExSitemapGenerator.Location do
     compress: true,
     create_index: :auto
   ]
-
-  use ExSitemapGenerator.State
 
   def init(name), do: init(name, [])
   def init(name, opts) do
