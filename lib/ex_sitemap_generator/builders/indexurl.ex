@@ -3,12 +3,10 @@ defmodule ExSitemapGenerator.Builders.Indexurl do
   import XmlBuilder
 
   def to_xml(link, opts \\ []) do
-    element(:sitemap, [
+    element(:sitemap, Funcs.eraser([
       element(:loc,     link),
-      element(:lastmod, Keyword.get_lazy(opts, :lastmod, fn ->
-        Funcs.iso8601
-      end))
-    ])
+      element(:lastmod, Keyword.get_lazy(opts, :lastmod, fn -> Funcs.iso8601 end))
+    ]))
   end
 
 end

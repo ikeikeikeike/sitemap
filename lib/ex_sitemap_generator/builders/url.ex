@@ -4,15 +4,13 @@ defmodule ExSitemapGenerator.Builders.Url do
 
   def to_xml(link, attrs \\ []) do
     elms =
-      element(:url, [
+      element(:url, Funcs.eraser([
         element(:loc,         link),
-        element(:lastmod,     Keyword.get_lazy(attrs, :lastmod, fn ->
-          Funcs.iso8601
-        end)),
+        element(:lastmod,     Keyword.get_lazy(attrs, :lastmod, fn -> Funcs.iso8601 end)),
         element(:expires,     attrs[:expires]),
         element(:changefreq,  attrs[:changefreq]),
         element(:priority,    attrs[:priority]),
-      ])
+      ]))
 
     if attrs[:mobile],     do: elms = append_last(elms, mobile())
     if attrs[:geo],        do: elms = append_last(elms, geo(attrs[:geo]))
