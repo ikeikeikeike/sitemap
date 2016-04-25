@@ -4,7 +4,8 @@ defmodule ExSitemapGenerator.SitemapTest do
   use ExUnit.Case
   use ExSitemapGenerator#, max_sitemap_links: 5
 
-  alias ExSitemapGenerator.Config
+  # alias ExSitemapGenerator.Config
+  alias ExSitemapGenerator.Builders.Indexfile
 
   setup do
     ExSitemapGenerator.start_link
@@ -15,11 +16,9 @@ defmodule ExSitemapGenerator.SitemapTest do
     # {:ok, hello: "world"}
   end
 
-  test "limit file" do
-    Config.set :max_sitemap_links, 10
-
+  test "limit file: gen 100 rows" do
     create do
-      Enum.each 0..20, fn n ->
+      Enum.each 1..20, fn n ->
         add "rss#{n}",     priority: 0.1, changefreq: "weekly",  expires: nil, mobile: true
         add "site#{n}",    priority: 0.2, changefreq: "always",  expires: nil, mobile: true
         add "entry#{n}",   priority: 0.3, changefreq: "dayly",   expires: nil, mobile: false
@@ -27,6 +26,22 @@ defmodule ExSitemapGenerator.SitemapTest do
         add "contact#{n}", priority: 0.5, changefreq: "yearly",  expires: nil, mobile: false
       end
     end
+
+    assert Indexfile.state.total_count == 100
   end
+
+  # test "limit file: gen 1000 rows" do
+    # create do
+      # Enum.each 1..1000, fn n ->
+        # add "rss#{n}",     priority: 0.1, changefreq: "weekly",  expires: nil, mobile: true
+        # add "site#{n}",    priority: 0.2, changefreq: "always",  expires: nil, mobile: true
+        # add "entry#{n}",   priority: 0.3, changefreq: "dayly",   expires: nil, mobile: false
+        # add "about#{n}",   priority: 0.4, changefreq: "monthly", expires: nil, mobile: true
+        # add "contact#{n}", priority: 0.5, changefreq: "yearly",  expires: nil, mobile: false
+      # end
+    # end
+
+    # assert Indexfile.state.total_count == 1000
+  # end
 
 end
