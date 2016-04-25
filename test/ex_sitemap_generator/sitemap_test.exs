@@ -2,7 +2,9 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 
 defmodule ExSitemapGenerator.SitemapTest do
   use ExUnit.Case
-  use ExSitemapGenerator, max_sitemap_links: 5
+  use ExSitemapGenerator#, max_sitemap_links: 5
+
+  alias ExSitemapGenerator.Config
 
   setup do
     ExSitemapGenerator.start_link
@@ -14,9 +16,9 @@ defmodule ExSitemapGenerator.SitemapTest do
   end
 
   test "limit file" do
-    create do
-      ExSitemapGenerator.Config.set :max_sitemap_links, 10
+    Config.set :max_sitemap_links, 10
 
+    create do
       Enum.each 0..20, fn n ->
         add "rss#{n}",     priority: 0.1, changefreq: "weekly",  expires: nil, mobile: true
         add "site#{n}",    priority: 0.2, changefreq: "always",  expires: nil, mobile: true

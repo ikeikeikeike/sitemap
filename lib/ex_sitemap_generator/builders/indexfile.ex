@@ -1,4 +1,5 @@
 defmodule ExSitemapGenerator.Builders.Indexfile do
+  alias ExSitemapGenerator.Consts
   alias ExSitemapGenerator.Builders.File, as: FileBuilder
   alias ExSitemapGenerator.Builders.Indexurl
   alias ExSitemapGenerator.Location

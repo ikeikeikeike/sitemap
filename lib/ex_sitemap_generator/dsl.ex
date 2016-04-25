@@ -14,12 +14,12 @@ defmodule ExSitemapGenerator.DSL do
       case contents do
         [do: block] ->
           quote do
-            unquote(block)
+            unquote(block); fin
             :ok
           end
         _ ->
           quote do
-            try(unquote(contents))
+            try(unquote(contents)); fin
             :ok
           end
       end

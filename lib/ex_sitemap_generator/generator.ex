@@ -6,21 +6,19 @@ defmodule ExSitemapGenerator.Generator do
     case FileBuilder.add(link, attrs) do
       :ok   -> :ok
       :full ->
-        finalize
-        add(link, attrs)
-      :fin ->
-        # FileBuilder.finalize
+        full
         add(link, attrs)
     end
   end
 
-  def finalize do
-    add_to_index
+  def full do
+    Indexfile.add
     FileBuilder.finalize_state
   end
 
-  def add_to_index do
-    Indexfile.add
+  def fin do
+    full
+    Indexfile.write
   end
 
   # def group do end
