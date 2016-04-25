@@ -25,7 +25,7 @@ defmodule ExSitemapGenerator.Config do
       max_sitemap_images:   ow[:max_sitemap_images]   || System.get_env("SITEMAP_MAXIMAGES")     || Application.get_env(:ex_sitemap_generator, :max_sitemap_images,   1_000),
       max_sitemap_filesize: ow[:max_sitemap_filesize] || System.get_env("SITEMAP_MAXFILESIZE")   || Application.get_env(:ex_sitemap_generator, :max_sitemap_filesize, 10_000_000),
       host:                 ow[:host]                 || System.get_env("SITEMAP_HOST")          || Application.get_env(:ex_sitemap_generator, :host,                 "http://www.example.com"),
-      filename:             ow[:filename]             || System.get_env("SITEMAP_FILENAME")      || Application.get_env(:ex_sitemap_generator, :filename,             ""),
+      filename:             ow[:filename]             || System.get_env("SITEMAP_FILENAME")      || Application.get_env(:ex_sitemap_generator, :filename,             "sitemap"),
       public_path:          ow[:public_path]          || System.get_env("SITEMAP_PUBLIC_PATH")   || Application.get_env(:ex_sitemap_generator, :public_path,          ""),
       sitemaps_path:        ow[:sitemaps_path]        || System.get_env("SITEMAP_SITEMAPS_PATH") || Application.get_env(:ex_sitemap_generator, :sitemaps_path,        "sitemaps/"),
       adapter:              ow[:adapter]              || System.get_env("SITEMAP_ADAPTER")       || Application.get_env(:ex_sitemap_generator, :adapter,              ExSitemapGenerator.Adapters.File),

@@ -2,7 +2,7 @@ defmodule ExSitemapGenerator.Namer do
   alias ExSitemapGenerator.NameError
 
   defstruct [
-    base: "",
+    filename: "",
     ext: ".xml.gz",
     zero: nil,
     start: 1,
@@ -16,7 +16,7 @@ defmodule ExSitemapGenerator.Namer do
 
   def to_string(name) do
     s = state(name)
-    "#{name}#{s.count}#{s.ext}"
+    "#{s.filename}#{s.count}#{s.ext}"
   end
 
   def reset(name) do
