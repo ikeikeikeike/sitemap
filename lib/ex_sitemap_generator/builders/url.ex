@@ -1,5 +1,5 @@
 defmodule ExSitemapGenerator.Builders.Url do
-  alias ExSitemapGenerator.Util
+  alias ExSitemapGenerator.Funcs
   import XmlBuilder
 
   def to_xml(link, attrs \\ []) do
@@ -7,7 +7,7 @@ defmodule ExSitemapGenerator.Builders.Url do
       element(:url, [
         element(:loc,         link),
         element(:lastmod,     Keyword.get_lazy(attrs, :lastmod, fn ->
-          Util.iso8601
+          Funcs.iso8601
         end)),
         element(:expires,     attrs[:expires]),
         element(:changefreq,  attrs[:changefreq]),
