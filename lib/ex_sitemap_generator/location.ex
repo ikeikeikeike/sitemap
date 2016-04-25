@@ -1,9 +1,8 @@
 defmodule ExSitemapGenerator.Location do
   alias ExSitemapGenerator.Namer
-  alias ExSitemapGenerator.Adapters.File, as: FileAdapter
 
   defstruct [
-    adapter: FileAdapter,
+    adapter: ExSitemapGenerator.Adapters.File,
     public_path: "",
     filename: "",
     sitemaps_path: "sitemaps/",
