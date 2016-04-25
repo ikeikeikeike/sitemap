@@ -32,31 +32,31 @@ defmodule ExSitemapGenerator.Builders.Url do
   end
 
   defp news(data) do
-    element(:"news:news", [
-      element(:"news:publication", [
+    element(:"news:news", Funcs.eraser([
+      element(:"news:publication", Funcs.eraser([
         element(:"news:name",             data[:publication_name]),
         element(:"news:language",         data[:publication_language]),
-      ]),
-      element(":news:title",              data[:title]),
-      element(":news:access",             data[:access]),
-      element(":news:genres",             data[:genres]),
-      element(":news:keywords",           data[:keywords]),
-      element(":news:stock_tickers",      data[:stock_tickers]),
-      element(":news:publication_date",   data[:publication_date]),
-    ])
+      ])),
+      element(:"news:title",              data[:title]),
+      element(:"news:access",             data[:access]),
+      element(:"news:genres",             data[:genres]),
+      element(:"news:keywords",           data[:keywords]),
+      element(:"news:stock_tickers",      data[:stock_tickers]),
+      element(:"news:publication_date",   data[:publication_date]),
+    ]))
   end
 
   defp images(list, elements \\ [])
   defp images([], elements), do: elements
   defp images([data|tail], elements) do
     elm =
-      element(:"image:image", [
+      element(:"image:image", Funcs.eraser([
         element(:"image:loc",             data[:loc]),
         element(:"image:title",           data[:title]),
         element(:"image:license",         data[:license]),
         element(:"image:caption",         data[:caption]),
         element(:"image:geo_location",    data[:geo_location]),
-      ])
+      ]))
 
     images(tail, elements ++ [elm])
   end
@@ -65,7 +65,7 @@ defmodule ExSitemapGenerator.Builders.Url do
   defp videos([], elements), do: elements
   defp videos([data|tail], elements) do
     elm =
-      element(:"video:video", [
+      element(:"video:video", Funcs.eraser([
         element(:"video:title",           data[:title]),
         element(:"video:description",     data[:description]),
 
@@ -102,7 +102,7 @@ defmodule ExSitemapGenerator.Builders.Url do
 
         element(:"video:live", data[:live]),
         element(:"video:requires_subscription", data[:requires_subscription]),
-      ])
+      ]))
 
     videos(tail, elements ++ [elm])
   end

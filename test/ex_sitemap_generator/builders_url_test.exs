@@ -79,7 +79,6 @@ defmodule ExSitemapGenerator.BuildersUrlTest do
 
     assert xpath(parsed, ~x"//news:news/news:publication/news:name/text()") == 'Example'
     assert xpath(parsed, ~x"//news:news/news:publication/news:language/text()") == 'en'
-    require IEx; IEx.pry
     assert xpath(parsed, ~x"//news:news/news:title/text()") == 'My Article'
     assert xpath(parsed, ~x"//news:news/news:keywords/text()") == 'my article, articles about myself'
     assert xpath(parsed, ~x"//news:news/news:stock_tickers/text()") == 'SAO:PETR3'
