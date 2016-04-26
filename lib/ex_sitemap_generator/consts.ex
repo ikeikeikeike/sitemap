@@ -1,5 +1,5 @@
-defmodule ExSitemapGenerator.Consts do
-  import ExSitemapGenerator.Define
+defmodule Sitemap.Consts do
+  import Sitemap.Define
 
   define :schemas, %{
     geo:     "http://www.google.com/geo/schemas/sitemap/1.0",

@@ -1,13 +1,22 @@
-defmodule ExSitemapGenerator.Mixfile do
+defmodule Sitemap.Mixfile do
   use Mix.Project
 
+  @description """
+  Generating sitemap.xml
+  """
+
   def project do
-    [app: :ex_sitemap_generator,
+   [
+     app: :sitemap,
+     name: "Sitemap",
      version: "0.0.1",
      elixir: ">= 1.0.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     package: package,
+     deps: deps,
+     source_url: "https://github.com/ikeikeikeike/sitemap"
+   ]
   end
 
   # Configuration for the OTP application
@@ -31,6 +40,15 @@ defmodule ExSitemapGenerator.Mixfile do
       {:sweet_xml, ">= 0.0.0"},
       {:xml_builder, ">= 0.0.0"},
       # {:bmark, "~> 1.0"},
+      {:earmark, "~> 0.1", only: :dev},
+      {:ex_doc, "~> 0.11", only: :dev}
     ]
   end
+
+  defp package do
+    [ maintainers: ["Tatsuo Ikeda / ikeikeikeike"],
+      licenses: ["MIT"],
+      links: %{"github" => "https://github.com/ikeikeikeike/sitemap"} ]
+  end
+
 end

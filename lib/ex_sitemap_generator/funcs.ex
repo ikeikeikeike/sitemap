@@ -1,4 +1,4 @@
-defmodule ExSitemapGenerator.Funcs do
+defmodule Sitemap.Funcs do
   def iso8601 do
     {{yy, mm, dd}, {hh, mi, ss}} = :calendar.universal_time
     iso8601(yy, mm, dd, hh, mi, ss)

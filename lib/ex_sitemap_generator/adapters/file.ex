@@ -1,6 +1,6 @@
-defmodule ExSitemapGenerator.Adapters.File do
-  alias ExSitemapGenerator.Location
-  alias ExSitemapGenerator.DirNotExists
+defmodule Sitemap.Adapters.File do
+  alias Sitemap.Location
+  alias Sitemap.DirNotExists
 
   def write(name, data) do
     dir = Location.directory(name)

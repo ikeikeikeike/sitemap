@@ -1,7 +1,7 @@
-defmodule ExSitemapGenerator.Location do
-  alias ExSitemapGenerator.Namer
-  use ExSitemapGenerator.State, [
-    adapter: ExSitemapGenerator.Adapters.File,
+defmodule Sitemap.Location do
+  alias Sitemap.Namer
+  use Sitemap.State, [
+    adapter: Sitemap.Adapters.File,
     public_path: "",
     filename: "",
     sitemaps_path: "sitemaps/",

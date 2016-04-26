@@ -1,3 +1,3 @@
-defmodule ExSitemapGenerator.DirNotExists do
+defmodule Sitemap.DirNotExists do
   defexception message: "no message"
 end

@@ -2,11 +2,11 @@ defmodule Builder do
   use Bmark
 
   bmark :file_add do
-    ExSitemapGenerator.Config.configure
-    ExSitemapGenerator.Builders.File.init
+    Sitemap.Config.configure
+    Sitemap.Builders.File.init
 
     Enum.each 1..100, fn n ->
-      ExSitemapGenerator.Builders.File.add [
+      Sitemap.Builders.File.add [
         loc: "loc#{n}",
         priority: 0.5,
         changefreq: "daily",
@@ -15,11 +15,11 @@ defmodule Builder do
   end
 
   bmark :url_to_xml do
-    ExSitemapGenerator.Config.configure
-    ExSitemapGenerator.Builders.File.init
+    Sitemap.Config.configure
+    Sitemap.Builders.File.init
 
     Enum.each 1..100, fn n ->
-      ExSitemapGenerator.Builders.Url.to_xml "loc#{n}", [
+      Sitemap.Builders.Url.to_xml "loc#{n}", [
         priority: 0.5,
         changefreq: "daily",
       ]
@@ -27,11 +27,11 @@ defmodule Builder do
   end
 
   bmark :url_to_xml_after_generate do
-    ExSitemapGenerator.Config.configure
-    ExSitemapGenerator.Builders.File.init
+    Sitemap.Config.configure
+    Sitemap.Builders.File.init
 
     Enum.each 1..100, fn n ->
-      material = ExSitemapGenerator.Builders.Url.to_xml "loc#{n}", [
+      material = Sitemap.Builders.Url.to_xml "loc#{n}", [
         priority: 0.5,
         changefreq: "daily",
       ]
@@ -45,8 +45,8 @@ defmodule Builder do
   end
 
   bmark :bench_join_string do
-    ExSitemapGenerator.Config.configure
-    ExSitemapGenerator.Builders.File.init
+    Sitemap.Config.configure
+    Sitemap.Builders.File.init
 
     Agent.start_link(fn -> %Bench{} end, name: :bench)
 
@@ -56,7 +56,7 @@ defmodule Builder do
 
     Enum.each 0..10000, fn _ ->
       Agent.update(:bench, fn s ->
-        ExSitemapGenerator.Builders.File.sizelimit? s.content
+        Sitemap.Builders.File.sizelimit? s.content
         Map.update!(s, :content, &(&1 <> str))
       end)
     end

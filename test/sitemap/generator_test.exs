@@ -1,13 +1,13 @@
 Code.require_file "../../test_helper.exs", __ENV__.file
 
-defmodule ExSitemapGenerator.GeneratorTest do
+defmodule Sitemap.GeneratorTest do
 
   use ExUnit.Case
-  use ExSitemapGenerator
-  alias ExSitemapGenerator.Builders.File
+  use Sitemap
+  alias Sitemap.Builders.File
 
   setup do
-    ExSitemapGenerator.start_link
+    Sitemap.start_link
     on_exit fn ->
       nil
     end

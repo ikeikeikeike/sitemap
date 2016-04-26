@@ -1,11 +1,11 @@
-defmodule ExSitemapGenerator.Builders.File do
-  alias ExSitemapGenerator.Consts
-  alias ExSitemapGenerator.Config
-  alias ExSitemapGenerator.Builders.Url
-  alias ExSitemapGenerator.Location
+defmodule Sitemap.Builders.File do
+  alias Sitemap.Consts
+  alias Sitemap.Config
+  alias Sitemap.Builders.Url
+  alias Sitemap.Location
   require XmlBuilder
 
-  use ExSitemapGenerator.State, [
+  use Sitemap.State, [
     link_count: 0,
     news_count: 0,
     content: "",

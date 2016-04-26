@@ -1,11 +1,11 @@
-defmodule ExSitemapGenerator.Builders.Indexfile do
-  alias ExSitemapGenerator.Consts
-  alias ExSitemapGenerator.Builders.File, as: FileBuilder
-  alias ExSitemapGenerator.Builders.Indexurl
-  alias ExSitemapGenerator.Location
+defmodule Sitemap.Builders.Indexfile do
+  alias Sitemap.Consts
+  alias Sitemap.Builders.File, as: FileBuilder
+  alias Sitemap.Builders.Indexurl
+  alias Sitemap.Location
   require XmlBuilder
 
-  use ExSitemapGenerator.State, [
+  use Sitemap.State, [
     content: "",
     link_count: 0,
     total_count: 0,

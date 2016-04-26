@@ -1,11 +1,11 @@
-defmodule ExSitemapGenerator.DSL do
+defmodule Sitemap.DSL do
   defmacro __using__(_opts) do
     quote do
       Module.register_attribute(__MODULE__, :opts, accumulate: true)
       @before_compile unquote(__MODULE__)
 
       import unquote(__MODULE__)
-      import ExSitemapGenerator.Generator
+      import Sitemap.Generator
     end
   end
 

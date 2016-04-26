@@ -1,14 +1,14 @@
 Code.require_file "../../test_helper.exs", __ENV__.file
 
-defmodule ExSitemapGenerator.BuildersUrlTest do
+defmodule Sitemap.BuildersUrlTest do
   use ExUnit.Case
 
-  alias ExSitemapGenerator.Builders.Url
+  alias Sitemap.Builders.Url
   import SweetXml
   require XmlBuilder
 
   setup do
-    ExSitemapGenerator.start_link
+    Sitemap.start_link
     on_exit fn ->
       nil
     end

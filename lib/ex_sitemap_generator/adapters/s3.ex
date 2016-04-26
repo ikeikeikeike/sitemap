@@ -1,2 +1,2 @@
-defmodule ExSitemapGenerator.Adapters.S3 do
+defmodule Sitemap.Adapters.S3 do
 end

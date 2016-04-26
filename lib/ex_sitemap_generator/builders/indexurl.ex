@@ -1,5 +1,5 @@
-defmodule ExSitemapGenerator.Builders.Indexurl do
-  alias ExSitemapGenerator.Funcs
+defmodule Sitemap.Builders.Indexurl do
+  alias Sitemap.Funcs
   import XmlBuilder
 
   def to_xml(link, opts \\ []) do

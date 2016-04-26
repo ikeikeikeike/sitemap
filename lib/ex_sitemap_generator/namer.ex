@@ -1,6 +1,6 @@
-defmodule ExSitemapGenerator.Namer do
-  alias ExSitemapGenerator.NameError
-  use ExSitemapGenerator.State, [
+defmodule Sitemap.Namer do
+  alias Sitemap.NameError
+  use Sitemap.State, [
     filename: "",
     ext: ".xml.gz",
     zero: nil,

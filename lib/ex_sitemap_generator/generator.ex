@@ -1,6 +1,6 @@
-defmodule ExSitemapGenerator.Generator do
-  alias ExSitemapGenerator.Builders.File, as: FileBuilder
-  alias ExSitemapGenerator.Builders.Indexfile
+defmodule Sitemap.Generator do
+  alias Sitemap.Builders.File, as: FileBuilder
+  alias Sitemap.Builders.Indexfile
 
   def add(link, attrs \\ []) do
     case FileBuilder.add(link, attrs) do

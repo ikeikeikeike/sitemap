@@ -1,4 +1,4 @@
-defmodule ExSitemapGenerator.State do
+defmodule Sitemap.State do
 
   defmacro __using__(opts) do
     quote do

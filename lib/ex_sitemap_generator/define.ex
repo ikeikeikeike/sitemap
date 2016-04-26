@@ -1,4 +1,4 @@
-defmodule ExSitemapGenerator.Define do
+defmodule Sitemap.Define do
   defmacro define(key, value) do
     quote do
       @unquote(key)(unquote(value))
