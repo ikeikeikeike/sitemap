@@ -1,5 +1,7 @@
 ## Installation
 
+`Still developing.`
+
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
   1. Add ex_sitemap_generator to your list of dependencies in `mix.exs`:
