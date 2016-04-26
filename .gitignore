@@ -6,6 +6,7 @@
 erl_crash.dump
 *.ez
 
+/bmark
 /results
 
 tags
