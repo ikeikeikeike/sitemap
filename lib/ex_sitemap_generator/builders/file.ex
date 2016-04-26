@@ -6,20 +6,24 @@ defmodule ExSitemapGenerator.Builders.File do
   require XmlBuilder
 
   use ExSitemapGenerator.State, [
-    content: "",
     link_count: 0,
     news_count: 0,
+    content: "",
+    content_size: 0,
   ]
 
   def init do
     start_link
   end
 
-  defp sizelimit?(content) do
-    s = state
+  def sizelimit?(content) do
+    size = byte_size(content)
+    incr_state :content_size, size
 
     cfg = Config.get
-    r = String.length(s.content <> content) < cfg.max_sitemap_filesize
+    s = state
+
+    r = (size + s.content_size) < cfg.max_sitemap_filesize
     r = r && s.link_count < cfg.max_sitemap_links
     r = r && s.news_count < cfg.max_sitemap_news
     r
@@ -30,12 +34,11 @@ defmodule ExSitemapGenerator.Builders.File do
       Url.to_xml(link, attrs)
       |> XmlBuilder.generate
 
-    case sizelimit?(content) do
-      false ->
-        :full
-      true ->
-        add_state :content, content
-        incr_state :link_count
+    if sizelimit?(content) do
+      :full
+    else
+      add_state :content, content
+      incr_state :link_count
     end
   end
 

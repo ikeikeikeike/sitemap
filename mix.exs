@@ -30,6 +30,7 @@ defmodule ExSitemapGenerator.Mixfile do
     [
       {:sweet_xml, ">= 0.0.0"},
       {:xml_builder, ">= 0.0.0"},
+      # {:bmark, "~> 1.0"},
     ]
   end
 end

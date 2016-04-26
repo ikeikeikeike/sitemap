@@ -6,6 +6,8 @@
 erl_crash.dump
 *.ez
 
+/results
+
 tags
 
 /elixir/

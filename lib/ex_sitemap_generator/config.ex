@@ -19,11 +19,11 @@ defmodule ExSitemapGenerator.Config do
   def configure(overwrite) do
     ow = overwrite
     start_link(%__MODULE__{
-      max_sitemap_files:    ow[:max_sitemap_files]    || System.get_env("SITEMAP_MAXFILES")      || Application.get_env(:ex_sitemap_generator, :max_sitemap_files,    50_000),
-      max_sitemap_links:    ow[:max_sitemap_links]    || System.get_env("SITEMAP_MAX_LINKS")     || Application.get_env(:ex_sitemap_generator, :max_sitemap_links,    50_000),
+      max_sitemap_files:    ow[:max_sitemap_files]    || System.get_env("SITEMAP_MAXFILES")      || Application.get_env(:ex_sitemap_generator, :max_sitemap_files,    10_000),
+      max_sitemap_links:    ow[:max_sitemap_links]    || System.get_env("SITEMAP_MAX_LINKS")     || Application.get_env(:ex_sitemap_generator, :max_sitemap_links,    10_000),
       max_sitemap_news:     ow[:max_sitemap_news]     || System.get_env("SITEMAP_MAXNEWS")       || Application.get_env(:ex_sitemap_generator, :max_sitemap_news,     1_000),
       max_sitemap_images:   ow[:max_sitemap_images]   || System.get_env("SITEMAP_MAXIMAGES")     || Application.get_env(:ex_sitemap_generator, :max_sitemap_images,   1_000),
-      max_sitemap_filesize: ow[:max_sitemap_filesize] || System.get_env("SITEMAP_MAXFILESIZE")   || Application.get_env(:ex_sitemap_generator, :max_sitemap_filesize, 10_000_000),
+      max_sitemap_filesize: ow[:max_sitemap_filesize] || System.get_env("SITEMAP_MAXFILESIZE")   || Application.get_env(:ex_sitemap_generator, :max_sitemap_filesize, 5_000_000),
       host:                 ow[:host]                 || System.get_env("SITEMAP_HOST")          || Application.get_env(:ex_sitemap_generator, :host,                 "http://www.example.com"),
       filename:             ow[:filename]             || System.get_env("SITEMAP_FILENAME")      || Application.get_env(:ex_sitemap_generator, :filename,             "sitemap"),
       public_path:          ow[:public_path]          || System.get_env("SITEMAP_PUBLIC_PATH")   || Application.get_env(:ex_sitemap_generator, :public_path,          ""),
