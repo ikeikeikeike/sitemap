@@ -40,18 +40,4 @@ defmodule ExSitemapGenerator.GeneratorTest do
     assert :ok == full
   end
 
-  test "A lot of creating" do
-
-    create do
-      Enum.each 0..50, fn n ->
-        add "rss#{n}",     priority: 0.1, changefreq: "weekly", lastmod: nil, mobile: true
-        add "site#{n}",    priority: 0.2, changefreq: "always", lastmod: nil, mobile: true
-        add "entry#{n}",   priority: 0.3, changefreq: "dayly", lastmod: nil, mobile: false
-        add "about#{n}",   priority: 0.4, changefreq: "monthly", lastmod: nil, mobile: true
-        add "contact#{n}", priority: 0.5, changefreq: "yearly", lastmod: nil, mobile: false
-      end
-      assert File.state.link_count == 255
-    end
-  end
-
 end

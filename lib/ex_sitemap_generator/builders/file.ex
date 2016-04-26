@@ -35,10 +35,10 @@ defmodule ExSitemapGenerator.Builders.File do
       |> XmlBuilder.generate
 
     if sizelimit?(content) do
-      :full
-    else
       add_state :content, content
       incr_state :link_count
+    else
+      :full
     end
   end
 
