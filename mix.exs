@@ -11,6 +11,7 @@ defmodule Sitemap.Mixfile do
      name: "Sitemap",
      version: "0.0.1",
      elixir: ">= 1.0.0",
+     description: @description,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      package: package,
