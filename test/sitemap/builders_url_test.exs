@@ -8,7 +8,9 @@ defmodule Sitemap.BuildersUrlTest do
   require XmlBuilder
 
   setup do
-    Sitemap.start_link
+    Sitemap.Builders.File.finalize_state
+    Sitemap.Builders.Indexfile.finalize_state
+
     on_exit fn ->
       nil
     end

@@ -4,11 +4,9 @@ defmodule Sitemap.SitemapTest do
   use ExUnit.Case
   use Sitemap#, max_sitemap_links: 5
 
-  # alias Sitemap.Config
-  alias Sitemap.Builders.Indexfile
-
   setup do
-    Sitemap.start_link
+    Sitemap.Builders.File.finalize_state
+    Sitemap.Builders.Indexfile.finalize_state
     on_exit fn ->
       nil
     end
@@ -27,7 +25,7 @@ defmodule Sitemap.SitemapTest do
       end
     end
 
-    assert Indexfile.state.total_count == 100
+    assert Sitemap.Builders.Indexfile.state.total_count == 100
   end
 
   # test "limit file: gen 1000 rows" do
@@ -41,7 +39,7 @@ defmodule Sitemap.SitemapTest do
       # end
     # end
 
-    # assert Indexfile.state.total_count == 1000
+    # assert Sitemap.Builders.Indexfile.state.total_count == 1000
   # end
 
 end
