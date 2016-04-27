@@ -18,3 +18,4 @@ tags
 /Gemfile.lock
 /vendor/
 /sitemaps/
+/example/rel
