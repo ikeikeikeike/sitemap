@@ -4,16 +4,12 @@ defmodule Sitemap.Location do
 
   def directory(_name), do: directory
   def directory do
-    s = Config.get
-    s.public_path
-    |> Path.join(s.sitemaps_path)
+    Config.get.files_path
     |> Path.expand
   end
 
   def path(name) do
-    s = Config.get
-    s.public_path
-    |> Path.join(s.sitemaps_path)
+    Config.get.files_path
     |> Path.join(filename(name))
     |> Path.expand
   end
@@ -21,7 +17,7 @@ defmodule Sitemap.Location do
   def url(name) do
     s = Config.get
     s.host
-    |> Path.join(s.sitemaps_path)
+    |> Path.join(s.public_path)
     |> Path.join(filename(name))
   end
 

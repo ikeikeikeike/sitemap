@@ -19,6 +19,8 @@ defmodule Sitemap.SitemapTest do
 
   test "limit file: gen 100 rows" do
     create do
+      Sitemap.Config.update public_path: ""
+
       Enum.each 1..20, fn n ->
         add "rss#{n}",     priority: 0.1, changefreq: "weekly",  expires: nil, mobile: true
         add "site#{n}",    priority: 0.2, changefreq: "always",  expires: nil, mobile: true
