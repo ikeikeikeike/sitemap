@@ -12,10 +12,6 @@ defmodule Sitemap.Builders.File do
     content_size: 0,
   ]
 
-  def init do
-    start_link
-  end
-
   def sizelimit?(content) do
     size = byte_size(content)
     incr_state :content_size, size

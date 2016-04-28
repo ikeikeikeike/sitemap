@@ -8,9 +8,6 @@ defmodule Sitemap.Namer do
     count: nil,
   ]
 
-  def init(name), do: start_link(name)
-  def init(name, opts), do: start_link(name, opts)
-
   def to_string(name) do
     s = state(name)
     "#{s.filename}#{s.count}#{s.ext}"

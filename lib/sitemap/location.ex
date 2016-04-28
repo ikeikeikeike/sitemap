@@ -11,12 +11,6 @@ defmodule Sitemap.Location do
     create_index: :auto
   ]
 
-  def init(name), do: init(name, [])
-  def init(name, opts) do
-    Namer.init(name, opts)
-    start_link(name)
-  end
-
   def directory(name) do
     s = state(name)
     s.public_path

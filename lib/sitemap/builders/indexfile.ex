@@ -11,10 +11,6 @@ defmodule Sitemap.Builders.Indexfile do
     total_count: 0,
   ]
 
-  def init do
-    start_link
-  end
-
   def add(options \\ []) do
     FileBuilder.write
 
