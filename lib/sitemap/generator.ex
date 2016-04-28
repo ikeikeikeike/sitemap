@@ -1,4 +1,5 @@
 defmodule Sitemap.Generator do
+  alias Sitemap.Namer
   alias Sitemap.Builders.File, as: FileBuilder
   alias Sitemap.Builders.Indexfile
 
@@ -19,6 +20,8 @@ defmodule Sitemap.Generator do
   def fin do
     full
     Indexfile.write
+    Indexfile.finalize_state
+    Namer.update_state :file, :count, nil
   end
 
   # def group do end

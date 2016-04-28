@@ -29,8 +29,6 @@ defmodule Sitemap.SitemapTest do
         add "contact#{n}", priority: 0.5, changefreq: "yearly",  expires: nil, mobile: false
       end
     end
-
-    assert Sitemap.Builders.Indexfile.state.total_count == 100
   end
 
   # test "limit file: gen 1000 rows" do
