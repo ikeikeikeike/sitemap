@@ -10,8 +10,8 @@ defmodule Sitemap do
       worker(Sitemap.Config, []),
       worker(Sitemap.Builders.File, []),
       worker(Sitemap.Builders.Indexfile, []),
-      worker(Sitemap.Namer,    [:indexfile],                 id: :namer_indexfile),
-      worker(Sitemap.Namer,    [:file, [zero: 1, start: 2]], id: :namer_file),
+      worker(Sitemap.Namer, [:indexfile],                 id: :namer_indexfile),
+      worker(Sitemap.Namer, [:file, [zero: 1, start: 2]], id: :namer_file),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -20,15 +20,11 @@ defmodule Sitemap do
     Supervisor.start_link(children, opts)
   end
 
-  def start_link, do: start(nil, [])
-
   @doc false
   defmacro __using__(_opts) do
     quote do
       use Sitemap.DSL
     end
   end
-
-
 
 end
