@@ -15,7 +15,8 @@ defmodule Sitemap.Config do
     :create_index,
   ]
 
-  def configure, do: configure nil
+  def start_link, do: configure nil
+  def configure,  do: configure nil
   def configure(overwrite) do
     ow = overwrite
     start_link(%__MODULE__{

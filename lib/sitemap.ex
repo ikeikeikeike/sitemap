@@ -6,16 +6,12 @@ defmodule Sitemap do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    Sitemap.Config.configure
-    cfg = Sitemap.Config.get
-
     children = [
+      worker(Sitemap.Config, []),
       worker(Sitemap.Builders.File, []),
       worker(Sitemap.Builders.Indexfile, []),
-      worker(Sitemap.Location, [:file,      [filename: cfg.filename]], id: :location_file),
-      worker(Sitemap.Namer,    [:indexfile, [filename: cfg.filename]], id: :namer_indexfile),
-      worker(Sitemap.Location, [:indexfile, [filename: cfg.filename]], id: :location_indexfile),
-      worker(Sitemap.Namer,    [:file,      [filename: cfg.filename, zero: 1, start: 2]], id: :namer_file),
+      worker(Sitemap.Namer,    [:indexfile],                 id: :namer_indexfile),
+      worker(Sitemap.Namer,    [:file, [zero: 1, start: 2]], id: :namer_file),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

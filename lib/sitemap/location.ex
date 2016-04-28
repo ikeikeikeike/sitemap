@@ -1,25 +1,17 @@
 defmodule Sitemap.Location do
   alias Sitemap.Namer
-  use Sitemap.State, [
-    adapter: Sitemap.Adapters.File,
-    public_path: "",
-    filename: "",
-    sitemaps_path: "sitemaps/",
-    host: "http://www.example.com",
-    verbose: true,
-    compress: true,
-    create_index: :auto
-  ]
+  alias Sitemap.Config
 
-  def directory(name) do
-    s = state(name)
+  def directory(_name), do: directory
+  def directory do
+    s = Config.get
     s.public_path
     |> Path.join(s.sitemaps_path)
     |> Path.expand
   end
 
   def path(name) do
-    s = state(name)
+    s = Config.get
     s.public_path
     |> Path.join(s.sitemaps_path)
     |> Path.join(filename(name))
@@ -27,7 +19,7 @@ defmodule Sitemap.Location do
   end
 
   def url(name) do
-    s = state(name)
+    s = Config.get
     s.host
     |> Path.join(s.sitemaps_path)
     |> Path.join(filename(name))
@@ -36,11 +28,10 @@ defmodule Sitemap.Location do
   def filename(name) do
     fname = Namer.to_string(name)
 
-    s = state(name)
+    s = Config.get
     unless s.compress,
       do: fname = Regex.replace(~r/\.gz$/, fname, "")
 
-    update_state name, :filename, fname
     fname
   end
 
@@ -51,7 +42,7 @@ defmodule Sitemap.Location do
   end
 
   def write(name, data, _count) do
-    s = state(name)
+    s = Config.get
     s.adapter.write(name, data)
   end
 

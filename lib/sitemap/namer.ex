@@ -1,7 +1,8 @@
 defmodule Sitemap.Namer do
+  alias Sitemap.Config
   alias Sitemap.NameError
+
   use Sitemap.State, [
-    filename: "",
     ext: ".xml.gz",
     zero: nil,
     start: 1,
@@ -10,7 +11,7 @@ defmodule Sitemap.Namer do
 
   def to_string(name) do
     s = state(name)
-    "#{s.filename}#{s.count}#{s.ext}"
+    "#{Config.get.filename}#{s.count}#{s.ext}"
   end
 
   def reset(name) do

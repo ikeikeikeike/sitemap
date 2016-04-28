@@ -7,6 +7,8 @@ defmodule Sitemap.SitemapTest do
   setup do
     Sitemap.Builders.File.finalize_state
     Sitemap.Builders.Indexfile.finalize_state
+    Sitemap.Namer.finalize_state :file
+    Sitemap.Namer.finalize_state :indexfile
     on_exit fn ->
       nil
     end
