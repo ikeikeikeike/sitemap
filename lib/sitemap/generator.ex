@@ -41,7 +41,7 @@ defmodule Sitemap.Generator do
     Enum.each urls, fn url ->
       spawn(fn ->
         :httpc.request('#{url}#{indexurl}')
-        IO.puts "  Successful ping of #{url}"
+        IO.puts "Successful ping of #{url}#{indexurl}"
       end)
     end
   end
