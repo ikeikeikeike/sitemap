@@ -20,6 +20,10 @@ defmodule Sitemap.Generator do
 
   def fin do
     full
+    reset
+  end
+
+  def reset do
     Indexfile.write
     Indexfile.finalize_state
     Namer.update_state :file, :count, nil
@@ -28,12 +32,10 @@ defmodule Sitemap.Generator do
   # def group do end
 
   def ping(urls \\ []) do
-    urls = ~w(
-    http://google.com/ping?sitemap=
+    urls = ~w(http://google.com/ping?sitemap=
     http://www.google.com/webmasters/sitemaps/ping?sitemap=
     http://www.bing.com/webmaster/ping.aspx?sitemap=
-    http://submissions.ask.com/ping?sitemap=
-    ) ++ urls
+    http://submissions.ask.com/ping?sitemap=) ++ urls
 
     indexurl = Location.url :indexfile
 
@@ -44,9 +46,6 @@ defmodule Sitemap.Generator do
         IO.puts "Successful ping of #{url}#{indexurl}"
       end)
     end
-  end
-
-  def set_options(options \\ []) do
   end
 
 end

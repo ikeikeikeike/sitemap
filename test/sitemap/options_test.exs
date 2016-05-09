@@ -31,12 +31,6 @@ defmodule Sitemap.OptionsTest do
     Sitemap.Config.set :create_index, :auto
   end
 
-  # test "Change option in use statement" do
-    # create public_path: "" do
-      # add "use", priority: 0.1, changefreq: "weekly"
-    # end
-  # end
-
   test "Change option in create statement" do
     create [public_path: "abcde"] do
       assert Sitemap.Config.get.public_path == "abcde"
