@@ -17,24 +17,15 @@ defmodule Sitemap.BuildersFileTest do
   end
 
   test "Add Builders.File" do
-    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
-    assert :ok == Sitemap.Builders.File.add(data)
+    data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    assert :ok == Sitemap.Builders.File.add("", data)
   end
 
   test "Adds Builders.File" do
-    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
-    Enum.each(1..10, fn _ -> Sitemap.Builders.File.add(data) end)
+    data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
+    Enum.each(1..10, fn _ -> Sitemap.Builders.File.add("", data) end)
 
     assert 10 == Sitemap.Builders.File.state.link_count
-  end
-
-  # TODO: Want improving.
-  test "content_limit? Builders.File" do
-    data = [loc: "loc", lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
-    Enum.each(1..100, fn _ -> Sitemap.Builders.File.add(data) end)
-
-    assert :ok == Sitemap.Builders.File.add(data)
-    assert 101 == Sitemap.Builders.File.state.link_count
   end
 
 end

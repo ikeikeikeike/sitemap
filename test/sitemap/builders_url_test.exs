@@ -20,6 +20,14 @@ defmodule Sitemap.BuildersUrlTest do
     # {:ok, hello: "world"}
   end
 
+  test "Combine Host" do
+    actual =
+      Url.to_xml("path", [])
+      |> XmlBuilder.generate
+
+    assert xpath(parse(actual), ~x"//loc/text()") == 'http://www.example.com/path'
+  end
+
   test "Basic sitemap url" do
     data = [
       lastmod: "lastmod",
@@ -32,7 +40,7 @@ defmodule Sitemap.BuildersUrlTest do
       |> XmlBuilder.generate
 
     parsed = parse(actual)
-    assert xpath(parsed, ~x"//loc/text()")        == 'loc'
+    assert xpath(parsed, ~x"//loc/text()")        == 'http://www.example.com/loc'
     assert xpath(parsed, ~x"//lastmod/text()")    == 'lastmod'
     assert xpath(parsed, ~x"//expires/text()")    == 'expires'
     assert xpath(parsed, ~x"//changefreq/text()") == 'changefreq'
@@ -51,7 +59,7 @@ defmodule Sitemap.BuildersUrlTest do
       |> XmlBuilder.generate
 
     parsed = parse(actual)
-    assert xpath(parsed, ~x"//loc/text()")        == 'loc'
+    assert xpath(parsed, ~x"//loc/text()")        == 'http://www.example.com/loc'
     assert xpath(parsed, ~x"//lastmod/text()")    == 'lastmod'
     assert xpath(parsed, ~x"//expires/text()")    ==  nil
     assert xpath(parsed, ~x"//changefreq/text()") ==  nil
@@ -75,7 +83,7 @@ defmodule Sitemap.BuildersUrlTest do
       |> XmlBuilder.generate
 
     parsed = parse(actual)
-    assert xpath(parsed, ~x"//loc/text()")        ==  nil
+    assert xpath(parsed, ~x"//loc/text()")        ==  'http://www.example.com'
     assert xpath(parsed, ~x"//lastmod/text()")    !=  nil
     assert xpath(parsed, ~x"//expires/text()")    ==  nil
     assert xpath(parsed, ~x"//changefreq/text()") ==  nil

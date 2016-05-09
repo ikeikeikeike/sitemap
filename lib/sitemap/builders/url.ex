@@ -1,11 +1,12 @@
 defmodule Sitemap.Builders.Url do
   alias Sitemap.Funcs
+  alias Sitemap.Config
   import XmlBuilder
 
   def to_xml(link, attrs \\ []) do
     elms =
       element(:url, Funcs.eraser([
-        element(:loc,         link),
+        element(:loc,         Path.join(Config.get.host, link || "")),
         element(:lastmod,     Keyword.get_lazy(attrs, :lastmod, fn -> Funcs.iso8601 end)),
         element(:expires,     attrs[:expires]),
         element(:changefreq,  attrs[:changefreq]),

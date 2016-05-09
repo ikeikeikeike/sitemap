@@ -20,8 +20,9 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   end
   ```
 
+#### Usage
 
-#### Basic
+##### Basic
 
 ```elixir
 defmodule Sitemaps do
@@ -35,7 +36,7 @@ defmodule Sitemaps do
 end
 ```
 
-#### As a function
+##### As a function
 
 ```elixir
 defmodule Sitemaps do
@@ -50,6 +51,13 @@ defmodule Sitemaps do
   end
 
 end
+```
+
+##### With Ecto
+
+```elixir
+a
+b
 ```
 
 #### Change options.
