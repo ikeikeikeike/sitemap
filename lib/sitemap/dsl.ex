@@ -1,11 +1,18 @@
 defmodule Sitemap.DSL do
-  defmacro __using__(_opts) do
+  defmacro __using__(opts) do
     quote do
-      Module.register_attribute(__MODULE__, :opts, accumulate: true)
-      @before_compile unquote(__MODULE__)
+      @__use_resource__ unquote(opts)
 
       import unquote(__MODULE__)
       import Sitemap.Generator
+    end
+  end
+
+  defmacro create(options, contents) do
+    quote do
+      Sitemap.Config.update @__use_resource__
+      Sitemap.Config.update unquote(options)
+      create unquote(contents ++ [use: false])
     end
   end
 
@@ -14,13 +21,12 @@ defmodule Sitemap.DSL do
       case contents do
         [do: block] ->
           quote do
+            Sitemap.Config.update @__use_resource__
             unquote(block); fin
-            :ok
           end
-        _ ->
+        [do: block, use: false] ->
           quote do
-            try(unquote(contents)); fin
-            :ok
+            unquote(block); fin
           end
       end
 
@@ -31,16 +37,4 @@ defmodule Sitemap.DSL do
     end)
   end
 
-  defmacro alt(name, options) do
-    quote do
-      @opt {unquote(name), unquote(options)}
-    end
-  end
-
-  defmacro __before_compile__(env) do
-    opts = Module.get_attribute(env.module, :opts)
-    quote do
-      defp __resource__, do: unquote(opts)
-    end
-  end
 end

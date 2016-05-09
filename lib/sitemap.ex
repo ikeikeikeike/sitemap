@@ -21,9 +21,9 @@ defmodule Sitemap do
   end
 
   @doc false
-  defmacro __using__(_opts) do
+  defmacro __using__(opts) do
     quote do
-      use Sitemap.DSL
+      use Sitemap.DSL, unquote(opts)
     end
   end
 

@@ -3,9 +3,9 @@ Code.require_file "../../test_helper.exs", __ENV__.file
 defmodule Sitemap.BuildersIndexurlTest do
   use ExUnit.Case
 
-  alias Sitemap.Builders.Indexurl
-  import SweetXml
-  require XmlBuilder
+  # alias Sitemap.Builders.Indexurl
+  # import SweetXml
+  # require XmlBuilder
 
   setup do
     Sitemap.Builders.File.finalize_state

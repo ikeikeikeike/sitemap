@@ -27,7 +27,7 @@ defmodule Sitemap.Generator do
 
   # def group do end
 
-  def ping_search_engines(urls \\ []) do
+  def ping(urls \\ []) do
     urls = ~w(
     http://google.com/ping?sitemap=
     http://www.google.com/webmasters/sitemaps/ping?sitemap=
