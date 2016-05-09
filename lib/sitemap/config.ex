@@ -31,7 +31,7 @@ defmodule Sitemap.Config do
       public_path:          ow[:public_path]          || System.get_env("SITEMAP_PUBLIC_PATH")   || Application.get_env(:sitemap, :public_path,          "sitemaps/"),
       adapter:              ow[:adapter]              || System.get_env("SITEMAP_ADAPTER")       || Application.get_env(:sitemap, :adapter, Sitemap.Adapters.File),
       verbose:              ow[:verbose]              || System.get_env("SITEMAP_VERBOSE")       || Application.get_env(:sitemap, :verbose,              true),
-      compress:             ow[:compress]             || System.get_env("SITEMAP_COMPRESS")      || Application.get_env(:sitemap, :compress,            true),
+      compress:             ow[:compress]             || System.get_env("SITEMAP_COMPRESS")      || Application.get_env(:sitemap, :compress,             true),
       create_index:         ow[:create_index]         || System.get_env("SITEMAP_CREATE_INDEX")  || Application.get_env(:sitemap, :create_index,         :auto),
     })
   end
