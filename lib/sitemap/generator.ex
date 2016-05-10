@@ -33,9 +33,7 @@ defmodule Sitemap.Generator do
 
   def ping(urls \\ []) do
     urls = ~w(http://google.com/ping?sitemap=%s
-    http://www.google.com/webmasters/sitemaps/ping?sitemap=%s
-    http://www.bing.com/webmaster/ping.aspx?sitemap=%s
-    http://submissions.ask.com/ping?sitemap=%s) ++ urls
+    http://www.bing.com/webmaster/ping.aspx?sitemap=%s) ++ urls
 
     indexurl = Location.url :indexfile
 
