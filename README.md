@@ -1,3 +1,15 @@
+# Sitemap
+
+[![Build Status](http://img.shields.io/travis/ikeikeikeike/sitemap.svg?style=flat-square)](http://travis-ci.org/ikeikeikeike/sitemap)
+[![Hex version](https://img.shields.io/hexpm/v/sitemap.svg "Hex version")](https://hex.pm/packages/sitemap)
+[![Hex downloads](https://img.shields.io/hexpm/dt/sitemap.svg "Hex downloads")](https://hex.pm/packages/sitemap)
+[![Inline docs](https://inch-ci.org/github/ikeikeikeike/sitemap.svg)](http://inch-ci.org/github/ikeikeikeike/sitemap)
+[![hex.pm](https://img.shields.io/hexpm/l/ltsv.svg)](https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE)
+
+
+Generating sitemap.xml
+
+
 ## Installation
 
 `Still developing.`
@@ -59,8 +71,8 @@ end
 defmodule Sitemaps do
   use Sitemap,
     host: "http://#{Application.get_env(:myapp, MyApp.Endpoint)[:url][:host]}",
-    files_path: "static/",
-    public_path: ""
+    files_path: "priv/static/sitemaps/",
+    public_path: "sitemaps/"
 
   alias MyApp.Router.Helpers
 
