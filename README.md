@@ -1,3 +1,15 @@
+# Sitemap
+
+[![Build Status](http://img.shields.io/travis/ikeikeikeike/sitemap.svg?style=flat-square)](http://travis-ci.org/ikeikeikeike/sitemap)
+[![Hex version](https://img.shields.io/hexpm/v/sitemap.svg "Hex version")](https://hex.pm/packages/sitemap)
+[![Hex downloads](https://img.shields.io/hexpm/dt/sitemap.svg "Hex downloads")](https://hex.pm/packages/sitemap)
+[![Inline docs](https://inch-ci.org/github/ikeikeikeike/sitemap.svg)](http://inch-ci.org/github/ikeikeikeike/sitemap)
+[![hex.pm](https://img.shields.io/hexpm/l/ltsv.svg)](https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE)
+
+
+Generating sitemap.xml
+
+
 ## Installation
 
 `Still developing.`
@@ -22,7 +34,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 #### Usage
 
-##### Basic
+###### Basic
 
 ```elixir
 defmodule Sitemaps do
@@ -36,7 +48,7 @@ defmodule Sitemaps do
 end
 ```
 
-##### As a function
+###### As a function
 
 ```elixir
 defmodule Sitemaps do
@@ -53,14 +65,14 @@ defmodule Sitemaps do
 end
 ```
 
-##### With Ecto
+###### With Ecto
 
 ```elixir
 defmodule Sitemaps do
   use Sitemap,
     host: "http://#{Application.get_env(:myapp, MyApp.Endpoint)[:url][:host]}",
-    files_path: "static/",
-    public_path: ""
+    files_path: "priv/static/sitemaps/",
+    public_path: "sitemaps/"
 
   alias MyApp.Router.Helpers
 
@@ -120,3 +132,25 @@ defmodule Sitemaps do
   ping
 end
 ```
+
+### Features
+
+Current Features or To-Do
+
+- [x] Supports: generate kind of some sitemaps.
+  - [x] News sitemaps
+  - [x] Video sitemaps
+  - [x] Image sitemaps
+  - [x] Geo sitemaps
+  - [x] Mobile sitemaps
+  - [x] PageMap sitemap
+  - [x] Alternate Links
+- [ ] Supports: write some kind of filesystem and object storage.
+  - [x] Filesystem
+  - [ ] S3
+- [x] Customizable sitemap working
+- [x] Notifies search engines (Google, Bing) of new sitemaps
+- [x] Gives you complete control over your sitemap contents and naming scheme
+- [x] Customizable sitemap compression
+- [ ] Intelligent sitemap indexing
+- [ ] All of completing Examples
