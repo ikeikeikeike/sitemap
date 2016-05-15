@@ -34,7 +34,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 #### Usage
 
-##### Basic
+###### Basic
 
 ```elixir
 defmodule Sitemaps do
@@ -48,7 +48,7 @@ defmodule Sitemaps do
 end
 ```
 
-##### As a function
+###### As a function
 
 ```elixir
 defmodule Sitemaps do
@@ -65,7 +65,7 @@ defmodule Sitemaps do
 end
 ```
 
-##### With Ecto
+###### With Ecto
 
 ```elixir
 defmodule Sitemaps do
@@ -132,3 +132,25 @@ defmodule Sitemaps do
   ping
 end
 ```
+
+### Features
+
+Current Features or To-Do
+
+- [x] Supports: generate kind of some sitemaps.
+  - [x] News sitemaps
+  - [x] Video sitemaps
+  - [x] Image sitemaps
+  - [x] Geo sitemaps
+  - [x] Mobile sitemaps
+  - [x] PageMap sitemap
+  - [x] Alternate Links
+- [ ] Supports: write some kind of filesystem and object storage.
+  - [x] Filesystem
+  - [ ] S3
+- [x] Customizable sitemap working
+- [x] Notifies search engines (Google, Bing) of new sitemaps
+- [x] Gives you complete control over your sitemap contents and naming scheme
+- [x] Customizable sitemap compression
+- [ ] Intelligent sitemap indexing
+- [ ] All of completing Examples
