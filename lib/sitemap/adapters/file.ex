@@ -2,6 +2,8 @@ defmodule Sitemap.Adapters.File do
   alias Sitemap.Location
   alias Sitemap.DirNotExists
 
+  @behaviour Sitemap.Adapters.Behaviour
+
   def write(name, data) do
     dir = Location.directory(name)
     cond do

@@ -9,7 +9,7 @@ defmodule Sitemap.Mixfile do
    [
      app: :sitemap,
      name: "Sitemap",
-     version: "0.5.8",
+     version: "0.5.9",
      elixir: ">= 1.0.0",
      description: @description,
      build_embedded: Mix.env == :prod,

@@ -1,6 +1,8 @@
 defmodule Sitemap.Adapters.String do
   alias Sitemap.Location
 
+  @behaviour Sitemap.Adapters.Behaviour
+
   def write(name, data) do
     path = Location.path(name)
     if Regex.match?(~r/.gz$/, path) do
