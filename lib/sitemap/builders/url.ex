@@ -70,31 +70,31 @@ defmodule Sitemap.Builders.Url do
         element(:"video:title",           data[:title]),
         element(:"video:description",     data[:description]),
 
-        # TODO: Elase nil when this statement returns that.
         (if data[:player_loc] do
-          attrs = %{allow_embed: data[:allow_embed]}
-          if data[:autoplay], do: attrs = Map.put(attrs, :autoplay, data[:autoplay])
+          attrs = %{allow_embed: Funcs.yes_no(data[:allow_embed])}
+          if data[:autoplay], do: attrs = Map.put(attrs, :autoplay, Funcs.autoplay(data[:autoplay]))
           element(:"video:player_loc", attrs, data[:player_loc])
         end),
-        element(:"video:content_loc",     data[:content_loc]),
-        element(:"video:thumbnail_loc",   data[:thumbnail_loc]),
-        element(:"video:gallery_loc", %{title: data[:gallery_title]}, data[:gallery_loc]),
+        # element(:"video:content_loc",     data[:content_loc]),
+        # element(:"video:thumbnail_loc",   data[:thumbnail_loc]),
+        # element(:"video:gallery_loc", %{title: data[:gallery_title]}, data[:gallery_loc]),
 
-        element(:"video:price", video_price_attrs(data), data[:price]),
+        # element(:"video:price", video_price_attrs(data), data[:price]),
         element(:"video:rating",          data[:rating]),
         element(:"video:duration",        data[:duration]),
         element(:"video:view_count",      data[:view_count]),
 
-        element(:"video:expiration_date", data[:expiration_date]),
-        element(:"video:publication_date",data[:publication_date]),
+        element(:"video:expiration_date", data[:expiration_date]),  # TODO: gonna be convinient
+        element(:"video:publication_date",data[:publication_date]), # TODO: gonna be convinient
 
         Enum.map(data[:tags] || [], &(element(:"video:tag", &1))),
         element(:"video:tag",             data[:tag]),
         element(:"video:category",        data[:category]),
 
-        element(:"video:family_friendly", data[:family_friendly]),
+        (if Keyword.has_key?(data, :family_friendly) do
+          element(:"video:family_friendly", Funcs.yes_no(data[:family_friendly]))
+        end),
 
-        # TODO: Elase nil when this statement returns that.
         (if data[:uploader] do
           attrs = %{}
           if data[:uploader_info], do: attrs = %{info: data[:uploader_info]}

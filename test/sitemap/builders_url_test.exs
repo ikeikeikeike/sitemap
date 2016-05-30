@@ -103,6 +103,56 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   test "Videos sitemap url" do
+    data = [videos: [
+      thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
+      title: "Grilling steaks for summer",
+      description: "Alkis shows you how to get perfectly done steaks every time",
+      content_loc: "http://www.example.com/video123.flv",
+      # player_loc: "http://www.example.com/videoplayer.swf?video=123",
+      allow_embed: true,
+      autoplay: true,
+      duration: 600,
+      expiration_date: "2009-11-05T19:20:30+08:00",
+      rating: 0.5,
+      view_count: 1000,
+      publication_date: "2007-11-05T19:20:30+08:00",
+      tags: ~w(tag1 tag2 tag3),
+      tag: "tag4",
+      category: "Category",
+      family_friendly: true,
+      # gallery_loc: "",
+      # gallery_title: "",
+      # uploader: "",
+      # uploader_info: "",
+# :price - Optional. Only one price supported at this time
+# :price_currency - Required. In ISO_4217 format.
+# :price_type - Optional. rent or own
+# :price_resolution - Optional. HD or SD
+      # live: "",
+      # requires_subscription: ""
+    ]]
+
+    actual =
+      Url.to_xml("/video.html", data)
+      |> XmlBuilder.generate
+
+    # IO.puts actual
+
+    # parsed = parse(actual)
+    # assert xpath(parsed, ~x"//loc/text()")        ==  'http://www.example.com'
+    # assert xpath(parsed, ~x"//lastmod/text()")    !=  nil
+    # assert xpath(parsed, ~x"//expires/text()")    ==  nil
+    # assert xpath(parsed, ~x"//changefreq/text()") ==  nil
+    # assert xpath(parsed, ~x"//priority/text()")   ==  nil
+
+    # assert xpath(parsed, ~x"//news:news/news:publication/news:name/text()") == 'Example'
+    # assert xpath(parsed, ~x"//news:news/news:publication/news:language/text()") == 'en'
+    # assert xpath(parsed, ~x"//news:news/news:title/text()") == 'My Article'
+    # assert xpath(parsed, ~x"//news:news/news:keywords/text()") == 'my article, articles about myself'
+    # assert xpath(parsed, ~x"//news:news/news:stock_tickers/text()") == 'SAO:PETR3'
+    # assert xpath(parsed, ~x"//news:news/news:publication_date/text()") == '2011-08-22'
+    # assert xpath(parsed, ~x"//news:news/news:genres/text()") == 'PressRelease'
+    # assert xpath(parsed, ~x"//news:news/news:access/text()") == 'Subscription'
   end
 
   test "Alternates sitemap url" do

@@ -11,7 +11,20 @@ defmodule Sitemap.Funcs do
 
   def eraser(elements) do
     Enum.filter elements, fn elm ->
-      !!elem(elm, 2)
+      case elm do
+        e when is_list(e) -> eraser(e)
+        nil -> false
+        _   -> !!elem(elm, 2)
+      end
     end
   end
+
+  def yes_no(bool) do
+    if bool == false, do: "no", else: "yes"
+  end
+
+  def autoplay(bool) do
+    if bool, do: "ap=1", else: "ap=0"
+  end
+
 end
