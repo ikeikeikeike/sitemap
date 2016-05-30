@@ -12,7 +12,6 @@ Generating sitemap.xml
 
 ## Installation
 
-`Still developing.`
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
