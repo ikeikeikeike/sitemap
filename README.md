@@ -135,7 +135,7 @@ Current Features or To-Do
 
 - [x] [Supports: generate kind of some sitemaps](#supports-generate-kind-of-some-sitemaps)
   - [x] [News Sitemaps](#news-sitemaps)
-  - [x] Video Sitemaps
+  - [x] [Video Sitemaps](#video-sitemaps)
   - [x] Image Sitemaps
   - [x] Geo Sitemaps
   - [x] Mobile Sitemaps
@@ -181,20 +181,20 @@ end
 
 ```xml
 <url>
-	<loc>http://www.example.com/index.html</loc>
-	<lastmod>2016-05-30T13:13:12Z</lastmod>
-	<news:news>
-		<news:publication>
-			<news:name>Example</news:name>
-			<news:language>en</news:language>
-		</news:publication>
-		<news:title>My Article</news:title>
-		<news:access>Subscription</news:access>
-		<news:genres>PressRelease</news:genres>
-		<news:keywords>my article, articles about myself</news:keywords>
-		<news:stock_tickers>SAO:PETR3</news:stock_tickers>
-		<news:publication_date>2011-08-22</news:publication_date>
-	</news:news>
+ <loc>http://www.example.com/index.html</loc>
+ <lastmod>2016-05-30T13:13:12Z</lastmod>
+ <news:news>
+   <news:publication>
+     <news:name>Example</news:name>
+     <news:language>en</news:language>
+   </news:publication>
+   <news:title>My Article</news:title>
+   <news:access>Subscription</news:access>
+   <news:genres>PressRelease</news:genres>
+   <news:keywords>my article, articles about myself</news:keywords>
+   <news:stock_tickers>SAO:PETR3</news:stock_tickers>
+   <news:publication_date>2011-08-22</news:publication_date>
+ </news:news>
 </url>
 ```
 
@@ -208,13 +208,34 @@ defmodule Sitemaps do
 
   create do
     add "index.html", videos: [
-         thumbnail_loc: "Example",
-         publication_language: "http://www.example.com/video1_thumbnail.png",
-         title: "My Video",
-         description: "my video, videos about itself",
-         content_loc: "http://www.example.com/cool_video.mpg",
-         tags: ~w(and then nothing),
-         category: "Category"
+         thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
+         title: "Grilling steaks for summer",
+         description: "Alkis shows you how to get perfectly done steaks every time",
+         content_loc: "http://www.example.com/video123.flv",
+         player_loc: "http://www.example.com/videoplayer.swf?video=123",
+         allow_embed: true,
+         autoplay: true,
+         duration: 600,
+         expiration_date: "2009-11-05T19:20:30+08:00",
+         publication_date: "2007-11-05T19:20:30+08:00",
+         rating: 0.5,
+         view_count: 1000,
+         tags: ~w(tag1 tag2 tag3),
+         tag: "tag4",
+         category: "Category",
+         family_friendly: true,
+         restriction: "IE GB US CA",
+         relationship: true,
+         gallery_loc: "http://cooking.example.com",
+         gallery_title: "Cooking Videos",
+         price: "1.99",
+         price_currency: "EUR",
+         price_type: "own",
+         price_resolution: "HD",
+         uploader: "GrillyMcGrillerson",
+         uploader_info: "http://www.example.com/users/grillymcgrillerson",
+         live: true,
+         requires_subscription: false
        ]
   end
 end
@@ -225,24 +246,33 @@ end
 
 ```xml
 <url>
-    <loc>http://www.example.com/video.html</loc>
-    <lastmod>2016-05-30T14:53:00Z</lastmod>
-    <video:video>
-        <video:title>Grilling steaks for summer</video:title>
-        <video:description>Alkis shows you how to get perfectly done steaks every time</video:description>
-        <video:rating>0.5</video:rating>
-        <video:duration>600</video:duration>
-        <video:view_count>1000</video:view_count>
-        <video:expiration_date>2009-11-05T19:20:30+08:00</video:expiration_date>
-        <video:publication_date>2007-11-05T19:20:30+08:00</video:publication_date>
-        <video:tag>tag1</video:tag>
-        <video:tag>tag2</video:tag>
-        <video:tag>tag3</video:tag>
-        <video:tag>tag4</video:tag>
-        <video:category>Category</video:category>
-        <video:family_friendly>yes</video:family_friendly>
-    </video:video>
+ <loc>http://www.example.com/video.html</loc>
+ <lastmod>2016-05-31T12:51:47Z</lastmod>
+ <video:video>
+   <video:title>Grilling steaks for summer</video:title>
+   <video:description>Alkis shows you how to get perfectly done steaks every time</video:description>
+   <video:player_loc allow_embed="yes" autoplay="ap=1">http://www.example.com/videoplayer.swf?video=123</video:player_loc>
+   <video:content_loc>http://www.example.com/video123.flv</video:content_loc>
+   <video:thumbnail_loc>http://www.example.com/thumbs/123.jpg</video:thumbnail_loc>
+   <video:duration>600</video:duration>
+   <video:gallery_loc title="Cooking Videos">http://cooking.example.com</video:gallery_loc>
+   <video:rating>0.5</video:rating>
+   <video:view_count>1000</video:view_count>
+   <video:expiration_date>2009-11-05T19:20:30+08:00</video:expiration_date>
+   <video:publication_date>2007-11-05T19:20:30+08:00</video:publication_date>
+   <video:tag>tag1</video:tag>
+   <video:tag>tag2</video:tag>
+   <video:tag>tag3</video:tag>
+   <video:tag>tag4</video:tag>
+   <video:category>Category</video:category>
+   <video:family_friendly>yes</video:family_friendly>
+   <video:restriction relationship="allow">IE GB US CA</video:restriction>
+   <video:uploader info="http://www.example.com/users/grillymcgrillerson">GrillyMcGrillerson</video:uploader>
+   <video:price currency="EUR" resolution="HD" type="own">1.99</video:price>
+   <video:live>yes</video:live>
+   <video:requires_subscription>no</video:requires_subscription>
+ </video:video>
 </url>
 ```
 
-Look at [Video sitemaps](https://support.google.com/webmasters/answer/80471) as required.
+Look at [Video sitemaps](https://developers.google.com/webmasters/videosearch/sitemaps#adding-video-content-to-a-sitemap) as required.

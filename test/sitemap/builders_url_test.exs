@@ -108,28 +108,30 @@ defmodule Sitemap.BuildersUrlTest do
       title: "Grilling steaks for summer",
       description: "Alkis shows you how to get perfectly done steaks every time",
       content_loc: "http://www.example.com/video123.flv",
-      # player_loc: "http://www.example.com/videoplayer.swf?video=123",
+      player_loc: "http://www.example.com/videoplayer.swf?video=123",
       allow_embed: true,
       autoplay: true,
       duration: 600,
       expiration_date: "2009-11-05T19:20:30+08:00",
+      publication_date: "2007-11-05T19:20:30+08:00",
       rating: 0.5,
       view_count: 1000,
-      publication_date: "2007-11-05T19:20:30+08:00",
       tags: ~w(tag1 tag2 tag3),
       tag: "tag4",
       category: "Category",
       family_friendly: true,
-      # gallery_loc: "",
-      # gallery_title: "",
-      # uploader: "",
-      # uploader_info: "",
-# :price - Optional. Only one price supported at this time
-# :price_currency - Required. In ISO_4217 format.
-# :price_type - Optional. rent or own
-# :price_resolution - Optional. HD or SD
-      # live: "",
-      # requires_subscription: ""
+      restriction: "IE GB US CA",
+      relationship: true,
+      gallery_loc: "http://cooking.example.com",
+      gallery_title: "Cooking Videos",
+      price: "1.99",
+      price_currency: "EUR",
+      price_type: "own",
+      price_resolution: "HD",
+      uploader: "GrillyMcGrillerson",
+      uploader_info: "http://www.example.com/users/grillymcgrillerson",
+      live: true,
+      requires_subscription: false
     ]]
 
     actual =

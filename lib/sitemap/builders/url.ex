@@ -69,40 +69,36 @@ defmodule Sitemap.Builders.Url do
       element(:"video:video", Funcs.eraser([
         element(:"video:title",           data[:title]),
         element(:"video:description",     data[:description]),
-
         (if data[:player_loc] do
           attrs = %{allow_embed: Funcs.yes_no(data[:allow_embed])}
           if data[:autoplay], do: attrs = Map.put(attrs, :autoplay, Funcs.autoplay(data[:autoplay]))
           element(:"video:player_loc", attrs, data[:player_loc])
         end),
-        # element(:"video:content_loc",     data[:content_loc]),
-        # element(:"video:thumbnail_loc",   data[:thumbnail_loc]),
-        # element(:"video:gallery_loc", %{title: data[:gallery_title]}, data[:gallery_loc]),
-
-        # element(:"video:price", video_price_attrs(data), data[:price]),
-        element(:"video:rating",          data[:rating]),
+        element(:"video:content_loc",     data[:content_loc]),
+        element(:"video:thumbnail_loc",   data[:thumbnail_loc]),
         element(:"video:duration",        data[:duration]),
-        element(:"video:view_count",      data[:view_count]),
 
-        element(:"video:expiration_date", data[:expiration_date]),  # TODO: gonna be convinient
-        element(:"video:publication_date",data[:publication_date]), # TODO: gonna be convinient
-
-        Enum.map(data[:tags] || [], &(element(:"video:tag", &1))),
-        element(:"video:tag",             data[:tag]),
-        element(:"video:category",        data[:category]),
-
-        (if Keyword.has_key?(data, :family_friendly) do
-          element(:"video:family_friendly", Funcs.yes_no(data[:family_friendly]))
+        (unless is_nil(data[:gallery_loc]),      do: element(:"video:gallery_loc", %{title: data[:gallery_title]}, data[:gallery_loc])),
+        (unless is_nil(data[:rating]),           do: element(:"video:rating", data[:rating])),
+        (unless is_nil(data[:view_count]),       do: element(:"video:view_count", data[:view_count])),
+        (unless is_nil(data[:expiration_date]),  do: element(:"video:expiration_date", data[:expiration_date])),  # TODO: gonna be convinient
+        (unless is_nil(data[:publication_date]), do: element(:"video:publication_date", data[:publication_date])), # TODO: gonna be convinient
+        (unless is_nil(data[:tags]),             do: Enum.map(data[:tags] || [], &(element(:"video:tag", &1)))),
+        (unless is_nil(data[:tag]),              do: element(:"video:tag", data[:tag])),
+        (unless is_nil(data[:category]),         do: element(:"video:category", data[:category])),
+        (unless is_nil(data[:family_friendly]),  do: element(:"video:family_friendly", Funcs.yes_no(data[:family_friendly]))),
+        (unless is_nil(data[:restriction]) do
+          attrs = %{relationship: Funcs.allow_deny(data[:relationship])}
+          element(:"video:restriction", attrs, data[:restriction])
         end),
-
-        (if data[:uploader] do
+        (unless is_nil(data[:uploader]) do
           attrs = %{}
           if data[:uploader_info], do: attrs = %{info: data[:uploader_info]}
           element(:"video:uploader", attrs, data[:uploader])
         end),
-
-        element(:"video:live", data[:live]),
-        element(:"video:requires_subscription", data[:requires_subscription]),
+        (unless is_nil(data[:price]), do: element(:"video:price", video_price_attrs(data), data[:price])),
+        (unless is_nil(data[:live]),  do: element(:"video:live", Funcs.yes_no(data[:live]))),
+        (unless is_nil(data[:requires_subscription]), do: element(:"video:requires_subscription", Funcs.yes_no(data[:requires_subscription]))),
       ]))
 
     videos(tail, elements ++ [elm])
@@ -110,9 +106,9 @@ defmodule Sitemap.Builders.Url do
 
   defp video_price_attrs(data) do
     attrs = %{}
-    attrs = Map.put attrs, :currency,     data[:price_currency]
-    attrs = Map.put attrs, :type,         data[:price_type]
-    attrs = Map.put attrs, :resolution,   data[:price_resolution]
+    attrs = Map.put attrs, :currency, data[:price_currency]
+    if data[:price_type], do: attrs = Map.put attrs, :type, data[:price_type]
+    if data[:price_type], do: attrs = Map.put attrs, :resolution, data[:price_resolution]
     attrs
   end
 

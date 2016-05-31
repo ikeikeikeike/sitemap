@@ -23,6 +23,10 @@ defmodule Sitemap.Funcs do
     if bool == false, do: "no", else: "yes"
   end
 
+  def allow_deny(bool) do
+    if bool == false, do: "deny", else: "allow"
+  end
+
   def autoplay(bool) do
     if bool, do: "ap=1", else: "ap=0"
   end
