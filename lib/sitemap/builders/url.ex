@@ -52,11 +52,11 @@ defmodule Sitemap.Builders.Url do
   defp images([data|tail], elements) do
     elm =
       element(:"image:image", Funcs.eraser([
-        element(:"image:loc",             data[:loc]),
-        element(:"image:title",           data[:title]),
-        element(:"image:license",         data[:license]),
-        element(:"image:caption",         data[:caption]),
-        element(:"image:geo_location",    data[:geo_location]),
+        element(:"image:loc", data[:loc]),
+        (unless is_nil(data[:title]), do: element(:"image:title", data[:title])),
+        (unless is_nil(data[:license]), do: element(:"image:license", data[:license])),
+        (unless is_nil(data[:caption]), do: element(:"image:caption", data[:caption])),
+        (unless is_nil(data[:geo_location]), do: element(:"image:geo_location", data[:geo_location])),
       ]))
 
     images(tail, elements ++ [elm])

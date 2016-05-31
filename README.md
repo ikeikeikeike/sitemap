@@ -136,7 +136,7 @@ Current Features or To-Do
 - [x] [Supports: generate kind of some sitemaps](#supports-generate-kind-of-some-sitemaps)
   - [x] [News Sitemaps](#news-sitemaps)
   - [x] [Video Sitemaps](#video-sitemaps)
-  - [x] Image Sitemaps
+  - [x] [Image Sitemaps](#image-sitemaps)
   - [x] Geo Sitemaps
   - [x] Mobile Sitemaps
   - [x] PageMap Sitemap
@@ -199,6 +199,43 @@ end
 ```
 
 Look at [Creating a Google News Sitemap](https://support.google.com/news/publisher/answer/74288) as required.
+
+### Image sitemaps
+
+```elixir
+defmodule Sitemaps do
+  use Sitemap, compress: false, host: "http://example.com"
+
+  create do
+    add "index.html", images: [
+         loc: "http://example.com/image.jpg",
+         caption: "Caption",
+         title: "Title",
+         license: "https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE",
+         geo_location: "Limerick, Ireland",
+       ]
+  end
+end
+```
+
+###### Generated Result
+
+```xml
+<url>
+ <loc>http://www.example.com/image.html</loc>
+ <lastmod>2016-05-31T13:32:40Z</lastmod>
+ <image:image>
+   <image:loc>http://example.com/image.jpg</image:loc>
+   <image:caption>Caption</image:caption>
+   <image:title>Title</image:title>
+   <image:license>https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE</image:license>
+   <image:geo_location>Limerick, Ireland</image:geo_location>
+ </image:image>
+</url>
+```
+
+Look at [Image sitemaps](https://support.google.com/webmasters/answer/178636) as required.
+
 
 ### Video sitemaps
 
