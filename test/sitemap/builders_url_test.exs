@@ -231,6 +231,29 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//video:video/video:live/text()") == 'yes'
   end
   test "Alternates sitemap url" do
+
+    data = ["/index.html", alternates: [
+         href: "http://www.example.de/index.html",
+         lang: "de",
+         nofollow: true,
+         media: "only screen and (max-width: 640px)"
+    ]]
+
+    actual =
+      Url.to_xml("/video.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//loc/text()")        ==  'http://www.example.com/video.html'
+    assert xpath(parsed, ~x"//lastmod/text()")    !=  nil
+    assert xpath(parsed, ~x"//expires/text()")    ==  nil
+    assert xpath(parsed, ~x"//changefreq/text()") ==  nil
+    assert xpath(parsed, ~x"//priority/text()")   ==  nil
+
+    assert xpath(parsed, ~x"//xhtml:link/@href") == 'http://www.example.de/index.html'
+    assert xpath(parsed, ~x"//xhtml:link/@hreflang") == 'de'
+    assert xpath(parsed, ~x"//xhtml:link/@media") == 'only screen and (max-width: 640px)'
+    assert xpath(parsed, ~x"//xhtml:link/@rel") == 'alternate nofollow'
   end
 
   test "Geo sitemap url" do

@@ -135,12 +135,12 @@ Current Features or To-Do
 
 - [x] [Supports: generate kind of some sitemaps](#supports-generate-kind-of-some-sitemaps)
   - [x] [News Sitemaps](#news-sitemaps)
-  - [x] [Video Sitemaps](#video-sitemaps)
   - [x] [Image Sitemaps](#image-sitemaps)
+  - [x] [Video Sitemaps](#video-sitemaps)
   - [x] Geo Sitemaps
   - [x] Mobile Sitemaps
   - [x] PageMap Sitemap
-  - [x] Alternate Links
+  - [x] [Alternate Links](alternate-links)
 - [ ] Supports: write some kind of filesystem and object storage.
   - [x] Filesystem
   - [ ] S3
@@ -313,3 +313,33 @@ end
 ```
 
 Look at [Video sitemaps](https://developers.google.com/webmasters/videosearch/sitemaps#adding-video-content-to-a-sitemap) as required.
+
+
+### Alternate Links
+
+```elixir
+defmodule Sitemaps do
+  use Sitemap, compress: true, host: "http://example.com"
+
+  create do
+    add "index.html", alternates: [
+         href: "http://www.example.de/index.html",
+         lang: "de",
+         nofollow: true,
+         media: "only screen and (max-width: 640px)"
+       ]
+  end
+end
+```
+
+###### Generated Result
+
+```xml
+<url>
+ <loc>http://www.example.com/video.html</loc>
+ <lastmod>2016-06-01T14:05:05Z</lastmod>
+ <xhtml:link href="http://www.example.de/index.html" hreflang="de" media="only screen and (max-width: 640px)" rel="alternate nofollow"/>
+</url>
+```
+
+Look at [Alternate Links](https://support.google.com/webmasters/answer/2620865) as required.
