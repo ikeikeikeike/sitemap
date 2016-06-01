@@ -137,7 +137,7 @@ Current Features or To-Do
   - [x] [News Sitemaps](#news-sitemaps)
   - [x] [Image Sitemaps](#image-sitemaps)
   - [x] [Video Sitemaps](#video-sitemaps)
-  - [x] Geo Sitemaps
+  - [x] [Geo Sitemaps](geo-sitemaps)
   - [x] Mobile Sitemaps
   - [x] PageMap Sitemap
   - [x] [Alternate Links](alternate-links)
@@ -343,3 +343,32 @@ end
 ```
 
 Look at [Alternate Links](https://support.google.com/webmasters/answer/2620865) as required.
+
+
+### Geo Sitemaps
+
+```elixir
+defmodule Sitemaps do
+  use Sitemap, compress: true, host: "http://example.com"
+
+  create do
+    add "geo.html", alternates: [
+         format: "kml"
+       ]
+  end
+end
+```
+
+###### Generated Result
+
+```xml
+<url>
+ <loc>http://www.example.com/geo.html</loc>
+ <lastmod>2016-06-01T14:15:25Z</lastmod>
+ <geo:geo>
+   <geo:format>kml</geo:format>
+ </geo:geo>
+</url>
+```
+
+Look at [Geo Sitemaps](https://support.google.com/webmasters/answer/94555) as required.

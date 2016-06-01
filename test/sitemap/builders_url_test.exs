@@ -257,6 +257,16 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   test "Geo sitemap url" do
+    data = ["/geo.html", geo: [
+         format: "kml"
+    ]]
+
+    actual =
+      Url.to_xml("/geo.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//geo:geo/geo:format/text()") == 'kml'
   end
 
   test "Mobile sitemap url" do
