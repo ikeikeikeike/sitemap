@@ -31,4 +31,21 @@ defmodule Sitemap.Funcs do
     if bool, do: "ap=1", else: "ap=0"
   end
 
+  def getenv(key) do
+    case System.get_env(key) do
+      "false" -> false
+      "true"  -> true
+       x      -> x
+    end
+  end
+
+  def nil_or(opts), do: nil_or(opts, "")
+  def nil_or([], value), do: value
+  def nil_or([h|t], _value) do
+    case h do
+      v when is_nil(v) -> nil_or(t, "")
+      v -> nil_or([], v)
+    end
+  end
+
 end

@@ -137,28 +137,34 @@ use Mix.Config
 
 config :sitemap, [
   compress: false,
-  host: "http://example.xom",
+  host: "http://example.com",
 ]
 
 ```
 
+###### Change option( Environment )
+
+```elixir
+SITEMAP_COMPRESS=false SITEMAP_HOST=http://example.com mix run ./sitemap.exs
+```
+
 ##### All of options.
 
-| Name                 | Default Value          | -          |
-|:---------------------|:-----------------------|:-----------|
-| max_sitemap_files    | 10_000                 | Max sitemap links per index file |
-| max_sitemap_links    | 10_000                 | Max links per sitemap  |
-| max_sitemap_news     | 1_000                  | Max news sitemap per index_file  |
-| max_sitemap_images   | 1_000                  | Max images per url  |
-| max_sitemap_filesize | 5_000_000              | Bytes |
-| host                 | http://www.example.com | Your domain, also host with http scheme.  |
-| filename             | sitemap                | Name of sitemap file.  |
-| files_path           | sitemap                | After domain path's location on URL.  |
-| public_path          | sitemap                | Write sitemap files to this local path.  |
-| adapter              | Sitemap.Adapters.File  | You'd change to write each filesystem(default: Sitemap.Adapters.File)  |
-| verbose              | true                   | Getting more information in sitemap working.  |
-| compress             | true                   | Gzip compression.  |
-| create_index         | :auto                  | Generating sitemps to this directory path.  |
+| Name                 | Default Value          | Environment           | -    |
+|:---------------------|:-----------------------|:----------------------|:-----|
+| max_sitemap_files    | 10_000                 | SITEMAP_MAXFILES      | Max sitemap links per index file |
+| max_sitemap_links    | 10_000                 | SITEMAP_MAXLINKS      | Max links per sitemap  |
+| max_sitemap_news     | 1_000                  | SITEMAP_MAXNEWS       | Max news sitemap per index_file  |
+| max_sitemap_images   | 1_000                  | SITEMAP_MAXIMAGES     | Max images per url  |
+| max_sitemap_filesize | 5_000_000              | SITEMAP_MAXFILESIZE   | Bytes |
+| host                 | http://www.example.com | SITEMAP_HOST          | Your domain, also host with http scheme.  |
+| filename             | sitemap                | SITEMAP_FILENAME      | Name of sitemap file.  |
+| files_path           | sitemap                | SITEMAP_SITEMAPS_PATH | After domain path's location on URL.  |
+| public_path          | sitemap                | SITEMAP_PUBLIC_PATH   | Write sitemap files to this local path.  |
+| adapter              | Sitemap.Adapters.File  | SITEMAP_ADAPTER       | You'd change to write each filesystem  |
+| verbose              | true                   | SITEMAP_VERBOSE       | Getting more information in sitemap working.  |
+| compress             | true                   | SITEMAP_COMPRESS      | Gzip compression.  |
+| create_index         | auto                   | SITEMAP_CREATE_INDEX  | Generating sitemps to this directory path.  |
 
 ### Features
 

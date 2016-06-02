@@ -1,4 +1,6 @@
 defmodule Sitemap.Config do
+  import Sitemap.Funcs, only: [getenv: 1, nil_or: 1]
+
   defstruct [
     :max_sitemap_files,     # Max sitemap links per index file
     :max_sitemap_links,     # Max links per sitemap
@@ -20,19 +22,19 @@ defmodule Sitemap.Config do
   def configure(overwrite) do
     ow = overwrite
     start_link(%__MODULE__{
-      max_sitemap_files:    ow[:max_sitemap_files]    || System.get_env("SITEMAP_MAXFILES")      || Application.get_env(:sitemap, :max_sitemap_files,    10_000),
-      max_sitemap_links:    ow[:max_sitemap_links]    || System.get_env("SITEMAP_MAX_LINKS")     || Application.get_env(:sitemap, :max_sitemap_links,    10_000),
-      max_sitemap_news:     ow[:max_sitemap_news]     || System.get_env("SITEMAP_MAXNEWS")       || Application.get_env(:sitemap, :max_sitemap_news,     1_000),
-      max_sitemap_images:   ow[:max_sitemap_images]   || System.get_env("SITEMAP_MAXIMAGES")     || Application.get_env(:sitemap, :max_sitemap_images,   1_000),
-      max_sitemap_filesize: ow[:max_sitemap_filesize] || System.get_env("SITEMAP_MAXFILESIZE")   || Application.get_env(:sitemap, :max_sitemap_filesize, 5_000_000),
-      host:                 ow[:host]                 || System.get_env("SITEMAP_HOST")          || Application.get_env(:sitemap, :host,   "http://www.example.com"),
-      filename:             ow[:filename]             || System.get_env("SITEMAP_FILENAME")      || Application.get_env(:sitemap, :filename,             "sitemap"),
-      files_path:           ow[:files_path]           || System.get_env("SITEMAP_SITEMAPS_PATH") || Application.get_env(:sitemap, :files_path,           "sitemaps/"),
-      public_path:          ow[:public_path]          || System.get_env("SITEMAP_PUBLIC_PATH")   || Application.get_env(:sitemap, :public_path,          "sitemaps/"),
-      adapter:              ow[:adapter]              || System.get_env("SITEMAP_ADAPTER")       || Application.get_env(:sitemap, :adapter, Sitemap.Adapters.File),
-      verbose:              ow[:verbose]              || System.get_env("SITEMAP_VERBOSE")       || Application.get_env(:sitemap, :verbose,              true),
-      compress:             ow[:compress]             || System.get_env("SITEMAP_COMPRESS")      || Application.get_env(:sitemap, :compress,             true),
-      create_index:         ow[:create_index]         || System.get_env("SITEMAP_CREATE_INDEX")  || Application.get_env(:sitemap, :create_index,         :auto),
+      max_sitemap_files:    nil_or([ow[:max_sitemap_files]   , getenv("SITEMAP_MAXFILES")     , Application.get_env(:sitemap, :max_sitemap_files,    10_000)]),
+      max_sitemap_links:    nil_or([ow[:max_sitemap_links]   , getenv("SITEMAP_MAXLINKS")     , Application.get_env(:sitemap, :max_sitemap_links,    10_000)]),
+      max_sitemap_news:     nil_or([ow[:max_sitemap_news]    , getenv("SITEMAP_MAXNEWS")      , Application.get_env(:sitemap, :max_sitemap_news,     1_000)]),
+      max_sitemap_images:   nil_or([ow[:max_sitemap_images]  , getenv("SITEMAP_MAXIMAGES")    , Application.get_env(:sitemap, :max_sitemap_images,   1_000)]),
+      max_sitemap_filesize: nil_or([ow[:max_sitemap_filesize], getenv("SITEMAP_MAXFILESIZE")  , Application.get_env(:sitemap, :max_sitemap_filesize, 5_000_000)]),
+      host:                 nil_or([ow[:host]                , getenv("SITEMAP_HOST")         , Application.get_env(:sitemap, :host,   "http://www.example.com")]),
+      filename:             nil_or([ow[:filename]            , getenv("SITEMAP_FILENAME")     , Application.get_env(:sitemap, :filename,            "sitemap")]),
+      files_path:           nil_or([ow[:files_path]          , getenv("SITEMAP_SITEMAPS_PATH"), Application.get_env(:sitemap, :files_path,          "sitemaps/")]),
+      public_path:          nil_or([ow[:public_path]         , getenv("SITEMAP_PUBLIC_PATH")  , Application.get_env(:sitemap, :public_path,         "sitemaps/")]),
+      adapter:              nil_or([ow[:adapter]             , getenv("SITEMAP_ADAPTER")      , Application.get_env(:sitemap, :adapter, Sitemap.Adapters.File)]),
+      verbose:              nil_or([ow[:verbose]             , getenv("SITEMAP_VERBOSE")      , Application.get_env(:sitemap, :verbose,              true)]),
+      compress:             nil_or([ow[:compress]            , getenv("SITEMAP_COMPRESS")     , Application.get_env(:sitemap, :compress,             true)]),
+      create_index:         nil_or([ow[:create_index]        , getenv("SITEMAP_CREATE_INDEX") , Application.get_env(:sitemap, :create_index,        "auto")]),
     })
   end
 
