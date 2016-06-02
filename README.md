@@ -408,7 +408,17 @@ defmodule Sitemaps do
   use Sitemap, compress: true, host: "http://example.com"
 
   create do
-    add "pagemap.html", priority: 0.5, changefreq: "hourly", mobile: true
+    add "pagemap.html", pagemap: [
+      dataobjects: [[
+        type: "document",
+        id: "hibachi",
+        attributes: [
+          [name: "name",   value: "Dragon"],
+          [name: "review", value: "3.5"],
+        ]
+      ]]
+    ]
+
   end
 end
 ```
