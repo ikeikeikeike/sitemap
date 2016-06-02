@@ -135,7 +135,7 @@ defmodule Sitemap.Builders.Url do
   end
 
   defp pagemap(data) do
-    element(:PageMap, Enum.map(data[:pagemap][:dataobjects] || [], fn(obj) ->
+    element(:PageMap, Enum.map(data[:dataobjects] || [], fn(obj) ->
       element(:DataObject, %{type: obj[:type], id: obj[:id]}, Enum.map(obj[:attributes] || [], fn(attr) ->
         element(:Attribute, %{name: attr[:name]}, attr[:value])
       end))

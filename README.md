@@ -137,10 +137,10 @@ Current Features or To-Do
   - [x] [News Sitemaps](#news-sitemaps)
   - [x] [Image Sitemaps](#image-sitemaps)
   - [x] [Video Sitemaps](#video-sitemaps)
-  - [x] [Geo Sitemaps](geo-sitemaps)
-  - [x] Mobile Sitemaps
-  - [x] PageMap Sitemap
-  - [x] [Alternate Links](alternate-links)
+  - [x] [Alternate Links](#alternate-links)
+  - [x] [Geo Sitemaps](#geo-sitemaps)
+  - [x] [Mobile Sitemaps](#mobile-sitemaps)
+  - [x] [PageMap Sitemap](#pagemap-sitemap)
 - [ ] Supports: write some kind of filesystem and object storage.
   - [x] Filesystem
   - [ ] S3
@@ -372,3 +372,60 @@ end
 ```
 
 Look at [Geo Sitemaps](https://support.google.com/webmasters/answer/94555) as required.
+
+
+### Mobile Sitemaps
+
+```elixir
+defmodule Sitemaps do
+  use Sitemap, compress: true, host: "http://example.com"
+
+  create do
+    add "mobile.html", priority: 0.5, changefreq: "hourly", mobile: true
+  end
+end
+```
+
+###### Generated Result
+
+```xml
+<url>
+ <loc>http://www.example.com/mobile.html</loc>
+ <lastmod>2016-06-01T14:24:44Z</lastmod>
+ <changefreq>hourly</changefreq>
+ <priority>0.5</priority>
+ <mobile:mobile/>
+</url>
+```
+
+Look at [Mobile Sitemaps](https://support.google.com/webmasters/answer/6082207) as required.
+
+
+### PageMap sitemap
+
+```elixir
+defmodule Sitemaps do
+  use Sitemap, compress: true, host: "http://example.com"
+
+  create do
+    add "pagemap.html", priority: 0.5, changefreq: "hourly", mobile: true
+  end
+end
+```
+
+###### Generated Result
+
+```xml
+<url>
+ <loc>http://www.example.com/pagemap.html</loc>
+ <lastmod>2016-06-02T17:01:17Z</lastmod>
+ <PageMap>
+   <DataObject id="hibachi" type="document">
+     <Attribute name="name">Dragon</Attribute>
+     <Attribute name="review">3.5</Attribute>
+   </DataObject>
+ </PageMap>
+</url>
+```
+
+Look at [PageMap sitemap](https://developers.google.com/custom-search/docs/structured_data#addtositemaps) as required.

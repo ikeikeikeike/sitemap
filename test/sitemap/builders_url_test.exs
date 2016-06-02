@@ -232,7 +232,7 @@ defmodule Sitemap.BuildersUrlTest do
   end
   test "Alternates sitemap url" do
 
-    data = ["/index.html", alternates: [
+    data = [alternates: [
          href: "http://www.example.de/index.html",
          lang: "de",
          nofollow: true,
@@ -257,7 +257,7 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   test "Geo sitemap url" do
-    data = ["/geo.html", geo: [
+    data = [geo: [
          format: "kml"
     ]]
 
@@ -270,9 +270,39 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   test "Mobile sitemap url" do
+    data = [priority: 0.5, changefreq: "hourly", expires: nil, mobile: true]
+
+    actual =
+      Url.to_xml("/mobile.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//mobile:mobile") ==
+      {:xmlElement, :"mobile:mobile", :"mobile:mobile", {'mobile', 'mobile'},
+        {:xmlNamespace, [], []}, [url: 1], 10, [], [], [], :undefined, :undeclared}
   end
 
   test "Pagemap sitemap url" do
+    data = [pagemap: [
+      dataobjects: [[
+        type: "document",
+        id: "hibachi",
+        attributes: [
+          [name: "name",   value: "Dragon"],
+          # [name: "review", value: "3.5"],
+        ]
+      ]]
+    ]]
+
+    actual =
+      Url.to_xml("/pagemap.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//PageMap/DataObject/@id") == 'hibachi'
+    assert xpath(parsed, ~x"//PageMap/DataObject/@type") == 'document'
+    assert xpath(parsed, ~x"//PageMap/DataObject/Attribute/text()") == 'Dragon'
+    assert xpath(parsed, ~x"//PageMap/DataObject/Attribute/@name") == 'name'
   end
 
 
