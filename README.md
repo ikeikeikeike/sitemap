@@ -129,6 +129,37 @@ defmodule Sitemaps do
 end
 ```
 
+###### Change option( Mix.confg )
+
+
+```elixir
+use Mix.Config
+
+config :sitemap, [
+  compress: false,
+  host: "http://example.xom",
+]
+
+```
+
+##### All of options.
+
+| Name                 | Default Value          | -          |
+|:---------------------|:-----------------------|:-----------|
+| max_sitemap_files    | 10_000                 | Max sitemap links per index file |
+| max_sitemap_links    | 10_000                 | Max links per sitemap  |
+| max_sitemap_news     | 1_000                  | Max news sitemap per index_file  |
+| max_sitemap_images   | 1_000                  | Max images per url  |
+| max_sitemap_filesize | 5_000_000              | Bytes |
+| host                 | http://www.example.com | Your domain, also host with http scheme.  |
+| filename             | sitemap                | Name of sitemap file.  |
+| files_path           | sitemap                | After domain path's location on URL.  |
+| public_path          | sitemap                | Write sitemap files to this local path.  |
+| adapter              | Sitemap.Adapters.File  | You'd change to write each filesystem(default: Sitemap.Adapters.File)  |
+| verbose              | true                   | Getting more information in sitemap working.  |
+| compress             | true                   | Gzip compression.  |
+| create_index         | :auto                  | Generating sitemps to this directory path.  |
+
 ### Features
 
 Current Features or To-Do
