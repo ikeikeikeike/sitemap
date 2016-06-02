@@ -152,11 +152,11 @@ SITEMAP_COMPRESS=false SITEMAP_HOST=http://example.com mix run ./sitemap.exs
 
 | Name                 | Default Value          | Environment           | -    |
 |:---------------------|:-----------------------|:----------------------|:-----|
-| max_sitemap_files    | 10_000                 | SITEMAP_MAXFILES      | Max sitemap links per index file |
-| max_sitemap_links    | 10_000                 | SITEMAP_MAXLINKS      | Max links per sitemap  |
-| max_sitemap_news     | 1_000                  | SITEMAP_MAXNEWS       | Max news sitemap per index_file  |
-| max_sitemap_images   | 1_000                  | SITEMAP_MAXIMAGES     | Max images per url  |
-| max_sitemap_filesize | 5_000_000              | SITEMAP_MAXFILESIZE   | Bytes |
+| max_sitemap_files    | 10000                  | SITEMAP_MAXFILES      | Max sitemap links per index file |
+| max_sitemap_links    | 10000                  | SITEMAP_MAXLINKS      | Max links per sitemap  |
+| max_sitemap_news     | 1000                   | SITEMAP_MAXNEWS       | Max news sitemap per index_file  |
+| max_sitemap_images   | 1000                   | SITEMAP_MAXIMAGES     | Max images per url  |
+| max_sitemap_filesize | 5000000                | SITEMAP_MAXFILESIZE   | Bytes |
 | host                 | http://www.example.com | SITEMAP_HOST          | Your domain, also host with http scheme.  |
 | filename             | sitemap                | SITEMAP_FILENAME      | Name of sitemap file.  |
 | files_path           | sitemap                | SITEMAP_SITEMAPS_PATH | After domain path's location on URL.  |

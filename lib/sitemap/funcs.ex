@@ -32,10 +32,14 @@ defmodule Sitemap.Funcs do
   end
 
   def getenv(key) do
-    case System.get_env(key) do
-      "false" -> false
-      "true"  -> true
-       x      -> x
+    x = System.get_env(key)
+    cond do
+      x == "false"  -> false
+      x == "true"   -> true
+      is_numeric(x) ->
+        {num, _} = Integer.parse(x)
+         num
+      true          -> x
     end
   end
 
@@ -45,6 +49,15 @@ defmodule Sitemap.Funcs do
     case h do
       v when is_nil(v) -> nil_or(t, "")
       v -> nil_or([], v)
+    end
+  end
+
+  def is_numeric(str) when is_nil(str), do: false
+  def is_numeric(str) do
+    case Float.parse(str) do
+      {_num, ""} -> true
+      {_num, _r} -> false
+      :error     -> false
     end
   end
 
