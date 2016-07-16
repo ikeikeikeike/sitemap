@@ -9,7 +9,7 @@ defmodule Sitemap.Mixfile do
    [
      app: :sitemap,
      name: "Sitemap",
-     version: "0.7.0",
+     version: "0.7.1",
      elixir: ">= 1.0.0",
      description: @description,
      build_embedded: Mix.env == :prod,
@@ -24,7 +24,7 @@ defmodule Sitemap.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [], included_applications: [:xml_builder], mod: {Sitemap, []}]
+    [applications: [:xml_builder], mod: {Sitemap, []}]
   end
 
   # Dependencies can be Hex packages:
