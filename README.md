@@ -73,21 +73,12 @@ defmodule Sitemaps do
     files_path: "priv/static/sitemaps/",
     public_path: "sitemaps/"
 
+  alias MyApp.Endpoint
   alias MyApp.Router.Helpers
 
   create do
-    entries = MyApp.Repo.all MyApp.Entry
-
-    Enum.each [false, true], fn bool ->
-      add Helpers.entry_path(MyApp.Endpoint, :index),
-        priority: 0.5, changefreq: "hourly", expires: nil, mobile: bool
-
-      Enum.each(entries, fn entry ->
-        add Helpers.entry_path(MyApp.Endpoint, :show, entry.id, entry.title),
-          priority: 0.5, changefreq: "hourly", expires: nil, mobile: bool
-      end)
-
-    end
+    add Helpers.entry_path(Endpoint, :index), priority: 0.5, changefreq: "hourly", expires: nil
+    add Helpers.entry_path(Endpoint, :about), priority: 0.5, changefreq: "hourly", expires: nil
   end
 
   ping
