@@ -21,7 +21,7 @@ defmodule Sitemap.GeneratorTest do
     statement = create do
       false
     end
-    assert {:ok, []} == statement
+    assert :ok == statement
   end
 
   test "create & add" do
