@@ -17,24 +17,16 @@ defmodule Sitemap.DSL do
   end
 
   defmacro create(contents) do
-    contents =
-      case contents do
-        [do: block] ->
-          quote do
-            Sitemap.Config.update @__use_resource__
-            unquote(block); fin
-          end
-        [do: block, use: false] ->
-          quote do
-            unquote(block); fin
-          end
-      end
-
-    contents = Macro.escape(contents, unquote: true)
-
-    Code.eval_quoted(quote do
-      unquote(contents)
-    end)
+    case contents do
+      [do: block] ->
+        quote do
+          Sitemap.Config.update @__use_resource__
+          unquote(block); fin()
+        end
+      [do: block, use: false] ->
+        quote do
+          unquote(block); fin()
+        end
+    end
   end
-
 end
