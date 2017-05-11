@@ -130,8 +130,8 @@ SITEMAP_COMPRESS=false SITEMAP_HOST=http://example.com mix run ./sitemap.exs
 
 And you guys should follow mix task documents, here:
 
-https://hexdocs.pm/mix/Mix.Tasks.Run.html
-https://hexdocs.pm/mix/Mix.Task.html
+- https://hexdocs.pm/mix/Mix.Tasks.Run.html
+- https://hexdocs.pm/mix/Mix.Task.html
 
 
 ##### All of options.

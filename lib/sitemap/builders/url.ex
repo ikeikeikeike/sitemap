@@ -13,15 +13,22 @@ defmodule Sitemap.Builders.Url do
         element(:priority,    attrs[:priority]),
       ]))
 
-    if attrs[:mobile],     do: elms = append_last(elms, mobile())
-    if attrs[:geo],        do: elms = append_last(elms, geo(attrs[:geo]))
-    if attrs[:news],       do: elms = append_last(elms, news(attrs[:news]))
-    if attrs[:pagemap],    do: elms = append_last(elms, pagemap(attrs[:pagemap]))
-    if attrs[:images],     do: elms = append_last(elms, images([attrs[:images]]))
-    if attrs[:videos],     do: elms = append_last(elms, videos([attrs[:videos]]))
-    if attrs[:alternates], do: elms = append_last(elms, alternates([attrs[:alternates]]))
-
+    elms = ifput attrs[:mobile],     elms, &append_last(&1, mobile())
+    elms = ifput attrs[:geo],        elms, &append_last(&1, geo(attrs[:geo]))
+    elms = ifput attrs[:news],       elms, &append_last(&1, news(attrs[:news]))
+    elms = ifput attrs[:pagemap],    elms, &append_last(&1, pagemap(attrs[:pagemap]))
+    elms = ifput attrs[:images],     elms, &append_last(&1, images([attrs[:images]]))
+    elms = ifput attrs[:videos],     elms, &append_last(&1, videos([attrs[:videos]]))
+    elms = ifput attrs[:alternates], elms, &append_last(&1, alternates([attrs[:alternates]]))
     elms
+  end
+
+  defp ifput(bool, elms, fun) do
+    if bool do
+      fun.(elms)
+    else
+      elms
+    end
   end
 
   defp append_last(elements, element) do
@@ -71,7 +78,7 @@ defmodule Sitemap.Builders.Url do
         element(:"video:description",     data[:description]),
         (if data[:player_loc] do
           attrs = %{allow_embed: Funcs.yes_no(data[:allow_embed])}
-          if data[:autoplay], do: attrs = Map.put(attrs, :autoplay, Funcs.autoplay(data[:autoplay]))
+          attrs = ifput data[:autoplay], attrs, &Map.put(&1, :autoplay, Funcs.autoplay(data[:autoplay]))
           element(:"video:player_loc", attrs, data[:player_loc])
         end),
         element(:"video:content_loc",     data[:content_loc]),
@@ -93,7 +100,7 @@ defmodule Sitemap.Builders.Url do
         end),
         (unless is_nil(data[:uploader]) do
           attrs = %{}
-          if data[:uploader_info], do: attrs = %{info: data[:uploader_info]}
+          attrs = ifput data[:uploader_info], attrs, &Map.put(&1, :info, data[:uploader_info])
           element(:"video:uploader", attrs, data[:uploader])
         end),
         (unless is_nil(data[:price]), do: element(:"video:price", video_price_attrs(data), data[:price])),
@@ -107,8 +114,8 @@ defmodule Sitemap.Builders.Url do
   defp video_price_attrs(data) do
     attrs = %{}
     attrs = Map.put attrs, :currency, data[:price_currency]
-    if data[:price_type], do: attrs = Map.put attrs, :type, data[:price_type]
-    if data[:price_type], do: attrs = Map.put attrs, :resolution, data[:price_resolution]
+    attrs = ifput data[:price_type], attrs, &Map.put(&1, :type, data[:price_type])
+    attrs = ifput data[:price_type], attrs, &Map.put(&1, :resolution, data[:price_resolution])
     attrs
   end
 

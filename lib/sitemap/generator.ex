@@ -8,7 +8,7 @@ defmodule Sitemap.Generator do
     case FileBuilder.add(link, attrs) do
       :ok   -> :ok
       :full ->
-        full
+        full()
         add(link, attrs)
     end
   end
@@ -19,8 +19,8 @@ defmodule Sitemap.Generator do
   end
 
   def fin do
-    full
-    reset
+    full()
+    reset()
   end
 
   def reset do

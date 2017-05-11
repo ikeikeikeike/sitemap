@@ -2,7 +2,7 @@ defmodule Sitemap.Location do
   alias Sitemap.Namer
   alias Sitemap.Config
 
-  def directory(_name), do: directory
+  def directory(_name), do: directory()
   def directory do
     Config.get.files_path
     |> Path.expand
@@ -22,18 +22,18 @@ defmodule Sitemap.Location do
   end
 
   def filename(name) do
-    fname = Namer.to_string(name)
+    fname = Namer.to_string name
 
-    s = Config.get
-    unless s.compress,
-      do: fname = Regex.replace(~r/\.gz$/, fname, "")
-
-    fname
+    if Config.get.compress do
+      fname
+    else
+      Regex.replace ~r/\.gz$/, fname, ""
+    end
   end
 
   def reserve_name(name) do
     fname = filename(name)
-    Namer.next(name)
+    Namer.next name
     fname
   end
 

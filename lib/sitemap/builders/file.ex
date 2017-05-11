@@ -17,7 +17,7 @@ defmodule Sitemap.Builders.File do
     incr_state :content_size, size
 
     cfg = Config.get
-    s = state
+    s = state()
 
     r = (size + s.content_size) < cfg.max_sitemap_filesize
     r = r && s.link_count < cfg.max_sitemap_links
@@ -39,7 +39,7 @@ defmodule Sitemap.Builders.File do
   end
 
   def write do
-    s = state
+    s = state()
     content = Consts.xml_header <> s.content <> Consts.xml_footer
 
     Location.reserve_name(:file)

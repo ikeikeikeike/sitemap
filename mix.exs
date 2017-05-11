@@ -9,13 +9,13 @@ defmodule Sitemap.Mixfile do
    [
      app: :sitemap,
      name: "Sitemap",
-     version: "0.7.2",
+     version: "0.8.0",
      elixir: ">= 1.0.0",
      description: @description,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     package: package,
-     deps: deps,
+     package: package(),
+     deps: deps(),
      source_url: "https://github.com/ikeikeikeike/sitemap"
    ]
   end
@@ -40,10 +40,11 @@ defmodule Sitemap.Mixfile do
     [
       {:xml_builder, ">= 0.0.0"},
       {:sweet_xml, ">= 0.0.0", only: :test},
-      # {:bmark, "~> 1.0"},
-      {:earmark, "~> 0.1", only: :dev},
-      {:ex_doc, "~> 0.11", only: :dev},
-      {:inch_ex, only: :docs},
+
+      {:credo, "~> 0.7", only: :dev},
+      {:earmark, "~> 1.2", only: :dev},
+      {:ex_doc, "~> 0.15", only: :dev},
+      {:inch_ex, ">= 0.0.0",  only: :docs},
     ]
   end
 

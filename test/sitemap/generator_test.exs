@@ -39,7 +39,7 @@ defmodule Sitemap.GeneratorTest do
     data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
     Sitemap.Builders.File.add("loc", data)
 
-    assert :ok == full
+    assert :ok == full()
   end
 
 end
