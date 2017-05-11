@@ -19,7 +19,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
   ```elixir
   def deps do
-    [{:sitemap, ">= 0.7.2"}]
+    [{:sitemap, ">= 0.8"}]
   end
   ```
 
@@ -185,17 +185,19 @@ Current Features or To-Do
 defmodule Sitemaps do
   use Sitemap, compress: false, host: "http://example.com"
 
-  create do
-    add "index.html", news: [
-         publication_name: "Example",
-         publication_language: "en",
-         title: "My Article",
-         keywords: "my article, articles about myself",
-         stock_tickers: "SAO:PETR3",
-         publication_date: "2011-08-22",
-         access: "Subscription",
-         genres: "PressRelease"
-       ]
+  def generate do
+    create do
+      add "index.html", news: [
+           publication_name: "Example",
+           publication_language: "en",
+           title: "My Article",
+           keywords: "my article, articles about myself",
+           stock_tickers: "SAO:PETR3",
+           publication_date: "2011-08-22",
+           access: "Subscription",
+           genres: "PressRelease"
+         ]
+    end
   end
 end
 ```
@@ -229,14 +231,16 @@ Look at [Creating a Google News Sitemap](https://support.google.com/news/publish
 defmodule Sitemaps do
   use Sitemap, compress: false, host: "http://example.com"
 
-  create do
-    add "index.html", images: [
-         loc: "http://example.com/image.jpg",
-         caption: "Caption",
-         title: "Title",
-         license: "https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE",
-         geo_location: "Limerick, Ireland",
-       ]
+  def generate do
+    create do
+      add "index.html", images: [
+           loc: "http://example.com/image.jpg",
+           caption: "Caption",
+           title: "Title",
+           license: "https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE",
+           geo_location: "Limerick, Ireland",
+         ]
+    end
   end
 end
 ```
@@ -266,37 +270,39 @@ Look at [Image sitemaps](https://support.google.com/webmasters/answer/178636) as
 defmodule Sitemaps do
   use Sitemap, compress: true, host: "http://example.com"
 
-  create do
-    add "index.html", videos: [
-         thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
-         title: "Grilling steaks for summer",
-         description: "Alkis shows you how to get perfectly done steaks every time",
-         content_loc: "http://www.example.com/video123.flv",
-         player_loc: "http://www.example.com/videoplayer.swf?video=123",
-         allow_embed: true,
-         autoplay: true,
-         duration: 600,
-         expiration_date: "2009-11-05T19:20:30+08:00",
-         publication_date: "2007-11-05T19:20:30+08:00",
-         rating: 0.5,
-         view_count: 1000,
-         tags: ~w(tag1 tag2 tag3),
-         tag: "tag4",
-         category: "Category",
-         family_friendly: true,
-         restriction: "IE GB US CA",
-         relationship: true,
-         gallery_loc: "http://cooking.example.com",
-         gallery_title: "Cooking Videos",
-         price: "1.99",
-         price_currency: "EUR",
-         price_type: "own",
-         price_resolution: "HD",
-         uploader: "GrillyMcGrillerson",
-         uploader_info: "http://www.example.com/users/grillymcgrillerson",
-         live: true,
-         requires_subscription: false
-       ]
+  def generate do
+    create do
+      add "index.html", videos: [
+           thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
+           title: "Grilling steaks for summer",
+           description: "Alkis shows you how to get perfectly done steaks every time",
+           content_loc: "http://www.example.com/video123.flv",
+           player_loc: "http://www.example.com/videoplayer.swf?video=123",
+           allow_embed: true,
+           autoplay: true,
+           duration: 600,
+           expiration_date: "2009-11-05T19:20:30+08:00",
+           publication_date: "2007-11-05T19:20:30+08:00",
+           rating: 0.5,
+           view_count: 1000,
+           tags: ~w(tag1 tag2 tag3),
+           tag: "tag4",
+           category: "Category",
+           family_friendly: true,
+           restriction: "IE GB US CA",
+           relationship: true,
+           gallery_loc: "http://cooking.example.com",
+           gallery_title: "Cooking Videos",
+           price: "1.99",
+           price_currency: "EUR",
+           price_type: "own",
+           price_resolution: "HD",
+           uploader: "GrillyMcGrillerson",
+           uploader_info: "http://www.example.com/users/grillymcgrillerson",
+           live: true,
+           requires_subscription: false
+         ]
+    end
   end
 end
 
@@ -344,13 +350,15 @@ Look at [Video sitemaps](https://developers.google.com/webmasters/videosearch/si
 defmodule Sitemaps do
   use Sitemap, compress: true, host: "http://example.com"
 
-  create do
-    add "index.html", alternates: [
-         href: "http://www.example.de/index.html",
-         lang: "de",
-         nofollow: true,
-         media: "only screen and (max-width: 640px)"
-       ]
+  def generate do
+    create do
+      add "index.html", alternates: [
+           href: "http://www.example.de/index.html",
+           lang: "de",
+           nofollow: true,
+           media: "only screen and (max-width: 640px)"
+         ]
+    end
   end
 end
 ```
@@ -374,10 +382,12 @@ Look at [Alternate Links](https://support.google.com/webmasters/answer/2620865) 
 defmodule Sitemaps do
   use Sitemap, compress: true, host: "http://example.com"
 
-  create do
-    add "geo.html", alternates: [
-         format: "kml"
-       ]
+  def generate do
+    create do
+      add "geo.html", alternates: [
+           format: "kml"
+         ]
+    end
   end
 end
 ```
@@ -403,8 +413,10 @@ Look at [Geo Sitemaps](https://support.google.com/webmasters/answer/94555) as re
 defmodule Sitemaps do
   use Sitemap, compress: true, host: "http://example.com"
 
-  create do
-    add "mobile.html", priority: 0.5, changefreq: "hourly", mobile: true
+  def generate do
+    create do
+      add "mobile.html", priority: 0.5, changefreq: "hourly", mobile: true
+    end
   end
 end
 ```
@@ -430,18 +442,19 @@ Look at [Mobile Sitemaps](https://support.google.com/webmasters/answer/6082207) 
 defmodule Sitemaps do
   use Sitemap, compress: true, host: "http://example.com"
 
-  create do
-    add "pagemap.html", pagemap: [
-      dataobjects: [[
-        type: "document",
-        id: "hibachi",
-        attributes: [
-          [name: "name",   value: "Dragon"],
-          [name: "review", value: "3.5"],
-        ]
-      ]]
-    ]
-
+  def generate do
+    create do
+      add "pagemap.html", pagemap: [
+        dataobjects: [[
+          type: "document",
+          id: "hibachi",
+          attributes: [
+            [name: "name",   value: "Dragon"],
+            [name: "review", value: "3.5"],
+          ]
+        ]]
+      ]
+    end
   end
 end
 ```
