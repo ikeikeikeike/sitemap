@@ -39,28 +39,13 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 defmodule Sitemaps do
   use Sitemap
 
-  create do
-    add "path1", priority: 0.5, changefreq: "hourly", expires: nil, mobile: true
-  end
-
-  ping
-end
-```
-
-###### As a function
-
-```elixir
-defmodule Sitemaps do
-  use Sitemap
-
   def generate do
     create do
       add "path1", priority: 0.5, changefreq: "hourly", expires: nil, mobile: true
     end
 
-    ping
+    ping()
   end
-
 end
 ```
 
@@ -73,16 +58,16 @@ defmodule Sitemaps do
     files_path: "priv/static/sitemaps/",
     public_path: "sitemaps/"
 
-  alias MyApp.Endpoint
-  alias MyApp.Router.Helpers
+  alias MyApp.{Endpoint, Router.Helpers}
 
-  create do
-    add Helpers.entry_path(Endpoint, :index), priority: 0.5, changefreq: "hourly", expires: nil
-    add Helpers.entry_path(Endpoint, :about), priority: 0.5, changefreq: "hourly", expires: nil
+  def generate do
+    create do
+      add Helpers.entry_path(Endpoint, :index), priority: 0.5, changefreq: "hourly", expires: nil
+      add Helpers.entry_path(Endpoint, :about), priority: 0.5, changefreq: "hourly", expires: nil
+    end
+
+    ping()
   end
-
-  ping
-
 end
 ```
 
@@ -95,12 +80,14 @@ end
 defmodule Sitemaps do
   use Sitemap, compress: false, host: "http://example.com"
 
-  create do
-    add "path1", priority: 0.5, changefreq: "hourly"
-    add "path2", priority: 0.5, changefreq: "hourly"
-  end
+  def generate do
+    create do
+      add "path1", priority: 0.5, changefreq: "hourly"
+      add "path2", priority: 0.5, changefreq: "hourly"
+    end
 
-  ping
+    ping()
+  end
 end
 ```
 
@@ -111,12 +98,14 @@ end
 defmodule Sitemaps do
   use Sitemap
 
-  create compress: false, host: "http://example.com" do
-    add "path1", priority: 0.5, changefreq: "hourly"
-    add "path2", priority: 0.5, changefreq: "hourly"
-  end
+  def generate do
+    create compress: false, host: "http://example.com" do
+      add "path1", priority: 0.5, changefreq: "hourly"
+      add "path2", priority: 0.5, changefreq: "hourly"
+    end
 
-  ping
+    ping()
+  end
 end
 ```
 
@@ -138,6 +127,12 @@ config :sitemap, [
 ```elixir
 SITEMAP_COMPRESS=false SITEMAP_HOST=http://example.com mix run ./sitemap.exs
 ```
+
+And you guys should follow mix task documents, here:
+
+https://hexdocs.pm/mix/Mix.Tasks.Run.html
+https://hexdocs.pm/mix/Mix.Task.html
+
 
 ##### All of options.
 
@@ -467,3 +462,8 @@ end
 ```
 
 Look at [PageMap sitemap](https://developers.google.com/custom-search/docs/structured_data#addtositemaps) as required.
+
+
+### Known issue
+
+- [Compilation error with ** (EXIT) no process](https://github.com/ikeikeikeike/sitemap/issues/5#issue-200979852)
