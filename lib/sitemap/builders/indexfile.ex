@@ -23,6 +23,14 @@ defmodule Sitemap.Builders.Indexfile do
     incr_state :total_count, FileBuilder.state.link_count
   end
 
+  def add_to_index(link, options \\ []) do
+    content = Location.custom_url(link)
+      |> Indexurl.to_xml(options)
+      |> XmlBuilder.generate
+
+    add_state :content, content
+  end
+
   def write do
     s = state()
     content = Consts.xml_idxheader <> s.content <> Consts.xml_idxfooter
