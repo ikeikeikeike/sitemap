@@ -477,6 +477,21 @@ end
 Look at [PageMap sitemap](https://developers.google.com/custom-search/docs/structured_data#addtositemaps) as required.
 
 
+### Additional links into the Sitemap Index
+
+
+```elixir
+create do
+  add_to_index "/mysitemap1.xml.gz"
+  add_to_index "/alternatemap.xml"
+  add_to_index "/changehost.xml.gz", host: "http://example.com"
+
+  add ...
+  add ....
+end
+```
+
+
 ### Known issue
 
 - [Compilation error with ** (EXIT) no process](https://github.com/ikeikeikeike/sitemap/issues/5#issue-200979852)
