@@ -35,6 +35,7 @@ defmodule Sitemap.GeneratorTest do
     end
   end
 
+  # TODO: write a proper test
   test "add_to_index function" do
     data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
     Sitemap.Builders.File.add("loc", data)
