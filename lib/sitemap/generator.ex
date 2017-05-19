@@ -33,18 +33,17 @@ defmodule Sitemap.Generator do
 
   def ping(urls \\ []) do
     urls = ~w(http://google.com/ping?sitemap=%s
-    http://www.bing.com/webmaster/ping.aspx?sitemap=%s) ++ urls
+              http://www.bing.com/webmaster/ping.aspx?sitemap=%s) ++ urls
 
     indexurl = Location.url :indexfile
 
-    :application.start(:inets)
-    Enum.each urls, fn url ->
-      spawn(fn ->
+    spawn fn ->
+      Enum.each urls, fn url ->
         ping_url = String.replace(url, "%s", indexurl)
 
         :httpc.request('#{ping_url}')
         IO.puts "Successful ping of #{ping_url}"
-      end)
+      end
     end
   end
 
