@@ -484,11 +484,33 @@ Look at [PageMap sitemap](https://developers.google.com/custom-search/docs/struc
 create do
   add_to_index "/mysitemap1.xml.gz"
   add_to_index "/alternatemap.xml"
-  add_to_index "/changehost.xml.gz", host: "http://example.com"
+  add_to_index "/changehost.xml.gz", host: "http://something.com"
 
   add ...
   add ....
 end
+```
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <sitemap>
+   <loc>http://example.com/mysitemap1.xml.gz</loc>
+   <lastmod>2017-05-19T11:42:45+09:00</lastmod>
+ </sitemap>
+ <sitemap>
+   <loc>http://example.com/mysitemap2.xml.gz</loc>
+   <lastmod>2017-05-19T11:42:45+09:00</lastmod>
+ </sitemap>
+ <sitemap>
+   <loc>http://something.com/changehost.xml.gz</loc>
+   <lastmod>2017-05-19T11:42:45+09:00</lastmod>
+ </sitemap>
+ <sitemap>
+   <loc>http://example.com/sitemap1.xml.gz</loc>
+   <lastmod>2017-05-19T11:42:45+09:00</lastmod>
+ </sitemap>
+</sitemapindex>
 ```
 
 
