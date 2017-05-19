@@ -1,8 +1,6 @@
 defmodule Sitemap.Generator do
-  alias Sitemap.Namer
+  alias Sitemap.{Namer, Location, Builders.Indexfile}
   alias Sitemap.Builders.File, as: FileBuilder
-  alias Sitemap.Builders.Indexfile
-  alias Sitemap.Location
 
   def add(link, attrs \\ []) do
     case FileBuilder.add(link, attrs) do
@@ -14,7 +12,7 @@ defmodule Sitemap.Generator do
   end
 
   def add_to_index(link, options \\ []) do
-    Indexfile.add_to_index link, options
+    Indexfile.add link, options
   end
 
   def full do

@@ -35,12 +35,17 @@ defmodule Sitemap.GeneratorTest do
     end
   end
 
-  # TODO: write a proper test
   test "add_to_index function" do
-    data = [lastmod: "lastmod", expires: "expires", changefreq: "changefreq", priority: 0.5]
-    Sitemap.Builders.File.add("loc", data)
+    create do
+      add_to_index "/mysitemap1.xml.gz"
+      assert String.contains?(Sitemap.Builders.Indexfile.state.content, "http://www.example.com/mysitemap1.xml.gz")
 
-    assert :ok == full()
+      add_to_index "/alternatemap.xml"
+      assert String.contains?(Sitemap.Builders.Indexfile.state.content, "http://www.example.com/alternatemap.xml")
+
+      add_to_index "/changehost.xml.gz", host: "http://google.com"
+      assert String.contains?(Sitemap.Builders.Indexfile.state.content, "http://google.com/changehost.xml.gz")
+    end
   end
 
 end

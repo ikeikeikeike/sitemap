@@ -14,18 +14,16 @@ defmodule Sitemap.Location do
     |> Path.expand
   end
 
-  def custom_url(link) do
-		conf = Sitemap.Config.get
-		conf.host
-			|> Path.join(conf.public_path)
-			|> Path.join(link)
-  end
-
-  def url(name) do
+  def url(name) when is_atom(name) do
     s = Config.get
     s.host
     |> Path.join(s.public_path)
     |> Path.join(filename(name))
+  end
+
+  def url(link) when is_binary(link) do
+    Config.get.host
+    |> Path.join(link)
   end
 
   def filename(name) do
