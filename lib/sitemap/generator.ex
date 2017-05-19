@@ -13,6 +13,10 @@ defmodule Sitemap.Generator do
     end
   end
 
+  def add_to_index(link, options \\ []) do
+    Indexfile.add_to_index link, options
+  end
+
   def full do
     Indexfile.add
     FileBuilder.finalize_state

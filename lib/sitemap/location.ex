@@ -14,6 +14,13 @@ defmodule Sitemap.Location do
     |> Path.expand
   end
 
+  def custom_url(link) do
+		conf = Sitemap.Config.get
+		conf.host
+			|> Path.join(conf.public_path)
+			|> Path.join(link)
+  end
+
   def url(name) do
     s = Config.get
     s.host
