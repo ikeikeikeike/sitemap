@@ -20,3 +20,5 @@ tags
 /vendor/
 /sitemaps/
 /example/rel
+/public
+/sitemap.rb
