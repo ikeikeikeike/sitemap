@@ -17,9 +17,9 @@ defmodule Sitemap.Builders.Url do
     elms = ifput attrs[:geo],        elms, &append_last(&1, geo(attrs[:geo]))
     elms = ifput attrs[:news],       elms, &append_last(&1, news(attrs[:news]))
     elms = ifput attrs[:pagemap],    elms, &append_last(&1, pagemap(attrs[:pagemap]))
-    elms = ifput attrs[:images],     elms, &append_last(&1, images([attrs[:images]]))
-    elms = ifput attrs[:videos],     elms, &append_last(&1, videos([attrs[:videos]]))
-    elms = ifput attrs[:alternates], elms, &append_last(&1, alternates([attrs[:alternates]]))
+    elms = ifput attrs[:images],     elms, &append_last(&1, images(attrs[:images]))
+    elms = ifput attrs[:videos],     elms, &append_last(&1, videos(attrs[:videos]))
+    elms = ifput attrs[:alternates], elms, &append_last(&1, alternates(attrs[:alternates]))
     elms
   end
 
@@ -56,6 +56,9 @@ defmodule Sitemap.Builders.Url do
 
   defp images(list, elements \\ [])
   defp images([], elements), do: elements
+  defp images([{_, _}|_] = list, elements) do
+    images [list], elements  # Make sure keyword list
+  end
   defp images([data|tail], elements) do
     elm =
       element(:"image:image", Funcs.eraser([
@@ -71,6 +74,9 @@ defmodule Sitemap.Builders.Url do
 
   defp videos(list, elements \\ [])
   defp videos([], elements), do: elements
+  defp videos([{_, _}|_] = list, elements) do
+    videos [list], elements  # Make sure keyword list
+  end
   defp videos([data|tail], elements) do
     elm =
       element(:"video:video", Funcs.eraser([
@@ -121,6 +127,9 @@ defmodule Sitemap.Builders.Url do
 
   defp alternates(list, elements \\ [])
   defp alternates([], elements), do: elements
+  defp alternates([{_, _}|_] = list, elements) do
+    alternates [list], elements  # Make sure keyword list
+  end
   defp alternates([data|tail], elements) do
     rel = if data[:nofollow], do: "alternate nofollow", else: "alternate"
 

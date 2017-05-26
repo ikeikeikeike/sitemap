@@ -126,6 +126,42 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//image:image/image:geo_location/text()") == 'Limerick, Ireland'
   end
 
+  test "Multiple loc for images sitemap" do
+    data = [images: [
+        [
+          loc: "http://example.com/image.jpg",
+          caption: "Caption",
+          title: "Title",
+          license: "https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE",
+          geo_location: "Limerick, Ireland",
+        ], [
+          loc: "http://example.com/image.jpg",
+          caption: "Caption",
+          title: "Title",
+          license: "https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE",
+          geo_location: "Limerick, Ireland",
+        ]
+      ]
+    ]
+
+    actual =
+      Url.to_xml("/image.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//loc/text()")        ==  'http://www.example.com/image.html'
+    assert xpath(parsed, ~x"//lastmod/text()")    !=  nil
+    assert xpath(parsed, ~x"//expires/text()")    ==  nil
+    assert xpath(parsed, ~x"//changefreq/text()") ==  nil
+    assert xpath(parsed, ~x"//priority/text()")   ==  nil
+
+    assert xpath(parsed, ~x"//image:image/image:title/text()") == 'Title'
+    assert xpath(parsed, ~x"//image:image/image:loc/text()") == 'http://example.com/image.jpg'
+    assert xpath(parsed, ~x"//image:image/image:caption/text()") == 'Caption'
+    assert xpath(parsed, ~x"//image:image/image:license/text()") == 'https://github.com/ikeikeikeike/sitemap/blob/master/LICENSE'
+    assert xpath(parsed, ~x"//image:image/image:geo_location/text()") == 'Limerick, Ireland'
+  end
+
   test "Videos sitemap url" do
     data = [videos: [
       thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
@@ -138,6 +174,51 @@ defmodule Sitemap.BuildersUrlTest do
       duration: 600,
       expiration_date: "2009-11-05T19:20:30+08:00",
     ]]
+
+    actual =
+      Url.to_xml("/video.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//loc/text()")        ==  'http://www.example.com/video.html'
+    assert xpath(parsed, ~x"//lastmod/text()")    !=  nil
+    assert xpath(parsed, ~x"//expires/text()")    ==  nil
+    assert xpath(parsed, ~x"//changefreq/text()") ==  nil
+    assert xpath(parsed, ~x"//priority/text()")   ==  nil
+
+    assert xpath(parsed, ~x"//video:video/video:title/text()") == 'Grilling steaks for summer'
+    assert xpath(parsed, ~x"//video:video/video:thumbnail_loc/text()") == 'http://www.example.com/thumbs/123.jpg'
+    assert xpath(parsed, ~x"//video:video/video:description/text()") == 'Alkis shows you how to get perfectly done steaks every time'
+    assert xpath(parsed, ~x"//video:video/video:content_loc/text()") == 'http://www.example.com/video123.flv'
+    assert xpath(parsed, ~x"//video:video/video:player_loc/text()") == 'http://www.example.com/videoplayer.swf?video=123'
+    assert xpath(parsed, ~x"//video:video/video:player_loc/@allow_embed") == 'yes'
+    assert xpath(parsed, ~x"//video:video/video:player_loc/@autoplay") == 'ap=1'
+    assert xpath(parsed, ~x"//video:video/video:duration/text()") == '600'
+    assert xpath(parsed, ~x"//video:video/video:expiration_date/text()") == '2009-11-05T19:20:30+08:00'
+  end
+
+  test "Multiple videos sitemap url" do
+    data = [videos: [[
+      thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
+      title: "Grilling steaks for summer",
+      description: "Alkis shows you how to get perfectly done steaks every time",
+      content_loc: "http://www.example.com/video123.flv",
+      player_loc: "http://www.example.com/videoplayer.swf?video=123",
+      allow_embed: true,
+      autoplay: true,
+      duration: 600,
+      expiration_date: "2009-11-05T19:20:30+08:00",
+    ], [
+      thumbnail_loc: "http://www.example.com/thumbs/123.jpg",
+      title: "Grilling steaks for summer",
+      description: "Alkis shows you how to get perfectly done steaks every time",
+      content_loc: "http://www.example.com/video123.flv",
+      player_loc: "http://www.example.com/videoplayer.swf?video=123",
+      allow_embed: true,
+      autoplay: true,
+      duration: 600,
+      expiration_date: "2009-11-05T19:20:30+08:00",
+    ]]]
 
     actual =
       Url.to_xml("/video.html", data)
@@ -230,6 +311,7 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//video:video/video:uploader/@info") == 'http://www.example.com/users/grillymcgrillerson'
     assert xpath(parsed, ~x"//video:video/video:live/text()") == 'yes'
   end
+
   test "Alternates sitemap url" do
 
     data = [alternates: [
@@ -238,6 +320,37 @@ defmodule Sitemap.BuildersUrlTest do
          nofollow: true,
          media: "only screen and (max-width: 640px)"
     ]]
+
+    actual =
+      Url.to_xml("/video.html", data)
+      |> XmlBuilder.generate
+
+    parsed = parse(actual)
+    assert xpath(parsed, ~x"//loc/text()")        ==  'http://www.example.com/video.html'
+    assert xpath(parsed, ~x"//lastmod/text()")    !=  nil
+    assert xpath(parsed, ~x"//expires/text()")    ==  nil
+    assert xpath(parsed, ~x"//changefreq/text()") ==  nil
+    assert xpath(parsed, ~x"//priority/text()")   ==  nil
+
+    assert xpath(parsed, ~x"//xhtml:link/@href") == 'http://www.example.de/index.html'
+    assert xpath(parsed, ~x"//xhtml:link/@hreflang") == 'de'
+    assert xpath(parsed, ~x"//xhtml:link/@media") == 'only screen and (max-width: 640px)'
+    assert xpath(parsed, ~x"//xhtml:link/@rel") == 'alternate nofollow'
+  end
+
+  test "Multiple alternates sitemap url" do
+
+    data = [alternates: [[
+         href: "http://www.example.de/index.html",
+         lang: "de",
+         nofollow: true,
+         media: "only screen and (max-width: 640px)"
+    ], [
+         href: "http://www.example.de/index.html",
+         lang: "de",
+         nofollow: true,
+         media: "only screen and (max-width: 640px)"
+    ]]]
 
     actual =
       Url.to_xml("/video.html", data)
