@@ -14,9 +14,9 @@ defmodule Sitemap.Adapters.File do
 
     path = Location.path(name)
     if Regex.match?(~r/.gz$/, path) do
-      writefile(File.open!(path, [:write, :compressed]), data)
+      writefile(File.open!(path, [:write, :utf8, :compressed]), data)
     else
-      writefile(File.open!(path, [:write]), data)
+      writefile(File.open!(path, [:write, :utf8]), data)
     end
   end
 
