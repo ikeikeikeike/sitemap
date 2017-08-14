@@ -517,3 +517,9 @@ end
 ### Known issue
 
 - [Compilation error with ** (EXIT) no process](https://github.com/ikeikeikeike/sitemap/issues/5#issue-200979852)
+
+
+### Inspired by
+
+- [sitemap_generator](http://github.com/kjvarga/sitemap_generator)
+- [go-sitemap-generator](http://github.com/ikeikeikeike/go-sitemap-generator)
