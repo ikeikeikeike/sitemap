@@ -253,7 +253,7 @@ defmodule Sitemap.BuildersUrlTest do
       autoplay: true,
       duration: 600,
       expiration_date: "2009-11-05T19:20:30+08:00",
-      publication_date: %DateTime{year: 2007, month: 11, day: 05, zone_abbr: "UTC", hour: 19, minute: 20, second: 30, microsecond: {0, 0}, utc_offset: 0, std_offset: 0, time_zone: "Etc/UTC"},
+      publication_date: {{2009, 11, 05}, {19, 20, 30}},
       rating: 0.5,
       view_count: 1000,
       tags: ~w(tag1 tag2 tag3),
@@ -296,7 +296,7 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//video:video/video:expiration_date/text()") == '2009-11-05T19:20:30+08:00'
     assert xpath(parsed, ~x"//video:video/video:rating/text()") == '0.5'
     assert xpath(parsed, ~x"//video:video/video:view_count/text()") == '1000'
-    assert xpath(parsed, ~x"//video:video/video:publication_date/text()") == '2007-11-05T19:20:30Z'
+    assert xpath(parsed, ~x"//video:video/video:publication_date/text()") == '2009-11-05T19:20:30Z'
     assert xpath(parsed, ~x"//video:video/video:family_friendly/text()") == 'yes'
     assert xpath(parsed, ~x"//video:video/video:restriction/text()") == 'IE GB US CA'
     assert xpath(parsed, ~x"//video:video/video:restriction/@relationship") == 'allow'
@@ -419,13 +419,15 @@ defmodule Sitemap.BuildersUrlTest do
   end
 
   test "date and datetime convert to iso8601" do
-    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601
-    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(:calendar.universal_time)
-    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(NaiveDateTime.utc_now)
-    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(DateTime.utc_now)
-    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(Ecto.DateTime.utc)
-    assert {:ok, %Date{}} = Date.from_iso8601 Sitemap.Funcs.iso8601(Date.utc_today)
-    assert {:ok, %Date{}} = Date.from_iso8601 Sitemap.Funcs.iso8601(Ecto.Date.utc)
+    assert String.contains? Sitemap.Funcs.iso8601, ["T", "Z"]
+if Code.ensure_loaded?(NaiveDateTime) do
+    assert "1111-11-11T11:11:11Z" = Sitemap.Funcs.iso8601 ~N[1111-11-11 11:11:11.111111]
+    assert "1111-11-11T11:11:11Z" = Sitemap.Funcs.iso8601 %DateTime{year: 1111, month: 11, day: 11, zone_abbr: "UTC", hour: 11, minute: 11, second: 11, microsecond: {0, 0}, utc_offset: 0, std_offset: 0, time_zone: "Etc/UTC"}
+end
+    assert "1111-11-11T11:11:11Z" = Sitemap.Funcs.iso8601 {{1111, 11, 11}, {11, 11, 11}}
+    assert "1111-11-11T11:11:11Z" = Sitemap.Funcs.iso8601 Ecto.DateTime.from_erl({{1111, 11, 11}, {11, 11, 11}})
+    assert "1111-11-11" = Sitemap.Funcs.iso8601 ~D[1111-11-11]
+    assert "1111-11-11" = Sitemap.Funcs.iso8601 Ecto.Date.from_erl({1111, 11, 11})
   end
 
 end

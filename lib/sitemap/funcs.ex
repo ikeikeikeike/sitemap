@@ -11,6 +11,7 @@ defmodule Sitemap.Funcs do
   def iso8601({{yy, mm, dd}, {hh, mi, ss}}) do
     iso8601(yy, mm, dd, hh, mi, ss)
   end
+if Code.ensure_loaded?(NaiveDateTime) do
   def iso8601(%NaiveDateTime{} = dt) do
     dt
     |> NaiveDateTime.to_erl
@@ -19,6 +20,7 @@ defmodule Sitemap.Funcs do
   def iso8601(%DateTime{} = dt) do
     DateTime.to_iso8601 dt
   end
+end
   def iso8601(%Date{} = dt) do
     Date.to_iso8601 dt
   end
