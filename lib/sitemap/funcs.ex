@@ -1,13 +1,38 @@
 defmodule Sitemap.Funcs do
-  def iso8601 do
-    {{yy, mm, dd}, {hh, mi, ss}} = :calendar.universal_time
-    iso8601(yy, mm, dd, hh, mi, ss)
-  end
   def iso8601(yy, mm, dd, hh, mi, ss) do
     "~4.10.0B-~2.10.0B-~2.10.0BT~2.10.0B:~2.10.0B:~2.10.0BZ"
     |> :io_lib.format([yy, mm, dd, hh, mi, ss])
     |> IO.iodata_to_binary
   end
+  def iso8601 do
+    {{yy, mm, dd}, {hh, mi, ss}} = :calendar.universal_time
+    iso8601(yy, mm, dd, hh, mi, ss)
+  end
+  def iso8601({{yy, mm, dd}, {hh, mi, ss}}) do
+    iso8601(yy, mm, dd, hh, mi, ss)
+  end
+  def iso8601(%NaiveDateTime{} = dt) do
+    dt
+    |> NaiveDateTime.to_erl
+    |> iso8601()
+  end
+  def iso8601(%DateTime{} = dt) do
+    DateTime.to_iso8601 dt
+  end
+  def iso8601(%Date{} = dt) do
+    Date.to_iso8601 dt
+  end
+if Code.ensure_loaded?(Ecto) do
+  def iso8601(%Ecto.DateTime{} = dt) do
+    dt
+    |> Ecto.DateTime.to_erl
+    |> iso8601()
+  end
+  def iso8601(%Ecto.Date{} = dt) do
+    Ecto.Date.to_iso8601 dt
+  end
+end
+  def iso8601(dt), do: dt
 
   def eraser(elements) do
     Enum.filter elements, fn elm ->
@@ -64,14 +89,14 @@ defmodule Sitemap.Funcs do
   def urljoin(src, dest) do
     {s, d} = {URI.parse(src), URI.parse(dest)}
     to_string struct(s, [
-      authority: d.authority || s.authority,
-      fragment: d.fragment || s.fragment,
       host: d.host || s.host,
       path: d.path || s.path,
       port: d.port || s.port,
       query: d.query || s.query,
       scheme: d.scheme || s.scheme,
       userinfo: d.userinfo || s.userinfo,
+      fragment: d.fragment || s.fragment,
+      authority: d.authority || s.authority,
     ])
   end
 end

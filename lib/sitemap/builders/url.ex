@@ -7,7 +7,7 @@ defmodule Sitemap.Builders.Url do
     elms =
       element(:url, Funcs.eraser([
         element(:loc,         Path.join(Config.get.host, link || "")),
-        element(:lastmod,     Keyword.get_lazy(attrs, :lastmod, fn -> Funcs.iso8601 end)),
+        element(:lastmod,     Funcs.iso8601(Keyword.get_lazy(attrs, :lastmod, fn -> Funcs.iso8601 end))),
         element(:expires,     attrs[:expires]),
         element(:changefreq,  attrs[:changefreq]),
         element(:priority,    attrs[:priority]),
@@ -50,7 +50,7 @@ defmodule Sitemap.Builders.Url do
       element(:"news:genres",             data[:genres]),
       element(:"news:keywords",           data[:keywords]),
       element(:"news:stock_tickers",      data[:stock_tickers]),
-      element(:"news:publication_date",   data[:publication_date]),
+      element(:"news:publication_date",   Funcs.iso8601(data[:publication_date])),
     ]))
   end
 
@@ -94,8 +94,8 @@ defmodule Sitemap.Builders.Url do
         (unless is_nil(data[:gallery_loc]),      do: element(:"video:gallery_loc", %{title: data[:gallery_title]}, data[:gallery_loc])),
         (unless is_nil(data[:rating]),           do: element(:"video:rating", data[:rating])),
         (unless is_nil(data[:view_count]),       do: element(:"video:view_count", data[:view_count])),
-        (unless is_nil(data[:expiration_date]),  do: element(:"video:expiration_date", data[:expiration_date])),  # TODO: gonna be convinient
-        (unless is_nil(data[:publication_date]), do: element(:"video:publication_date", data[:publication_date])), # TODO: gonna be convinient
+        (unless is_nil(data[:expiration_date]),  do: element(:"video:expiration_date", Funcs.iso8601(data[:expiration_date]))),
+        (unless is_nil(data[:publication_date]), do: element(:"video:publication_date", Funcs.iso8601(data[:publication_date]))),
         (unless is_nil(data[:tags]),             do: Enum.map(data[:tags] || [], &(element(:"video:tag", &1)))),
         (unless is_nil(data[:tag]),              do: element(:"video:tag", data[:tag])),
         (unless is_nil(data[:category]),         do: element(:"video:category", data[:category])),

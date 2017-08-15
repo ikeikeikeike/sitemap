@@ -39,19 +39,24 @@ defmodule Sitemap.Mixfile do
   defp deps do
     [
       {:xml_builder, ">= 0.0.0"},
+
+      {:ecto, ">= 1.1.0", only: :test},
       {:sweet_xml, ">= 0.0.0", only: :test},
 
       {:credo, "~> 0.7", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, ">= 0.0.0", only: :dev},
+
       {:inch_ex, ">= 0.0.0",  only: :docs},
     ]
   end
 
   defp package do
-    [ maintainers: ["Tatsuo Ikeda / ikeikeikeike"],
+    [
+      maintainers: ["Tatsuo Ikeda / ikeikeikeike"],
       licenses: ["MIT"],
-      links: %{"github" => "https://github.com/ikeikeikeike/sitemap"} ]
+      links: %{"github" => "https://github.com/ikeikeikeike/sitemap"}
+    ]
   end
 
 end

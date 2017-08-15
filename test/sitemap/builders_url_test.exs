@@ -253,7 +253,7 @@ defmodule Sitemap.BuildersUrlTest do
       autoplay: true,
       duration: 600,
       expiration_date: "2009-11-05T19:20:30+08:00",
-      publication_date: "2007-11-05T19:20:30+08:00",
+      publication_date: %DateTime{year: 2007, month: 11, day: 05, zone_abbr: "UTC", hour: 19, minute: 20, second: 30, microsecond: {0, 0}, utc_offset: 0, std_offset: 0, time_zone: "Etc/UTC"},
       rating: 0.5,
       view_count: 1000,
       tags: ~w(tag1 tag2 tag3),
@@ -296,7 +296,7 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//video:video/video:expiration_date/text()") == '2009-11-05T19:20:30+08:00'
     assert xpath(parsed, ~x"//video:video/video:rating/text()") == '0.5'
     assert xpath(parsed, ~x"//video:video/video:view_count/text()") == '1000'
-    assert xpath(parsed, ~x"//video:video/video:publication_date/text()") == '2007-11-05T19:20:30+08:00'
+    assert xpath(parsed, ~x"//video:video/video:publication_date/text()") == '2007-11-05T19:20:30Z'
     assert xpath(parsed, ~x"//video:video/video:family_friendly/text()") == 'yes'
     assert xpath(parsed, ~x"//video:video/video:restriction/text()") == 'IE GB US CA'
     assert xpath(parsed, ~x"//video:video/video:restriction/@relationship") == 'allow'
@@ -418,5 +418,14 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//PageMap/DataObject/Attribute/@name") == 'name'
   end
 
+  test "date and datetime convert to iso8601" do
+    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601
+    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(:calendar.universal_time)
+    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(NaiveDateTime.utc_now)
+    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(DateTime.utc_now)
+    assert {:ok, %DateTime{}, 0} = DateTime.from_iso8601 Sitemap.Funcs.iso8601(Ecto.DateTime.utc)
+    assert {:ok, %Date{}} = Date.from_iso8601 Sitemap.Funcs.iso8601(Date.utc_today)
+    assert {:ok, %Date{}} = Date.from_iso8601 Sitemap.Funcs.iso8601(Ecto.Date.utc)
+  end
 
 end
