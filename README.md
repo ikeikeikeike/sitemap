@@ -19,7 +19,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
   ```elixir
   def deps do
-    [{:sitemap, ">= 0.9"}]
+    [{:sitemap, "~> 1.0"}]
   end
   ```
 
@@ -519,7 +519,7 @@ end
 - [Compilation error with ** (EXIT) no process](https://github.com/ikeikeikeike/sitemap/issues/5#issue-200979852)
 
 
-### Inspired by
+### Inspired from
 
 - [sitemap_generator](http://github.com/kjvarga/sitemap_generator)
 - [go-sitemap-generator](http://github.com/ikeikeikeike/go-sitemap-generator)
