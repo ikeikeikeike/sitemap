@@ -33,6 +33,12 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 #### Usage
 
+sitemap helps you define a module with a `generate` function which will build a sitemap for your site. You must decide how to call `generate` - via a manual Mix task, a recurring background job, or whatever you choose.
+
+The resulting sitemap is currently written to a file. Because some web hosts do not support writing to the filesystem, we plan to support uploading to S3 in the future.
+
+You can always specify your own adapter module with a `write/2` function and persist the sitemaps wherever you like.
+
 ###### Basic
 
 ```elixir
@@ -41,9 +47,12 @@ defmodule Sitemaps do
 
   def generate do
     create do
+      # list each URL that should be included
       add "path1", priority: 0.5, changefreq: "hourly", expires: nil, mobile: true
+      # ...
     end
 
+    # notify search engines (currently Google and Bing) of the updated sitemap
     ping()
   end
 end
@@ -53,28 +62,30 @@ end
 
 ```elixir
 defmodule Sitemaps do
+  alias MyApp.{Endpoint, Router.Helpers}
+
   use Sitemap,
-    host: "http://#{Application.get_env(:myapp, MyApp.Endpoint)[:url][:host]}",
+    host: "http://#{Application.get_env(:myapp, Endpoint)[:url][:host]}",
     files_path: "priv/static/sitemaps/",
     public_path: "sitemaps/"
 
-  alias MyApp.{Endpoint, Router.Helpers}
-
   def generate do
     create do
+      # list each URL that should be included, using your application's routes
       add Helpers.entry_path(Endpoint, :index), priority: 0.5, changefreq: "hourly", expires: nil
       add Helpers.entry_path(Endpoint, :about), priority: 0.5, changefreq: "hourly", expires: nil
+      # ...
     end
 
+    # notify search engines (currently Google and Bing) of the updated sitemap
     ping()
   end
 end
 ```
 
-#### Change options.
+#### Ways to set sitemap's options
 
-
-###### Change option( use statement )
+###### Set options via the `use` statement
 
 ```elixir
 defmodule Sitemaps do
@@ -91,7 +102,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Change option( create function's option )
+###### Set options via arguments to `create`
 
 
 ```elixir
@@ -109,7 +120,7 @@ defmodule Sitemaps do
 end
 ```
 
-###### Change option( Mix.confg )
+###### Set options via `Mix` config
 
 
 ```elixir
@@ -122,7 +133,7 @@ config :sitemap, [
 
 ```
 
-###### Change option( Environment )
+###### Set options via environment variables
 
 ```elixir
 SITEMAP_COMPRESS=false SITEMAP_HOST=http://example.com mix run ./sitemap.exs
@@ -134,7 +145,7 @@ And you guys should follow mix task documents, here:
 - https://hexdocs.pm/mix/Mix.Task.html
 
 
-##### All of options.
+##### Available options
 
 | Name                 | Default Value          | Environment           | -    |
 |:---------------------|:-----------------------|:----------------------|:-----|
@@ -519,7 +530,7 @@ end
 - [Compilation error with ** (EXIT) no process](https://github.com/ikeikeikeike/sitemap/issues/5#issue-200979852)
 
 
-### Inspired from
+### Inspired by
 
 - [sitemap_generator](http://github.com/kjvarga/sitemap_generator)
 - [go-sitemap-generator](http://github.com/ikeikeikeike/go-sitemap-generator)
