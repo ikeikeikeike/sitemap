@@ -24,12 +24,13 @@ end
   def iso8601(%Date{} = dt) do
     Date.to_iso8601 dt
   end
-if Code.ensure_loaded?(Ecto) do
+if Code.ensure_loaded?(Ecto.DateTime) do
   def iso8601(%Ecto.DateTime{} = dt) do
     dt
     |> Ecto.DateTime.to_erl
     |> iso8601()
   end
+if Code.ensure_loaded?(Ecto.Date) do
   def iso8601(%Ecto.Date{} = dt) do
     Ecto.Date.to_iso8601 dt
   end
