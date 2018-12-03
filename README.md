@@ -19,7 +19,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
   ```elixir
   def deps do
-    [{:sitemap, "~> 1.0"}]
+    [{:sitemap, "~> 1.1"}]
   end
   ```
 

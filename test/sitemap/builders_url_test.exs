@@ -523,11 +523,6 @@ defmodule Sitemap.BuildersUrlTest do
     end
 
     assert "1111-11-11T11:11:11Z" = Sitemap.Funcs.iso8601({{1111, 11, 11}, {11, 11, 11}})
-
-    assert "1111-11-11T11:11:11Z" =
-             Sitemap.Funcs.iso8601(Ecto.DateTime.from_erl({{1111, 11, 11}, {11, 11, 11}}))
-
     assert "1111-11-11" = Sitemap.Funcs.iso8601(~D[1111-11-11])
-    assert "1111-11-11" = Sitemap.Funcs.iso8601(Ecto.Date.from_erl({1111, 11, 11}))
   end
 end
