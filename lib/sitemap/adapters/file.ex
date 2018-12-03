@@ -6,13 +6,15 @@ defmodule Sitemap.Adapters.File do
 
   def write(name, data) do
     dir = Location.directory(name)
+
     cond do
-      ! File.exists?(dir) -> File.mkdir_p(dir)
-      ! File.dir?(dir)    -> raise DirNotExists
-      true                -> nil
+      !File.exists?(dir) -> File.mkdir_p(dir)
+      !File.dir?(dir) -> raise DirNotExists
+      true -> nil
     end
 
     path = Location.path(name)
+
     if Regex.match?(~r/.gz$/, path) do
       writefile(File.open!(path, [:write, :utf8, :compressed]), data)
     else
@@ -21,8 +23,7 @@ defmodule Sitemap.Adapters.File do
   end
 
   defp writefile(stream, data) do
-    IO.write stream, data
-    File.close stream
+    IO.write(stream, data)
+    File.close(stream)
   end
-
 end

@@ -16,5 +16,4 @@ defmodule Sitemap.Adapters.String do
   #   IO.write stream, data
   #   StringIO.close stream
   # end
-
 end

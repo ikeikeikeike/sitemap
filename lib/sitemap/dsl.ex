@@ -10,9 +10,9 @@ defmodule Sitemap.DSL do
 
   defmacro create(options, contents) do
     quote do
-      Sitemap.Config.update @__use_resource__
-      Sitemap.Config.update unquote(options)
-      create unquote(contents ++ [use: false])
+      Sitemap.Config.update(@__use_resource__)
+      Sitemap.Config.update(unquote(options))
+      create(unquote(contents ++ [use: false]))
     end
   end
 
@@ -20,12 +20,15 @@ defmodule Sitemap.DSL do
     case contents do
       [do: block] ->
         quote do
-          Sitemap.Config.update @__use_resource__
-          unquote(block); fin()
+          Sitemap.Config.update(@__use_resource__)
+          unquote(block)
+          fin()
         end
+
       [do: block, use: false] ->
         quote do
-          unquote(block); fin()
+          unquote(block)
+          fin()
         end
     end
   end
