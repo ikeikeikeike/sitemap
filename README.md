@@ -62,7 +62,7 @@ end
 
 ```elixir
 defmodule Sitemaps do
-  alias MyApp.{Endpoint, Router.Helpers}
+  alias MyAppWeb.{Endpoint, Router.Helpers}
 
   use Sitemap,
     host: "http://#{Application.get_env(:myapp, Endpoint)[:url][:host]}",
