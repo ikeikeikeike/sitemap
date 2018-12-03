@@ -11,7 +11,7 @@ defmodule Sitemap do
       worker(Sitemap.Builders.File, [], restart: :permanent),
       worker(Sitemap.Builders.Indexfile, [], restart: :permanent),
       worker(Sitemap.Namer, [:indexfile], id: :namer_indexfile, restart: :permanent),
-      worker(Sitemap.Namer, [:file, [zero: 1, start: 2]], id: :namer_file, restart: :permanent),
+      worker(Sitemap.Namer, [:file, [zero: 1, start: 2]], id: :namer_file, restart: :permanent)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -26,5 +26,4 @@ defmodule Sitemap do
       use Sitemap.DSL, unquote(opts)
     end
   end
-
 end

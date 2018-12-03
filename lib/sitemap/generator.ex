@@ -4,7 +4,9 @@ defmodule Sitemap.Generator do
 
   def add(link, attrs \\ []) do
     case FileBuilder.add(link, attrs) do
-      :ok   -> :ok
+      :ok ->
+        :ok
+
       :full ->
         full()
         add(link, attrs)
@@ -12,12 +14,12 @@ defmodule Sitemap.Generator do
   end
 
   def add_to_index(link, options \\ []) do
-    Indexfile.add link, options
+    Indexfile.add(link, options)
   end
 
   def full do
-    Indexfile.add
-    FileBuilder.finalize_state
+    Indexfile.add()
+    FileBuilder.finalize_state()
   end
 
   def fin do
@@ -26,9 +28,9 @@ defmodule Sitemap.Generator do
   end
 
   def reset do
-    Indexfile.write
-    Indexfile.finalize_state
-    Namer.update_state :file, :count, nil
+    Indexfile.write()
+    Indexfile.finalize_state()
+    Namer.update_state(:file, :count, nil)
   end
 
   # def group do end
@@ -37,16 +39,15 @@ defmodule Sitemap.Generator do
     urls = ~w(http://google.com/ping?sitemap=%s
               http://www.bing.com/webmaster/ping.aspx?sitemap=%s) ++ urls
 
-    indexurl = Location.url :indexfile
+    indexurl = Location.url(:indexfile)
 
-    spawn fn ->
-      Enum.each urls, fn url ->
+    spawn(fn ->
+      Enum.each(urls, fn url ->
         ping_url = String.replace(url, "%s", indexurl)
 
         :httpc.request('#{ping_url}')
-        IO.puts "Successful ping of #{ping_url}"
-      end
-    end
+        IO.puts("Successful ping of #{ping_url}")
+      end)
+    end)
   end
-
 end

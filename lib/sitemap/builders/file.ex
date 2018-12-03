@@ -5,21 +5,20 @@ defmodule Sitemap.Builders.File do
   alias Sitemap.Location
   require XmlBuilder
 
-  use Sitemap.State, [
+  use Sitemap.State,
     link_count: 0,
     news_count: 0,
     content: "",
-    content_size: 0,
-  ]
+    content_size: 0
 
   def sizelimit?(content) do
     size = byte_size(content)
-    incr_state :content_size, size
+    incr_state(:content_size, size)
 
-    cfg = Config.get
+    cfg = Config.get()
     s = state()
 
-    r = (size + s.content_size) < cfg.max_sitemap_filesize
+    r = size + s.content_size < cfg.max_sitemap_filesize
     r = r && s.link_count < cfg.max_sitemap_links
     r = r && s.news_count < cfg.max_sitemap_news
     r
@@ -28,11 +27,11 @@ defmodule Sitemap.Builders.File do
   def add(link, attrs \\ []) do
     content =
       Url.to_xml(link, attrs)
-      |> XmlBuilder.generate
+      |> XmlBuilder.generate()
 
     if sizelimit?(content) do
-      add_state :content, content
-      incr_state :link_count
+      add_state(:content, content)
+      incr_state(:link_count)
     else
       :full
     end
@@ -40,10 +39,9 @@ defmodule Sitemap.Builders.File do
 
   def write do
     s = state()
-    content = Consts.xml_header <> s.content <> Consts.xml_footer
+    content = Consts.xml_header() <> s.content <> Consts.xml_footer()
 
     Location.reserve_name(:file)
-    Location.write :file, content, s.link_count
+    Location.write(:file, content, s.link_count)
   end
-
 end
