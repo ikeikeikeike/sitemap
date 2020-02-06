@@ -83,6 +83,16 @@ defmodule Sitemaps do
 end
 ```
 
+If your static assets are hosted by Pheonix using `Plug.Static` make sure you allow the sitemaps to be accessed:
+
+```
+plug Plug.Static,
+  at: "/",
+  from: :app,
+  gzip: false,
+  only: ~w(css fonts images js favicon.ico robots.txt sitemaps)
+```
+
 #### Ways to set sitemap's options
 
 ###### Set options via the `use` statement
@@ -144,6 +154,7 @@ And you guys should follow mix task documents, here:
 - https://hexdocs.pm/mix/Mix.Tasks.Run.html
 - https://hexdocs.pm/mix/Mix.Task.html
 
+If you are using Dokku, consider adding the mix task to the [deployment release](http://dokku.viewdocs.io/dokku/advanced-usage/deployment-tasks/#procfile-release-command) command.
 
 ##### Available options
 
