@@ -5,6 +5,7 @@ defmodule Sitemap.BuildersUrlTest do
 
   alias Sitemap.Builders.Url
   import SweetXml
+  import Sitemap.XpathNamespace
   require XmlBuilder
 
   setup do
@@ -498,6 +499,7 @@ defmodule Sitemap.BuildersUrlTest do
     assert xpath(parsed, ~x"//PageMap/DataObject/@type") == 'document'
     assert xpath(parsed, ~x"//PageMap/DataObject/Attribute/text()") == 'Dragon'
     assert xpath(parsed, ~x"//PageMap/DataObject/Attribute/@name") == 'name'
+    assert xpath_namespace(parsed, ~x"//PageMap")  == Sitemap.Consts.schemas.pagemap
   end
 
   test "date and datetime convert to iso8601" do

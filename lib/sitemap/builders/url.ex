@@ -1,6 +1,7 @@
 defmodule Sitemap.Builders.Url do
   alias Sitemap.Funcs
   alias Sitemap.Config
+  alias Sitemap.Consts
   import XmlBuilder
 
   def to_xml(link, attrs \\ []) do
@@ -201,6 +202,7 @@ defmodule Sitemap.Builders.Url do
   defp pagemap(data) do
     element(
       :PageMap,
+      %{xmlns: Consts.schemas.pagemap},
       Enum.map(data[:dataobjects] || [], fn obj ->
         element(
           :DataObject,
